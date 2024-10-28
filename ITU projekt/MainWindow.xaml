@@ -7,6 +7,29 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+        </Grid.RowDefinitions>
 
+        <!-- Menu bar -->
+        <Rectangle Grid.Row="0" Fill="Gray"></Rectangle>
+
+        <!-- Content frame -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="25*"></ColumnDefinition>
+                <ColumnDefinition Width="60*"></ColumnDefinition>
+                <ColumnDefinition Width="15*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Rectangle Grid.Column="0" Fill="Azure"></Rectangle>
+            <Rectangle Grid.Column="1" Fill="Aqua"></Rectangle>
+            <Rectangle Grid.Column="2" Fill="AntiqueWhite"></Rectangle>
+        </Grid>
+        
+        <!-- Bottom bar -->
+        <Rectangle Grid.Row="2" Fill="DarkBlue"></Rectangle>
     </Grid>
 </Window>
