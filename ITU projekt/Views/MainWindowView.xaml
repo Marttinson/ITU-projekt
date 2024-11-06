@@ -1,0 +1,89 @@
+﻿<Window x:Class="ITU_projekt.Views.MainWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:ITU_projekt.ViewModels"
+        WindowStartupLocation="CenterScreen"
+        Width="800"
+        Height="450"
+        Title="ITU Aplikace"
+        ResizeMode="CanResizeWithGrip"
+        Background="white"
+    >
+
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
+
+
+    <Grid>
+        <!-- Definice sloupců a řádků -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <!-- Horní panel s tlačítky -->
+            <RowDefinition Height="8*" />
+            <!-- Střední část s výběrem lekcí -->
+            <RowDefinition Height="*" />
+            <!-- Dolní panel pro progress bar -->
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <!-- Levý sloupec pro výběr jazyka -->
+            <ColumnDefinition Width="5*" />
+            <!-- Střední část pro výběr lekcí -->
+            <ColumnDefinition Width="*" />
+            <!-- Pravý sloupec pro menu -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Backgroung -->
+        <Rectangle Grid.Row="0"  Grid.Column="0" Grid.ColumnSpan="3" Fill="Gray" />
+
+
+        <!-- Menu pro vyber jazyku -->
+        <Viewbox Grid.Row="0" Grid.Column="0">
+            <ComboBox x:Name="LanguageComboBox"
+                       HorizontalAlignment="Left" VerticalAlignment="Top"
+                      Margin="10" MinWidth="65"
+                      SelectionChanged="LanguageComboBox_SelectionChanged">
+                <ComboBoxItem Content="English" IsSelected="True"/>
+                <ComboBoxItem Content="Čeština" />
+            </ComboBox>
+        </Viewbox>
+
+        <Viewbox Grid.Row="0" Grid.Column="1">
+            <TextBlock  Text="ITU Aplikace" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Viewbox>
+    
+        <!-- Tlacitko pro vysunuti menu -->
+        <Viewbox Grid.Row="0" Grid.Column="2">
+            <Button Content="Menu" HorizontalAlignment="Right" Click="MenuButton_Click"/>
+        </Viewbox>
+
+        <!-- Vyber lekci -->
+        <Viewbox  Grid.Row="1" Grid.Column="1">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <!-- Asi pres Image element -->
+                <TextBlock Text="Lekce 1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="Lekce 2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="Lekce 3" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock Text="Lekce 4" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </StackPanel>
+        </Viewbox>
+
+        <!-- Vysouvací menu -->
+        <Grid x:Name="RightSideMenu" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Background="Gray" Width="200" Opacity="0">
+            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch" >
+                <Button Content="Option 1" Margin="10"/>
+                <Button Content="Option 2" Margin="10"/>
+                <CheckBox x:Name="DarkModeCheckBox" Content="Dark Mode" 
+                  VerticalAlignment="Top" HorizontalAlignment="Left"
+                  Margin="10" Checked="DarkModeCheckBox_Checked" 
+                  Unchecked="DarkModeCheckBox_Unchecked"/>
+            </StackPanel>
+        </Grid>
+
+            <!-- Progress bar -->
+            <ProgressBar  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Height="Auto" Visibility="Visible" VerticalAlignment="Bottom" Width="Auto"/>
+        
+    </Grid>
+</Window>
