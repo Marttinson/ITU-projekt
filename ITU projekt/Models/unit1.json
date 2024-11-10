@@ -1,0 +1,26 @@
+{
+    "1": {
+        "TaskType": "´preklad",
+        "Type": "cz_en",
+        "TaskText": "ahoj",
+        "TaskAnswer": "hello"
+    },
+    "2": {
+        "TaskType": "preklad",
+        "Type": "cz_en",
+        "TaskText": "nashledanou",
+        "TaskAnswer": "bye"
+    },
+    "3": {
+        "TaskType": "preklad",
+        "Type": "en_cz",
+        "TaskText": "apple",
+        "TaskAnswer": "jablko"
+    },
+    "4": {
+        "TaskType": "preklad",
+        "Type": "en_cz",
+        "TaskText": "car",
+        "TaskAnswer": "auto"
+    }
+}
