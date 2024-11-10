@@ -86,6 +86,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
             case "Unit 1":
                 MessageBox.Show("Unit 1 in UserControl1 was clicked via Command!");
                 // TODO call function for generation
+                
 
                 // Add logic specific to Button1
                 break;

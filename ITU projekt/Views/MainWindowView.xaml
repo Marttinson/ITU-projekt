@@ -62,9 +62,19 @@
             <Button Content="Menu" HorizontalAlignment="Right" Click="MenuButton_Click"/>
         </Viewbox>
 
+        <ContentControl x:Name="MainContent" Grid.Column="1" Grid.Row="1"/>
+        
         <!-- Vyber lekci -->
-        <ScrollViewer Grid.Row="2" Grid.Column="1" VerticalScrollBarVisibility="Auto">
-            <ContentControl x:Name="ContentArea" Content="{Binding CurrentUserControl}"/>
+        <ScrollViewer Grid.Row="2" Grid.Column="1" VerticalScrollBarVisibility="Auto" x:Name="MenuPanel" >
+            <!-- <ContentControl x:Name="ContentArea" Content="{Binding CurrentUserControl}"/> -->
+            <Viewbox  Grid.Row="2" Grid.Column="1" >
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Button Content="Lekce1" Click="ShowView1"/>
+                    <Button Content="Lekce2" Click="ShowView1"/>
+                    <Button Content="Lekce3" Click="ShowView1"/>
+                    <Button Content="Lekce4" Click="ShowView1"/>
+                </StackPanel>
+            </Viewbox>
         </ScrollViewer>
 
         <!-- Bocni menu -->

@@ -36,6 +36,11 @@ namespace ITU_projekt.Views
                 viewModel?.SelectLanguage(language);
             }
         }
+        private void ShowView1(object sender, RoutedEventArgs e)
+        {
+            MenuPanel.Visibility = Visibility.Hidden; // Skryje MenuPanel v MainWindow
+            MainContent.Content = new view1(); // Načte UserControl 
+        }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
@@ -109,7 +114,7 @@ namespace ITU_projekt.Views
                 // Aplikace 
                 app.Resources.MergedDictionaries.Add(themeDict);
             }
-
+            
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to load theme: {ex.Message}");
