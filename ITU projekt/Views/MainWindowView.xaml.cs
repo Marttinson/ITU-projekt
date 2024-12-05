@@ -8,6 +8,9 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Globalization;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace ITU_projekt.Views
 {
@@ -36,10 +39,16 @@ namespace ITU_projekt.Views
                 viewModel?.SelectLanguage(language);
             }
         }
-        private void ShowView1(object sender, RoutedEventArgs e)
+        private void ShowPreklad_slova(object sender, RoutedEventArgs e)
         {
             MenuPanel.Visibility = Visibility.Hidden; // Skryje MenuPanel v MainWindow
-            MainContent.Content = new view1(); // Načte UserControl 
+            MainContent.Content = new Preklad_slova(); // Načte překlad slova 
+        }
+
+        private void BackToMenu(object sender, MouseButtonEventArgs e)
+        {
+            MainContent.Content = null; // Vymaže aktuální obsah
+            MenuPanel.Visibility = Visibility.Visible; // Zobrazí MenuPanel
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
@@ -73,14 +82,14 @@ namespace ITU_projekt.Views
                     To = 1,
                     Duration = new Duration(TimeSpan.FromSeconds(0.3))
                 };
-                    
+
                 // Aplikovani animace
                 RightSideMenu.BeginAnimation(UIElement.OpacityProperty, menuAnimation);
 
                 // Zapamatovani stavu
                 RightSideMenu_expanded = true;
             }
-        
+
         }
 
         private void DarkModeCheckBox_Checked(object sender, RoutedEventArgs e)
@@ -114,7 +123,7 @@ namespace ITU_projekt.Views
                 // Aplikace 
                 app.Resources.MergedDictionaries.Add(themeDict);
             }
-            
+
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to load theme: {ex.Message}");
@@ -127,6 +136,34 @@ namespace ITU_projekt.Views
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+    }
 
+    public class HeightConverter : IValueConverter
+    {
+        // Konvertor pro výpočet 10% výšky okna
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            double height = (double)value;
+            return height * 0.1; // Vráti 10% výšky
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class WidthConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            double width = (double)value;
+            return width * 0.5; // 50% šířky
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -16,9 +16,11 @@
     </Window.DataContext>
 
     <Window.Resources>
+        <!-- Konvertor pro výšku tlačítek (10% výšky okna) -->
+        <local:HeightConverter x:Key="HeightConverter"/>
+        <!-- Konvertor pro šířku tlačítek (50% šířky okna) -->
+        <local:WidthConverter x:Key="WidthConverter"/>
     </Window.Resources>
-
-
 
     <Grid>
         <!-- Definice sloupců a řádků -->
@@ -54,7 +56,7 @@
         </Viewbox>
 
         <Viewbox Grid.Row="0" Grid.Column="1">
-            <TextBlock  Text="ITU Aplikace" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <TextBlock  Text="ITU Aplikace" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonDown="BackToMenu" />
         </Viewbox>
     
         <!-- Tlacitko pro vysunuti menu -->
@@ -63,19 +65,27 @@
         </Viewbox>
 
         <ContentControl x:Name="MainContent" Grid.Column="1" Grid.Row="1"/>
-        
+
         <!-- Vyber lekci -->
-        <ScrollViewer Grid.Row="2" Grid.Column="1" VerticalScrollBarVisibility="Auto" x:Name="MenuPanel" >
-            <!-- <ContentControl x:Name="ContentArea" Content="{Binding CurrentUserControl}"/> -->
-            <Viewbox  Grid.Row="2" Grid.Column="1" >
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Button Content="Lekce1" Click="ShowView1"/>
-                    <Button Content="Lekce2" Click="ShowView1"/>
-                    <Button Content="Lekce3" Click="ShowView1"/>
-                    <Button Content="Lekce4" Click="ShowView1"/>
-                </StackPanel>
-            </Viewbox>
+        <ScrollViewer Grid.Row="2" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Center" Name="MenuPanel">
+            <StackPanel>
+                <!-- Tlačítka s pevnou výškou -->
+                <Button Height="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualHeight, Converter={StaticResource HeightConverter}}"
+                        Width="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualWidth, Converter={StaticResource WidthConverter}}"
+                        Content="Lekce1" Margin="20,5" HorizontalAlignment="Stretch" Click="ShowPreklad_slova" />
+                <Button Height="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualHeight, Converter={StaticResource HeightConverter}}"
+                        Width="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualWidth, Converter={StaticResource WidthConverter}}"
+                        Content="Lekce2" Margin="20,5" HorizontalAlignment="Stretch" Click="ShowPreklad_slova" />
+                <Button Height="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualHeight, Converter={StaticResource HeightConverter}}"
+                        Width="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualWidth, Converter={StaticResource WidthConverter}}"
+                        Content="Lekce3" Margin="20,5" HorizontalAlignment="Stretch" Click="ShowPreklad_slova" />
+                <Button Height="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualHeight, Converter={StaticResource HeightConverter}}"
+                        Width="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualWidth, Converter={StaticResource WidthConverter}}"
+                        Content="Lekce4" Margin="20,5" HorizontalAlignment="Stretch" Click="ShowPreklad_slova" />
+                <!-- Přidávejte další tlačítka podle potřeby -->
+            </StackPanel>
         </ScrollViewer>
+
 
         <!-- Bocni menu -->
         <Grid x:Name="RightSideMenu" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Background="Gray" Width="200" Opacity="0">
