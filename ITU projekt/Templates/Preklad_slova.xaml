@@ -1,7 +1,9 @@
-﻿<UserControl
+﻿<UserControl x:Class="ITU_projekt.Templates.Preklad_slova"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="ITU_projekt.Preklad_slova"
+             xmlns:av="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             mc:Ignorable="av"
              Width="auto" Height="auto" av:DesignHeight="229" av:DesignWidth="429">
 
     <Grid>

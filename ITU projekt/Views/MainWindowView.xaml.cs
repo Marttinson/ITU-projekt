@@ -24,36 +24,27 @@ namespace ITU_projekt.Views
 
         public MainWindowView()
         {
+            SetTheme("LightTheme.xaml");
             InitializeComponent();
+            BackToUnitSelection.Visibility = Visibility.Hidden;
             DataContext = new MainWindowViewModel();
         }
 
-        private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (LanguageComboBox.SelectedItem is ComboBoxItem selectedItem)
-            {
-                string language = selectedItem.Content.ToString();
-
-                // Volání příkazu pro výběr jazyka z ViewModelu
-                var viewModel = DataContext as MainWindowViewModel;
-                viewModel?.SelectLanguage(language);
-            }
-        }
         private void ShowPreklad_slova(object sender, RoutedEventArgs e)
         {
-            MenuPanel.Visibility = Visibility.Hidden; // Skryje MenuPanel v MainWindow
+            //MenuPanel.Visibility = Visibility.Hidden; // Skryje MenuPanel v MainWindow
             MainContent.Content = new Preklad_slova(); // Načte překlad slova 
         }
 
-        private void BackToMenu(object sender, MouseButtonEventArgs e)
+        private void back_to_unit_selection(object sender, RoutedEventArgs e)
         {
             MainContent.Content = null; // Vymaže aktuální obsah
-            MenuPanel.Visibility = Visibility.Visible; // Zobrazí MenuPanel
+            BackToUnitSelection.Visibility = Visibility.Hidden; // Schová back to menu tlačítko
+            // TODO inform VM -> stop lection, return UnitSelection UC
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
-
             Console.WriteLine("ZMACKNUTE TLACITKO!!");
             var viewModel = (MainWindowViewModel)DataContext;
 

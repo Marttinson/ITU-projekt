@@ -1,7 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
+using Newtonsoft.Json;
+using ITU_projekt.Models;
+using System.Windows;
+
+namespace ITU_projekt.API;
 
 public class Question
 {
@@ -64,5 +70,19 @@ public class JsonHandler
             Console.WriteLine($"Error: {ex.Message}");
             return new List<Question>();
         }
+    }
+
+    public static ObservableCollection<UnitModel> LoadUnits()
+    {
+
+        var json = File.ReadAllText("../../../Data/Anglictina/units.json");
+        if (String.IsNullOrEmpty(json))
+        {
+            MessageBox.Show("Units not found!");
+            return null;
+        }
+
+        return JsonConvert.DeserializeObject<ObservableCollection<UnitModel>>(json);
+
     }
 }

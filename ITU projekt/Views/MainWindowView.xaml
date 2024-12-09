@@ -41,57 +41,46 @@
         </Grid.ColumnDefinitions>
 
         <!-- Backgroung -->
-        <Rectangle Grid.Row="0"  Grid.Column="0" Grid.ColumnSpan="3" Fill="Gray" />
+        <Rectangle Grid.Row="0"  Grid.Column="0" Grid.ColumnSpan="3" Fill="{DynamicResource SettingsPanelBackground}" />
 
+        <!-- Menu -->
+        <Button     x:Name="BackToUnitSelection" BorderThickness="1" BorderBrush="Gray"
+                    Grid.Row="0" Grid.Column="0" 
+                    Click="back_to_unit_selection" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch" 
+                    HorizontalContentAlignment="Stretch" 
+                    VerticalContentAlignment="Stretch" >
+            <Viewbox>
+                <TextBlock Text="Menu" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Viewbox>
+        </Button>
 
-        <!-- Menu pro vyber jazyku -->
-        <Viewbox Grid.Row="0" Grid.Column="0">
-            <ComboBox x:Name="LanguageComboBox"
-                       HorizontalAlignment="Left" VerticalAlignment="Top"
-                      Margin="10" MinWidth="65"
-                      SelectionChanged="LanguageComboBox_SelectionChanged">
-                <ComboBoxItem Content="English" IsSelected="True"/>
-                <ComboBoxItem Content="Čeština" />
-            </ComboBox>
-        </Viewbox>
-
+        <!-- Title -->
         <Viewbox Grid.Row="0" Grid.Column="1">
-            <TextBlock  Text="ITU Aplikace" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonDown="BackToMenu" />
+            <TextBlock  Text="ITU Aplikace" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Viewbox>
     
         <!-- Tlacitko pro vysunuti menu -->
-        <Viewbox Grid.Row="0" Grid.Column="2">
-            <Button Content="Menu" HorizontalAlignment="Right" Click="MenuButton_Click"/>
-        </Viewbox>
+        <Button     Grid.Row="0" Grid.Column="2" BorderThickness="1" BorderBrush="Gray"
+                    Click="MenuButton_Click" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch" 
+                    HorizontalContentAlignment="Stretch" 
+                    VerticalContentAlignment="Stretch" 
+                    Background="{DynamicResource SideMenuButtonColor}">
+            <Viewbox>
+                <TextBlock Text="Nastavení" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Viewbox>
+        </Button>
 
-        <ContentControl x:Name="MainContent" Grid.Column="1" Grid.Row="1"/>
+        <!-- Here will be tasks inserted -->
 
-        <!-- Vyber lekci -->
-        <ScrollViewer Grid.Row="2" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Center" Name="MenuPanel">
-            <StackPanel>
-                <!-- Tlačítka s pevnou výškou -->
-                <Button Height="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualHeight, Converter={StaticResource HeightConverter}}"
-                        Width="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualWidth, Converter={StaticResource WidthConverter}}"
-                        Content="Lekce1" Margin="20,5" HorizontalAlignment="Stretch" Click="ShowPreklad_slova" />
-                <Button Height="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualHeight, Converter={StaticResource HeightConverter}}"
-                        Width="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualWidth, Converter={StaticResource WidthConverter}}"
-                        Content="Lekce2" Margin="20,5" HorizontalAlignment="Stretch" Click="ShowPreklad_slova" />
-                <Button Height="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualHeight, Converter={StaticResource HeightConverter}}"
-                        Width="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualWidth, Converter={StaticResource WidthConverter}}"
-                        Content="Lekce3" Margin="20,5" HorizontalAlignment="Stretch" Click="ShowPreklad_slova" />
-                <Button Height="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualHeight, Converter={StaticResource HeightConverter}}"
-                        Width="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=ActualWidth, Converter={StaticResource WidthConverter}}"
-                        Content="Lekce4" Margin="20,5" HorizontalAlignment="Stretch" Click="ShowPreklad_slova" />
-                <!-- Přidávejte další tlačítka podle potřeby -->
-            </StackPanel>
-        </ScrollViewer>
-
+        <ContentControl x:Name="MainContent" Grid.Column="1" Grid.Row="1" Content="{Binding CurrentUserControl}"/>
 
         <!-- Bocni menu -->
-        <Grid x:Name="RightSideMenu" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Background="Gray" Width="200" Opacity="0">
+        <Grid x:Name="RightSideMenu" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Background="{DynamicResource SettingsPanelBackground}" Width="200" Opacity="0">
             <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch" >
-                <Button Content="Option 1" Margin="10"/>
-                <Button Content="Option 2" Margin="10"/>
                 <CheckBox x:Name="DarkModeCheckBox" Content="Dark Mode" 
                   VerticalAlignment="Top" HorizontalAlignment="Left"
                   Margin="10" Checked="DarkModeCheckBox_Checked" 

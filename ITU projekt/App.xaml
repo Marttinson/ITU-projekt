@@ -10,19 +10,10 @@
 
         <ResourceDictionary x:Key="ThemeResource">
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="LightTheme.xaml"/>
+                <ResourceDictionary Source="Resources/LightTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-
-        <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="{DynamicResource ForegroundColor}" />
-        </Style>
-
-        <Style TargetType="Grid">
-            <Setter Property="Background" Value="{DynamicResource BackgroundColor}" />
-        </Style>
-
-
+        
         <DataTemplate x:Key="UnitSelectionTemplate">
             <StackPanel>
                 <Button Content="Unit 1" />
