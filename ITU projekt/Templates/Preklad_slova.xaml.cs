@@ -44,12 +44,12 @@ public partial class Preklad_slova : UserControl, INotifyPropertyChanged
         DataContext = this; // Nastavení datového kontextu
 
         string filePath = "Data/Anglictina/Data.json";
-        JsonHandler jsonHandler = new JsonHandler(filePath);
+        JsonHandler jsonHandler = new JsonHandler();
 
-        List<Question> questions = jsonHandler.LoadQuestions();
-        QuestionUtils qutils = new QuestionUtils(questions);
+        List<Question> questions = jsonHandler.LoadQuestions(filePath);
+        QuestionUtils qutils = new QuestionUtils();
 
-        question = qutils.GetRandomQuestions(1)[0];
+        question = qutils.GetRandomQuestions(questions, 1)[0];
 
         WordToTranslate = question.QuestionText;
 

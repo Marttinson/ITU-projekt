@@ -20,19 +20,19 @@ public class Question
 
 public class JsonHandler
 {
-    private string _filePath;
 
-    public JsonHandler(string filePath)
+    public JsonHandler()
     {
-        _filePath = filePath;
+        
     }
 
-    public List<Question> LoadQuestions()
+    // Funkce pro načtení otázek
+    public List<Question> LoadQuestions(string filePath)
     {
         try
         {
             // Načítání JSON obsahu ze souboru
-            string jsonContent = File.ReadAllText(_filePath);
+            string jsonContent = File.ReadAllText(filePath);
 
             //Console.WriteLine(jsonContent);  // Výpis načteného obsahu pro kontrolu
 
@@ -48,6 +48,11 @@ public class JsonHandler
                     {
                         Question question = new Question
                         {
+                            // TODO: pokud se bude upravovat formát json souboru, bude se muset upravit tato část,
+                            // pravděpodobně budou muset být dva handlery, respektive funkce, jeden přímo na otázky
+                            // a druhej na statistiku, zamyslet se ještě na tom jak zadávat filePath, možná by stačilo
+                            // zadat jen na složku "angličtina" a přidat další argument funkce na jednotlivé
+                            // úkoly (překlad a podobně)
                             ID = questionElement.GetProperty("ID").GetInt32(),
                             Type = questionElement.GetProperty("Type").GetString(),
                             QuestionText = questionElement.GetProperty("QuestionText").GetString(),
