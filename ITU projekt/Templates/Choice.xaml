@@ -28,9 +28,15 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" MaxHeight="40" MaxWidth="200" FontSize="22" Content="{Binding Option1}" Command="{Binding EvaluateAnswer}" CommandParameter="Možnost 1" />
-            <Button Grid.Column="1" MaxHeight="40" MaxWidth="200" FontSize="22" Content="{Binding Option2}" Command="{Binding EvaluateAnswer}" CommandParameter="Možnost 2" />
-            <Button Grid.Column="2" MaxHeight="40" MaxWidth="200" FontSize="22" Content="{Binding Option3}" Command="{Binding EvaluateAnswer}" CommandParameter="Možnost 3" />
+            <Button Grid.Column="0" MaxHeight="40" MaxWidth="200" FontSize="22" Content="{Binding Option1}" Background="{Binding Button1Background}"
+                    Command="{Binding EvaluateAnswerCommand}" CommandParameter="Možnost 1" Visibility="{Binding ButtonGroupVisibility}" />
+            <Button Grid.Column="1" MaxHeight="40" MaxWidth="200" FontSize="22" Content="{Binding Option2}" Background="{Binding Button2Background}"
+                    Command="{Binding EvaluateAnswerCommand}" CommandParameter="Možnost 2" Visibility="{Binding ButtonGroupVisibility}" />
+            <Button Grid.Column="2" MaxHeight="40" MaxWidth="200" FontSize="22" Content="{Binding Option3}" Background="{Binding Button3Background}"
+                    Command="{Binding EvaluateAnswerCommand}" CommandParameter="Možnost 3" Visibility="{Binding ButtonGroupVisibility}" />
+
+            <Button Grid.Column="0" Grid.ColumnSpan="3" MaxHeight="40" MaxWidth="300" FontSize="25" Content="Další"
+                    Visibility="{Binding ContinueButtonVisibility}" />
         </Grid>
     </Grid>
 </UserControl>

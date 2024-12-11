@@ -1,10 +1,8 @@
 ﻿using ITU_projekt.API;
-using ITU_projekt.Models;
+using ITU_projekt.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,19 +14,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ITU_projekt.ViewModels;
 
 namespace ITU_projekt.Templates
 {
     /// <summary>
-    /// Interakční logika pro Choice.xaml
+    /// Interakční logika pro WordMatching.xaml
     /// </summary>
-    public partial class Choice : UserControl
-    {
-        public Choice()
+    public partial class WordMatching : UserControl
+    {   
+        public WordMatching()
         {
             InitializeComponent();
-            DataContext = new ChoiceViewModel();
+            DataContext = new WordMatchingViewModel();
         }
     }
 }
