@@ -6,6 +6,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Templates\Graph.xaml.cs">
+    <Compile Update="Templates\Choice.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -14,6 +15,7 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Templates\Graph.xaml">
+    <Page Update="Templates\Choice.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
