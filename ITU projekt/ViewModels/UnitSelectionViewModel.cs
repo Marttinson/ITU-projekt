@@ -41,60 +41,11 @@ class UnitSelectionViewModel : INotifyPropertyChanged
     public ICommand AddCustomQuestions { get; set; }
     public ICommand StartUnitCommand { get; set; }
     public ICommand StartUnitCommand_endless { get; set; }
-    public ICommand ViewStatistics { get; set; }
+
 
     public UnitSelectionViewModel()
     {
         // Load Units
         Units = JsonHandler.LoadUnits();
-
-        // Connect Commands
-        AddCustomQuestions = new RelayCommand(ExecuteAddCustomQuestions);
-        StartUnitCommand = new RelayCommand(ExecuteStartUnitCommand);
-        StartUnitCommand_endless = new RelayCommand(ExecuteStartUnitCommand_ENDLESS);
-        ViewStatistics = new RelayCommand(ExecuteViewStatistics);
-    }
-
-    // TODO CUSTOM Qs
-    private void ExecuteAddCustomQuestions(object parameter)
-    {
-        var id = parameter as int?;
-        if (id.HasValue)
-        {
-            // TODO LOGIC
-            MessageBox.Show("Unit " + parameter + " custom");
-        }
-        else { MessageBox.Show("ID error"); }
-    }
-
-    // TODO START LECTION -> send to MainWindowViewModel
-    private void ExecuteStartUnitCommand(object parameter)
-    {
-        var id = parameter as int?;
-        if (id.HasValue)
-        {
-            // TODO LOGIC
-            MessageBox.Show("Unit " + parameter + " limited");
-        }
-    }
-    private void ExecuteStartUnitCommand_ENDLESS(object parameter)
-    {
-        var id = parameter as int?;
-        if (id.HasValue)
-        {
-            // TODO LOGIC
-            MessageBox.Show("Unit " + parameter + " endless");
-        }
-    }
-
-    // TODO VIEW STATISTICS ->send to MainWindowViewModel
-    private void ExecuteViewStatistics(object parameter)
-    {
-        var id = parameter as int?;
-        if (id.HasValue)
-        {
-            // TODO LOGIC
-            MessageBox.Show("Unit " + parameter + " statistics");
-        }
     }
 }

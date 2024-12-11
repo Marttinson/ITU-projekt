@@ -62,7 +62,8 @@
         </Viewbox>
     
         <!-- Tlacitko pro vysunuti menu -->
-        <Button     Grid.Row="0" Grid.Column="2" BorderThickness="1" BorderBrush="Gray"
+        <Button     Grid.Row="0" Grid.Column="2" 
+                    BorderThickness="0"
                     Click="MenuButton_Click" 
                     HorizontalAlignment="Stretch" 
                     VerticalAlignment="Stretch" 

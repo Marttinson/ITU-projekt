@@ -72,17 +72,73 @@ public class JsonHandler
         }
     }
 
+    // Load units
     public static ObservableCollection<UnitModel> LoadUnits()
     {
-
-        var json = File.ReadAllText("../../../Data/Anglictina/units.json");
-        if (String.IsNullOrEmpty(json))
+        try
         {
-            MessageBox.Show("Units not found!");
-            return null;
-        }
+            // Get the application data path
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
-        return JsonConvert.DeserializeObject<ObservableCollection<UnitModel>>(json);
+            // Construct the full path to lekce.json
+            string jsonPath = Path.Combine(appDataPath, "ITU", "lekce.json");
+
+            // If file does not exist
+            if (!File.Exists(jsonPath))
+            {
+                // NO LECTIONS FOUND, GENERATE PREDEFINED
+                string defaultLections = @"
+                [
+                    {
+                        ""Name"": ""Unit 1"",
+                        ""ID"": 1,
+                        ""Description"": ""To Be"",
+                        ""ErrorRates"": [ 0.1, 0.2, 0.15, 0.1, 0.8, 0.9, 0.5, 0.7, 0.6, 0.23, 0.64, 0.35 ],
+                        ""UserQuestions"": []
+                    },
+                    {
+                        ""Name"": ""Unit 2"",
+                        ""ID"": 2,
+                        ""Description"": ""Basic vocabulary"",
+                        ""ErrorRates"": [ 0.05, 0.07, 0.9, 0.5, 0.7, 0.6, 0.28 ],
+                        ""UserQuestions"": []
+                    },
+                    {
+                        ""Name"": ""Unit 3"",
+                        ""ID"": 3,
+                        ""Description"": ""Plural"",
+                        ""ErrorRates"": [ 0.1, 0.2, 0.15 ],
+                        ""UserQuestions"": []
+                    },
+                    {   
+                        ""Name"": ""Unit 4"",
+                        ""ID"": 4,
+                        ""Description"": ""Numbers"",
+                        ""ErrorRates"": [],
+                        ""UserQuestions"": []
+                    },
+                ]";
+
+                string dirPath = Path.Combine(appDataPath, "ITU");
+                // Ensure the directory exists
+                if (!Directory.Exists(dirPath))
+                {
+                    Directory.CreateDirectory(dirPath);
+                }
+
+                // generate basic units 
+                File.WriteAllText(jsonPath, defaultLections);
+            }
+
+            // Read and deserialize the JSON
+            var json = File.ReadAllText(jsonPath);
+            return JsonConvert.DeserializeObject<ObservableCollection<UnitModel>>(json);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"An error occurred while loading units: {ex.Message}");
+            return new ObservableCollection<UnitModel>();
+        }
 
     }
 }

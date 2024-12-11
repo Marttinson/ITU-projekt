@@ -5,9 +5,15 @@
     <Compile Update="Templates\Translation.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Templates\Graph.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Templates\Translation.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Templates\Graph.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

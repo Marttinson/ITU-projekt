@@ -9,6 +9,8 @@ using System.Windows;
 using ITU_projekt.Views;
 using System.Collections.ObjectModel;
 using System.Printing;
+using System.Windows.Input;
+using System.Data.Common;
 
 /*
  * Postup generace
@@ -53,13 +55,10 @@ public class MainWindowViewModel : INotifyPropertyChanged
         }
     }
 
-    public RelayCommand<UnitModel> StartUnitCommand { get; private set; }
+
     public RelayCommand<UnitModel> OpenSettingsCommand { get; private set; }
-
-
-
     public RelayCommand OpenMenuCommand { get; private set; }
-    public RelayCommand ToggleDarkModeCommand { get; private set; } // Příklad pro přepnutí dark mode
+    public RelayCommand ToggleDarkModeCommand { get; private set; }
 
     public event PropertyChangedEventHandler PropertyChanged;
 
@@ -67,6 +66,13 @@ public class MainWindowViewModel : INotifyPropertyChanged
     private UserControl _CurrentUserControl;
 
     public RelayCommand<string> ButtonClickCommand { get; private set; }
+
+    // ICommand for displaying statistics
+    public ICommand ShowStatisticsCommand { get; }
+    public ICommand AddCustomQuestionsCommand { get; }
+    public ICommand StartUnitCommand { get; }
+    public ICommand StartUnitCommand_endless { get; }
+
 
     public UserControl CurrentUserControl
     {
@@ -85,12 +91,38 @@ public class MainWindowViewModel : INotifyPropertyChanged
     public MainWindowViewModel()
     {
         // Na zacatku se zobrazi vyber lekci
+        ShowStatisticsCommand = new RelayCommand<UnitModel>(ExecuteShowStatistics);
+        // Connect Commands
+        AddCustomQuestionsCommand = new RelayCommand<UnitModel>(ExecuteAddCustomQuestions);
+        StartUnitCommand = new RelayCommand<UnitModel>(unit => ExecuteStartUnitCommand(unit, false));
+        StartUnitCommand_endless = new RelayCommand<UnitModel>(ExecuteStartUnitCommand_ENDLESS);
+
         CurrentUserControl = new UnitSelection();
     }
 
-    private void StartUnit(UnitModel unit)
+    private void ExecuteShowStatistics(UnitModel model)
+    {
+            // TODO LOGIC
+            MessageBox.Show("Unit " + model.ID + " statistics");
+            CurrentUserControl = new Graph(model);
+    }
+
+    private void ExecuteAddCustomQuestions(UnitModel model)
+    {
+        // TODO LOGIC
+        MessageBox.Show("Unit " + model.ID + " questions");
+    }
+
+    private void ExecuteStartUnitCommand_ENDLESS(UnitModel model)
+    {
+        MessageBox.Show("Unit " + model.ID + " endless");
+        ExecuteStartUnitCommand(model, true);
+    }
+
+    private void ExecuteStartUnitCommand(UnitModel model, bool endeless = false)
     {
         // Start unit
+        MessageBox.Show("Unit " + model.ID + " limited VM");
     }
 
     protected void OnPropertyChanged([CallerMemberName] string name = null)

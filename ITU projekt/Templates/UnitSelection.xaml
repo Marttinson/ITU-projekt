@@ -26,8 +26,8 @@
 
                                     <!-- Left Side - Start Exercise -->
                                     <Button Content="{Binding Name}" 
-                                            Command="{Binding DataContext.StartUnitCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                            CommandParameter="{Binding ID}"
+                                            Command="{Binding DataContext.StartUnitCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                            CommandParameter="{Binding}"
                                             HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
                                             FontSize="16" 
@@ -63,17 +63,17 @@
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
                                             <Button Content="Add custom questions" 
-                                                    Command="{Binding DataContext.AddCustomQuestions, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                    CommandParameter="{Binding ID}" 
+                                                    Command="{Binding DataContext.AddCustomQuestionsCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                    CommandParameter="{Binding}" 
                                                     Grid.Column="0" />
                                             <Button Content="View Statistics" 
-                                                    Command="{Binding DataContext.ViewStatistics, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                    CommandParameter="{Binding ID}"
+                                                    Command="{Binding DataContext.ShowStatisticsCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                    CommandParameter="{Binding}"
                                                     Grid.Column="1" />
                                         </Grid>
                                             <Button Content="Endless Mode" 
-                                                    Command="{Binding DataContext.StartUnitCommand_endless, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                    CommandParameter="{Binding ID}" />      
+                                                    Command="{Binding DataContext.StartUnitCommand_endless, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                    CommandParameter="{Binding}" />      
                                     </StackPanel>
                                 </Grid>
                             </Border>
