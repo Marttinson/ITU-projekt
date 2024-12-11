@@ -18,10 +18,10 @@ using ITU_projekt.API;
 
 namespace ITU_projekt.Templates;
 
-public partial class Preklad_slova : UserControl, INotifyPropertyChanged
+public partial class TranslateWord : UserControl, INotifyPropertyChanged
 {
     private string _wordToTranslate;
-    private Question question;
+    private TranslateWordQuestion question;
     public string WordToTranslate
     {
         get => _wordToTranslate;
@@ -38,22 +38,22 @@ public partial class Preklad_slova : UserControl, INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    public Preklad_slova()
+    public TranslateWord()
     {
         InitializeComponent();
         DataContext = this; // Nastavení datového kontextu
 
-        string filePath = "Data/Anglictina/Data.json";
+        // Musí se upravit cesta (teď nejde testovat, takže až se UC někde použije)
+        string filePath = "Data/Anglictina/TranslateWord.json";
+
         JsonHandler jsonHandler = new JsonHandler();
 
-        List<Question> questions = jsonHandler.LoadQuestions(filePath);
+        List<TranslateWordQuestion> questions = jsonHandler.LoadTranslateWordQuestions(filePath);
+
         QuestionUtils qutils = new QuestionUtils();
 
-        question = qutils.GetRandomQuestions(questions, 1)[0];
-
+        question = qutils.GetRandomTranslateWordQuestions(questions, 1)[0];
         WordToTranslate = question.QuestionText;
-
-        // WordToTranslate = "Lion"; // Výchozí hodnota
     }
 
     private void EvaluateAnswer(object sender, RoutedEventArgs e)

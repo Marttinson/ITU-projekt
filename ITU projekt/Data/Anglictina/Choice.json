@@ -1,0 +1,22 @@
+{
+  "questions": [
+    {
+      "ID": 1,
+      "QuestionText": "What is the capital city of France?",
+      "Options": [ "Paris", "London", "Berlin" ],
+      "Answer": "Paris"
+    },
+    {
+      "ID": 2,
+      "QuestionText": "Which planet is known as the Red Planet?",
+      "Options": [ "Earth", "Mars", "Venus" ],
+      "Answer": "Mars"
+    },
+    {
+      "ID": 3,
+      "QuestionText": "What is the largest mammal?",
+      "Options": [ "Elephant", "Blue Whale", "Giraffe" ],
+      "Answer": "Blue Whale"
+    }
+  ]
+}

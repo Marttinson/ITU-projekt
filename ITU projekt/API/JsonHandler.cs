@@ -6,15 +6,22 @@ using System.Text.Json;
 using Newtonsoft.Json;
 using ITU_projekt.Models;
 using System.Windows;
+using System.Linq;
 
 namespace ITU_projekt.API;
 
-public class Question
+public class TranslateWordQuestion
 {
     public int ID { get; set; }
-
-    public string Type { get; set; }
     public string QuestionText { get; set; }
+    public string Answer { get; set; }
+}
+
+public class PickFromThreeQuestion
+{
+    public int ID { get; set; }
+    public string QuestionText { get; set; }
+    public string[] Options { get; set; } = new string[3];
     public string Answer { get; set; }
 }
 
@@ -26,8 +33,8 @@ public class JsonHandler
         
     }
 
-    // Funkce pro načtení otázek
-    public List<Question> LoadQuestions(string filePath)
+    // Funkce pro načtení otázek pro překlad slova
+    public List<TranslateWordQuestion> LoadTranslateWordQuestions(string filePath)
     {
         try
         {
@@ -42,19 +49,13 @@ public class JsonHandler
                 JsonElement root = doc.RootElement;
                 if (root.TryGetProperty("questions", out JsonElement questionsElement))
                 {
-                    List<Question> questions = new List<Question>();
+                    List<TranslateWordQuestion> questions = new List<TranslateWordQuestion>();
 
                     foreach (JsonElement questionElement in questionsElement.EnumerateArray())
                     {
-                        Question question = new Question
+                        TranslateWordQuestion question = new TranslateWordQuestion
                         {
-                            // TODO: pokud se bude upravovat formát json souboru, bude se muset upravit tato část,
-                            // pravděpodobně budou muset být dva handlery, respektive funkce, jeden přímo na otázky
-                            // a druhej na statistiku, zamyslet se ještě na tom jak zadávat filePath, možná by stačilo
-                            // zadat jen na složku "angličtina" a přidat další argument funkce na jednotlivé
-                            // úkoly (překlad a podobně)
                             ID = questionElement.GetProperty("ID").GetInt32(),
-                            Type = questionElement.GetProperty("Type").GetString(),
                             QuestionText = questionElement.GetProperty("QuestionText").GetString(),
                             Answer = questionElement.GetProperty("Answer").GetString()
                         };
@@ -66,14 +67,60 @@ public class JsonHandler
                 else
                 {
                     Console.WriteLine("JSON soubor neobsahuje žádné otázky (JsonHandler.cs)");
-                    return new List<Question>();
+                    return new List<TranslateWordQuestion>();
                 }
             }
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error: {ex.Message}");
-            return new List<Question>();
+            return new List<TranslateWordQuestion>();
+        }
+    }
+
+    // Funkce pro načtení otázek pro výběr ze tří možností
+    public List<PickFromThreeQuestion> LoadOptionsQuestions(string filePath)
+    {
+        try
+        {
+            // Načítání JSON obsahu ze souboru
+            string jsonContent = File.ReadAllText(filePath);
+
+            //Console.WriteLine(jsonContent);  // Výpis načteného obsahu pro kontrolu
+
+            // Načítání a deserializace JSON pole
+            using (JsonDocument doc = JsonDocument.Parse(jsonContent))
+            {
+                JsonElement root = doc.RootElement;
+                if (root.TryGetProperty("questions", out JsonElement questionsElement))
+                {
+                    List<PickFromThreeQuestion> questions = new List<PickFromThreeQuestion>();
+
+                    foreach (JsonElement questionElement in questionsElement.EnumerateArray())
+                    {
+                        PickFromThreeQuestion question = new PickFromThreeQuestion
+                        {
+                            ID = questionElement.GetProperty("ID").GetInt32(),
+                            QuestionText = questionElement.GetProperty("QuestionText").GetString(),
+                            Options = questionElement.GetProperty("Options").EnumerateArray().Select(option => option.GetString()).ToArray(),
+                            Answer = questionElement.GetProperty("Answer").GetString()
+                        };
+                        questions.Add(question);
+                    }
+
+                    return questions;
+                }
+                else
+                {
+                    Console.WriteLine("JSON soubor neobsahuje žádné otázky (JsonHandler.cs)");
+                    return new List<PickFromThreeQuestion>();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+            return new List<PickFromThreeQuestion>();
         }
     }
 
