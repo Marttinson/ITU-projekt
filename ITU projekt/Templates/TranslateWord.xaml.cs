@@ -43,7 +43,7 @@ public partial class TranslateWord : UserControl, INotifyPropertyChanged
         InitializeComponent();
         DataContext = this; // Nastavení datového kontextu
 
-        // Musí se upravit cesta (teď nejde testovat, takže až se UC někde použije)
+        // TODO (vezmeme z appdata) Musí se upravit cesta (teď nejde testovat, takže až se UC někde použije)
         string filePath = "Data/Anglictina/TranslateWord.json";
 
         JsonHandler jsonHandler = new JsonHandler();

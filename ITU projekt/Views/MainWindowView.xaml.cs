@@ -26,21 +26,7 @@ namespace ITU_projekt.Views
         {
             SetTheme("LightTheme.xaml");
             InitializeComponent();
-            BackToUnitSelection.Visibility = Visibility.Hidden;
             DataContext = new MainWindowViewModel();
-        }
-
-        private void ShowTranslateWord(object sender, RoutedEventArgs e)
-        {
-            //MenuPanel.Visibility = Visibility.Hidden; // Skryje MenuPanel v MainWindow
-            MainContent.Content = new TranslateWord(); // Načte překlad slova 
-        }
-
-        private void back_to_unit_selection(object sender, RoutedEventArgs e)
-        {
-            MainContent.Content = null; // Vymaže aktuální obsah
-            BackToUnitSelection.Visibility = Visibility.Hidden; // Schová back to menu tlačítko
-            // TODO inform VM -> stop lection, return UnitSelection UC
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)

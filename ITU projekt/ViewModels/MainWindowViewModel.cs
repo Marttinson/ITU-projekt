@@ -72,6 +72,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
     public ICommand AddCustomQuestionsCommand { get; }
     public ICommand StartUnitCommand { get; }
     public ICommand StartUnitCommand_endless { get; }
+    public ICommand BackToMenuCommand { get; }
 
 
     public UserControl CurrentUserControl
@@ -87,6 +88,17 @@ public class MainWindowViewModel : INotifyPropertyChanged
         }
     }
 
+    private Visibility _BackToMenuVisibility;
+    public Visibility BackToMenuVisibility
+    {
+        get => _BackToMenuVisibility;
+        set
+        {
+            _BackToMenuVisibility = value;
+            OnPropertyChanged();
+        }
+    }
+
 
     public MainWindowViewModel()
     {
@@ -96,26 +108,42 @@ public class MainWindowViewModel : INotifyPropertyChanged
         AddCustomQuestionsCommand = new RelayCommand<UnitModel>(ExecuteAddCustomQuestions);
         StartUnitCommand = new RelayCommand<UnitModel>(unit => ExecuteStartUnitCommand(unit, false));
         StartUnitCommand_endless = new RelayCommand<UnitModel>(ExecuteStartUnitCommand_ENDLESS);
+        BackToMenuCommand = new RelayCommand(BackToMenuCommandExecute);
 
+        CurrentUserControl = new UnitSelection();
+        BackToMenuVisibility = Visibility.Hidden;
+    }
+
+    public void BackToMenuCommandExecute(object parameter)
+    {
+        // TODO Ukoncit lekci nebo whatever atd...
+        MessageBox.Show("BackToMenu");
+        /*if (_CurrentUserControl.GetType() == typeof(specific UC))
+        {
+            // clean up
+        }*/
+        BackToMenuVisibility = Visibility.Hidden;
         CurrentUserControl = new UnitSelection();
     }
 
     private void ExecuteShowStatistics(UnitModel model)
     {
-            // TODO LOGIC
-            MessageBox.Show("Unit " + model.ID + " statistics");
-            CurrentUserControl = new Graph(model);
+        CurrentUserControl = new Graph(model);
+        BackToMenuVisibility = Visibility.Visible;
     }
 
     private void ExecuteAddCustomQuestions(UnitModel model)
     {
         // TODO LOGIC
         MessageBox.Show("Unit " + model.ID + " questions");
+        CurrentUserControl = new CustomUserWordList(model);
+        BackToMenuVisibility = Visibility.Visible;
     }
 
     private void ExecuteStartUnitCommand_ENDLESS(UnitModel model)
     {
         MessageBox.Show("Unit " + model.ID + " endless");
+        BackToMenuVisibility = Visibility.Visible;
         ExecuteStartUnitCommand(model, true);
     }
 
@@ -123,6 +151,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
     {
         // Start unit
         MessageBox.Show("Unit " + model.ID + " limited VM");
+        BackToMenuVisibility = Visibility.Visible;
     }
 
     protected void OnPropertyChanged([CallerMemberName] string name = null)

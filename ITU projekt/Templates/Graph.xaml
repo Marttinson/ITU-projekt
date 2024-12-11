@@ -7,11 +7,18 @@
              Height="350" Width="600">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <!-- Take remaining space for PlotView -->
+            <RowDefinition Height="Auto" />
+            <!-- StackPanel at the bottom -->
+        </Grid.RowDefinitions>
+
         <!-- Plot View -->
-        <oxy:PlotView Model="{Binding PlotModel}" />
+        <oxy:PlotView Model="{Binding PlotModel}" Grid.Row="0" />
 
         <!-- X-Axis Range Controls -->
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10" Grid.Row="1">
             <!-- Toggle to switch between all or latest N values -->
             <Button Content="Show All" Command="{Binding ToggleRangeCommand}" Margin="5" />
 

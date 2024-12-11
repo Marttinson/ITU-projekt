@@ -44,13 +44,15 @@
         <Rectangle Grid.Row="0"  Grid.Column="0" Grid.ColumnSpan="3" Fill="{DynamicResource SettingsPanelBackground}" />
 
         <!-- Menu -->
-        <Button     x:Name="BackToUnitSelection" BorderThickness="1" BorderBrush="Gray"
-                    Grid.Row="0" Grid.Column="0" 
-                    Click="back_to_unit_selection" 
+        <Button     x:Name="BackToMenuButton" BorderThickness="1" BorderBrush="Gray"
+                    Grid.Row="0" Grid.Column="0"
+                    Command="{Binding BackToMenuCommand}" 
                     HorizontalAlignment="Stretch" 
                     VerticalAlignment="Stretch" 
                     HorizontalContentAlignment="Stretch" 
-                    VerticalContentAlignment="Stretch" >
+                    VerticalContentAlignment="Stretch" 
+                    Visibility="{Binding BackToMenuVisibility}"
+                    Background="{DynamicResource SideMenuButtonColor}">
             <Viewbox>
                 <TextBlock Text="Menu" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Viewbox>

@@ -10,6 +10,13 @@ using System.Linq;
 
 namespace ITU_projekt.API;
 
+public class Question
+{
+    public int ID { get; set; }
+    public string QuestionText { get; set; }
+    public string Answer { get; set; }
+}
+
 public class TranslateWordQuestion
 {
     public int ID { get; set; }
@@ -146,7 +153,59 @@ public class JsonHandler
                         ""ID"": 1,
                         ""Description"": ""To Be"",
                         ""ErrorRates"": [ 0.1, 0.2, 0.15, 0.1, 0.8, 0.9, 0.5, 0.7, 0.6, 0.23, 0.64, 0.35 ],
-                        ""UserQuestions"": []
+                        ""UserQuestions"": [
+    {
+        ""ID"": 0,
+        ""QuestionText"": ""Dog"",
+        ""Answer"": ""Pes""
+    },
+    {
+        ""ID"": 1,
+        ""QuestionText"": ""Cat"",
+        ""Answer"": ""Kočka""
+    },
+    {
+        ""ID"": 2,
+        ""QuestionText"": ""House"",
+        ""Answer"": ""Dům""
+    },
+    {
+        ""ID"": 3,
+        ""QuestionText"": ""Book"",
+        ""Answer"": ""Kniha""
+    },
+    {
+        ""ID"": 4,
+        ""QuestionText"": ""Car"",
+        ""Answer"": ""Auto""
+    },
+    {
+        ""ID"": 5,
+        ""QuestionText"": ""Water"",
+        ""Answer"": ""Voda""
+    },
+    {
+        ""ID"": 6,
+        ""QuestionText"": ""Chair"",
+        ""Answer"": ""Židle""
+    },
+    {
+        ""ID"": 7,
+        ""QuestionText"": ""Apple"",
+        ""Answer"": ""Jablko""
+    },
+    {
+
+        ""ID"": 8,
+        ""QuestionText"": ""Table"",
+        ""Answer"": ""Stůl""
+    },
+    {
+        ""ID"": 9,
+        ""QuestionText"": ""Tree"",
+        ""Answer"": ""Strom""
+    }
+]
                     },
                     {
                         ""Name"": ""Unit 2"",

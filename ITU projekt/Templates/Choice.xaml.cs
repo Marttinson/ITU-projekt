@@ -54,7 +54,7 @@ namespace ITU_projekt.Templates
 
             EvaluateAnswer = new RelayCommand(ExecuteEvaluateAnswer);
 
-            // Musí se upravit cesta (teď nejde testovat, takže až se UC někde použije)
+            // TODO (vezmeme z appdata) Musí se upravit cesta (teď nejde testovat, takže až se UC někde použije)
             string filePath = "Data/Anglictina/Choice.json";
 
             JsonHandler jsonHandler = new JsonHandler();

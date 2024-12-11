@@ -11,21 +11,22 @@
                     <DataTemplate>
                         <Grid>
                             <Border Margin="5" BorderThickness="1" BorderBrush="Gray">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="5*" />
-                                        <!-- Left side, bigger button -->
-                                        <ColumnDefinition Width="1*" />
-                                        <!-- Right side, smaller button -->
-                                    </Grid.ColumnDefinitions>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="5*" />
+                                            <!-- Left side, bigger button -->
+                                            <ColumnDefinition Width="1*" />
+                                            <!-- Right side, smaller button -->
+                                        </Grid.ColumnDefinitions>
 
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="5*" />
-                                    </Grid.RowDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="5*" />
+                                        </Grid.RowDefinitions>
 
-                                    <!-- Left Side - Start Exercise -->
-                                    <Button Content="{Binding Name}" 
+                                        <!-- Left Side - Start Exercise -->
+                                    
+                                        <Button Content="{Binding Name}" 
                                             Command="{Binding DataContext.StartUnitCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                             CommandParameter="{Binding}"
                                             HorizontalAlignment="Stretch"
@@ -37,9 +38,11 @@
                                             BorderBrush="Transparent" 
                                             Background="{DynamicResource PrimaryButtonBackground}" 
                                             Margin="5" />
+                                    
 
-                                    <!-- Right Side - Open Menu with Settings Icon -->
-                                    <Button Content="⚙" 
+                                        <!-- Right Side - Open Menu with Settings Icon -->
+                                    
+                                        <Button Content="⚙" 
                                                 Click="OpenSettingsButton_Click" 
                                                 HorizontalAlignment="Stretch"
                                                 VerticalAlignment="Stretch" 
@@ -51,12 +54,15 @@
                                                 Background="{DynamicResource UnitSelectionBackground}"
                                                 Margin="5"/>
 
+
                                     <StackPanel x:Name="SettingsPanel" 
                                                 Visibility="Collapsed"
                                                 Grid.Row="1"
                                                 Grid.ColumnSpan="2"
                                                 Background="{DynamicResource SettingsPanelBackground}">
+
                                         <TextBlock Text="{Binding Description}" />
+
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />
@@ -71,12 +77,13 @@
                                                     CommandParameter="{Binding}"
                                                     Grid.Column="1" />
                                         </Grid>
-                                            <Button Content="Endless Mode" 
+                                        <Button Content="Endless Mode" 
                                                     Command="{Binding DataContext.StartUnitCommand_endless, RelativeSource={RelativeSource AncestorType=Window}}"
-                                                    CommandParameter="{Binding}" />      
+                                                    CommandParameter="{Binding}" />
+
                                     </StackPanel>
                                 </Grid>
-                            </Border>
+                                </Border>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
