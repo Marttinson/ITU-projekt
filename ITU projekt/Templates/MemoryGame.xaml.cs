@@ -21,10 +21,10 @@ namespace ITU_projekt.Templates
     /// </summary>
     public partial class MemoryGame : UserControl
     {
-        public MemoryGame()
+        public MemoryGame(MainWindowViewModel _VM)
         {
             InitializeComponent();
-            DataContext = new MemoryGameViewModel();
+            DataContext = new MemoryGameViewModel(_VM);
         }
     }
 }

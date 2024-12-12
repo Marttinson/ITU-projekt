@@ -49,16 +49,15 @@ public class MemoryGameViewModel : INotifyPropertyChanged
 
     public ICommand ButtonPressedCommand { get; }
 
-    public MemoryGameViewModel()
+    private MainWindowViewModel VM;
+
+    public MemoryGameViewModel(MainWindowViewModel _VM)
     {
         JsonHandler jsonHandler = new JsonHandler();
 
         // Musí se upravit cesta (teď nejde testovat, takže až se UC někde použije)
-        string filePath = "Data/Anglictina";
-
-        List<TranslateWordQuestion> questions = jsonHandler.LoadTranslateWordQuestions(filePath + "/TranslateWord.json", "Unit 1");
-        List<TranslateWordQuestion> userQuestions = jsonHandler.LoadTranslateWordUserQuestions(filePath + "/units.json", "Unit 1");
-        questions.AddRange(userQuestions);
+        string filePath = "Data/Anglictina/TranslateWord.json";
+        List<TranslateWordQuestion> questions = jsonHandler.LoadAllQuestions(filePath);
 
         QuestionUtils qutils = new QuestionUtils();
 
@@ -82,6 +81,9 @@ public class MemoryGameViewModel : INotifyPropertyChanged
         };
 
         previous[0] = previous[1] = -1;
+
+        Complete = new RelayCommand<object>(ExecuteComplete);
+        VM = _VM;
     }
 
     private void ExecuteButtonPressed(object parameter)
@@ -136,6 +138,12 @@ public class MemoryGameViewModel : INotifyPropertyChanged
         {
             return randomQuestions[number - 8].QuestionText;
         }
+    }
+
+    public ICommand Complete { get; }
+    private void ExecuteComplete(object parameter)
+    {
+        VM.CurrentUserControl = new UnitSelection(VM);
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

@@ -1,5 +1,6 @@
 ﻿using ITU_projekt.API;
 using ITU_projekt.Models;
+using ITU_projekt.Templates;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -195,7 +196,9 @@ public class WordMatchingViewModel : INotifyPropertyChanged
     public List<string> usedWord = new List<string>();
     public List<string> usedSlovo = new List<string>();
 
-    public WordMatchingViewModel()
+    private string unit;
+    private MainWindowViewModel VM;
+    public WordMatchingViewModel(MainWindowViewModel _VM, string _unit)
     {
         SelectWordButtonCommand = new RelayCommand<string>(OnWordButtonSelected);
         SelectSlovoButtonCommand = new RelayCommand<string>(OnSlovoButtonSelected);
@@ -205,8 +208,9 @@ public class WordMatchingViewModel : INotifyPropertyChanged
         // Musí se upravit cesta (teď nejde testovat, takže až se UC někde použije)
         string filePath = "Data/Anglictina";
 
-        List<TranslateWordQuestion> questions = jsonHandler.LoadTranslateWordQuestions(filePath + "/TranslateWord.json", "Unit 1");
-        List<TranslateWordQuestion> userQuestions = jsonHandler.LoadTranslateWordUserQuestions(filePath + "/units.json", "Unit 1");
+        unit = _unit;
+        List<TranslateWordQuestion> questions = jsonHandler.LoadTranslateWordQuestions(filePath + "/TranslateWord.json", unit);
+        List<TranslateWordQuestion> userQuestions = jsonHandler.LoadTranslateWordUserQuestions(filePath + "/units.json", unit);
         questions.AddRange(userQuestions);
 
         QuestionUtils qutils = new QuestionUtils();
@@ -230,6 +234,9 @@ public class WordMatchingViewModel : INotifyPropertyChanged
         Slovo3 = randomQuestions[slovoNumbers[2]].QuestionText;
         Slovo4 = randomQuestions[slovoNumbers[3]].QuestionText;
         Slovo5 = randomQuestions[slovoNumbers[4]].QuestionText;
+
+        VM = _VM;
+        NextQuestion = new RelayCommand<object>(ExecuteNextQuestion);
     }
 
     private void OnWordButtonSelected(string wordButtonValue)
@@ -338,6 +345,20 @@ public class WordMatchingViewModel : INotifyPropertyChanged
         if (slovo == "2") Slovo3Background = new SolidColorBrush(color);
         if (slovo == "3") Slovo4Background = new SolidColorBrush(color);
         if (slovo == "4") Slovo5Background = new SolidColorBrush(color);
+    }
+
+    public ICommand NextQuestion { get; }
+    private void ExecuteNextQuestion(object parameter)
+    {
+        Random random = new Random();
+        int randomNumber = random.Next(1, 4);
+
+        if (randomNumber == 1)
+            VM.CurrentUserControl = new TranslateWord(VM, unit);
+        else if (randomNumber == 2)
+            VM.CurrentUserControl = new WordMatching(VM, unit);
+        else if (randomNumber == 3)
+            VM.CurrentUserControl = new Choice(VM, unit);
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

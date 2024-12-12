@@ -85,7 +85,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
     public MainWindowViewModel()
     {
         // Na zacatku se zobrazi vyber lekci
-        CurrentUserControl = new UnitSelection();
+        CurrentUserControl = new UnitSelection(this);
     }
 
     private void StartUnit(UnitModel unit)

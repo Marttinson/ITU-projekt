@@ -1,5 +1,6 @@
 ﻿using ITU_projekt.API;
 using ITU_projekt.Models;
+using ITU_projekt.Templates;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -57,16 +58,19 @@ public class TranslateWordViewModel : INotifyPropertyChanged
     }
 
     private TranslateWordQuestion question;
+    private string unit;
+    MainWindowViewModel VM;
 
-    public TranslateWordViewModel()
+    public TranslateWordViewModel(MainWindowViewModel _VM, string _unit)
     {
         JsonHandler jsonHandler = new JsonHandler();
 
         // Musí se upravit cesta (teď nejde testovat, takže až se UC někde použije)
         string filePath = "Data/Anglictina";
 
-        List<TranslateWordQuestion> questions = jsonHandler.LoadTranslateWordQuestions(filePath + "/TranslateWord.json", "Unit 1");
-        List<TranslateWordQuestion> userQuestions = jsonHandler.LoadTranslateWordUserQuestions(filePath + "/units.json", "Unit 1");
+        unit = _unit;
+        List<TranslateWordQuestion> questions = jsonHandler.LoadTranslateWordQuestions(filePath + "/TranslateWord.json", unit);
+        List<TranslateWordQuestion> userQuestions = jsonHandler.LoadTranslateWordUserQuestions(filePath + "/units.json", unit);
         questions.AddRange(userQuestions);
 
         QuestionUtils qutils = new QuestionUtils();
@@ -75,6 +79,8 @@ public class TranslateWordViewModel : INotifyPropertyChanged
         WordToTranslate = question.QuestionText;
 
         EvaluateAnswerCommand = new RelayCommand(_ => EvaluateAnswer());
+        NextQuestion = new RelayCommand<object>(ExecuteNextQuestion);
+        VM = _VM;
     }
 
     public ICommand EvaluateAnswerCommand { get; }
@@ -89,6 +95,20 @@ public class TranslateWordViewModel : INotifyPropertyChanged
         {
             MessageBox.Show("Špatná odpověď, zkuste to znovu.");
         }
+    }
+
+    public ICommand NextQuestion { get; }
+    private void ExecuteNextQuestion(object parameter)
+    {
+        Random random = new Random();
+        int randomNumber = random.Next(1, 4);
+
+        if (randomNumber == 1)
+            VM.CurrentUserControl = new TranslateWord(VM, unit);
+        else if (randomNumber == 2)
+            VM.CurrentUserControl = new WordMatching(VM, unit);
+        else if (randomNumber == 3)
+            VM.CurrentUserControl = new Choice(VM, unit);
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

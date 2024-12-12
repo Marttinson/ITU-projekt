@@ -21,9 +21,9 @@ namespace ITU_projekt.Templates;
 
 public partial class TranslateWord : UserControl
 {
-    public TranslateWord()
+    public TranslateWord(MainWindowViewModel VM, string unit)
     {
         InitializeComponent();
-        DataContext = new TranslateWordViewModel();
+        DataContext = new TranslateWordViewModel(VM, unit);
     }
 }

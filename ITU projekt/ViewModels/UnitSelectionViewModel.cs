@@ -43,7 +43,8 @@ class UnitSelectionViewModel : INotifyPropertyChanged
     public ICommand StartUnitCommand_endless { get; set; }
     public ICommand ViewStatistics { get; set; }
 
-    public UnitSelectionViewModel()
+    private MainWindowViewModel VM;
+    public UnitSelectionViewModel(MainWindowViewModel _VM)
     {
         // Load Units
         Units = JsonHandler.LoadUnits();
@@ -53,6 +54,8 @@ class UnitSelectionViewModel : INotifyPropertyChanged
         StartUnitCommand = new RelayCommand(ExecuteStartUnitCommand);
         StartUnitCommand_endless = new RelayCommand(ExecuteStartUnitCommand_ENDLESS);
         ViewStatistics = new RelayCommand(ExecuteViewStatistics);
+
+        VM = _VM;
     }
 
     // TODO CUSTOM Qs
@@ -74,7 +77,21 @@ class UnitSelectionViewModel : INotifyPropertyChanged
         if (id.HasValue)
         {
             // TODO LOGIC
-            MessageBox.Show("Unit " + parameter + " limited");
+            string unit = "Unit " + parameter;
+            //MessageBox.Show(unit + " limited");
+
+            //VM.CurrentUserControl = new MemoryGame(VM);
+
+            
+            Random random = new Random();
+            int randomNumber = random.Next(1, 4);
+
+            if(randomNumber == 1)
+                VM.CurrentUserControl = new TranslateWord(VM, unit);
+            else if (randomNumber == 2)
+                VM.CurrentUserControl = new WordMatching(VM, unit);
+            else if (randomNumber == 3)
+                VM.CurrentUserControl = new Choice(VM, unit);
         }
     }
     private void ExecuteStartUnitCommand_ENDLESS(object parameter)

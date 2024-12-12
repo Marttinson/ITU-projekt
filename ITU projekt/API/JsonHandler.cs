@@ -85,7 +85,7 @@ public class JsonHandler
         }
     }
 
-    // Funkce pro načtení otázek podle názvu lekce
+    // Funkce pro načtení otázek uživatele podle názvu lekce
     public List<TranslateWordQuestion> LoadTranslateWordUserQuestions(string filePath, string unit)
     {
         try
@@ -142,48 +142,102 @@ public class JsonHandler
         }
     }
 
-    // Funkce pro načtení otázek pro výběr ze tří možností
-    public List<PickFromThreeQuestion> LoadOptionsQuestions(string filePath)
+    // Načtení otázek pro pexeso
+    public List<TranslateWordQuestion> LoadAllQuestions(string filePath)
     {
         try
         {
-            // Načítání JSON obsahu ze souboru
+            // Načtení obsahu JSON ze souboru
             string jsonContent = File.ReadAllText(filePath);
 
-            //Console.WriteLine(jsonContent);  // Výpis načteného obsahu pro kontrolu
-
-            // Načítání a deserializace JSON pole
+            // Načtení a deserializace JSON
             using (JsonDocument doc = JsonDocument.Parse(jsonContent))
             {
                 JsonElement root = doc.RootElement;
-                if (root.TryGetProperty("questions", out JsonElement questionsElement))
+                if (root.TryGetProperty("units", out JsonElement unitsElement))
                 {
-                    List<PickFromThreeQuestion> questions = new List<PickFromThreeQuestion>();
+                    List<TranslateWordQuestion> allQuestions = new List<TranslateWordQuestion>();
 
-                    foreach (JsonElement questionElement in questionsElement.EnumerateArray())
+                    // Iterace přes všechny jednotky (lekce)
+                    foreach (JsonProperty unit in unitsElement.EnumerateObject())
                     {
-                        PickFromThreeQuestion question = new PickFromThreeQuestion
+                        foreach (JsonElement questionElement in unit.Value.EnumerateArray())
                         {
-                            ID = questionElement.GetProperty("ID").GetInt32(),
-                            QuestionText = questionElement.GetProperty("QuestionText").GetString(),
-                            Options = questionElement.GetProperty("Options").EnumerateArray().Select(option => option.GetString()).ToArray(),
-                            Answer = questionElement.GetProperty("Answer").GetString()
-                        };
-                        questions.Add(question);
+                            TranslateWordQuestion question = new TranslateWordQuestion
+                            {
+                                ID = questionElement.GetProperty("ID").GetInt32(),
+                                QuestionText = questionElement.GetProperty("QuestionText").GetString(),
+                                Answer = questionElement.GetProperty("Answer").GetString()
+                            };
+                            allQuestions.Add(question);
+                        }
                     }
 
-                    return questions;
+                    return allQuestions;
                 }
                 else
                 {
-                    Console.WriteLine("JSON soubor neobsahuje žádné otázky (JsonHandler.cs)");
+                    Console.WriteLine("JSON soubor neobsahuje klíč 'units'.");
+                    return new List<TranslateWordQuestion>();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Chyba: {ex.Message}");
+            return new List<TranslateWordQuestion>();
+        }
+    }
+
+    // Funkce pro načtení otázek pro výběr ze tří možností
+    public List<PickFromThreeQuestion> LoadOptionsQuestions(string filePath, string unitName)
+    {
+        try
+        {
+            // Načtení obsahu JSON ze souboru
+            string jsonContent = File.ReadAllText(filePath);
+
+            // Načtení a deserializace JSON
+            using (JsonDocument doc = JsonDocument.Parse(jsonContent))
+            {
+                JsonElement root = doc.RootElement;
+                if (root.TryGetProperty("units", out JsonElement unitsElement))
+                {
+                    // Najdi pole otázek podle názvu lekce (unitName)
+                    if (unitsElement.TryGetProperty(unitName, out JsonElement questionsElement))
+                    {
+                        List<PickFromThreeQuestion> questions = new List<PickFromThreeQuestion>();
+
+                        foreach (JsonElement questionElement in questionsElement.EnumerateArray())
+                        {
+                            PickFromThreeQuestion question = new PickFromThreeQuestion
+                            {
+                                ID = questionElement.GetProperty("ID").GetInt32(),
+                                QuestionText = questionElement.GetProperty("QuestionText").GetString(),
+                                Options = questionElement.GetProperty("Options").EnumerateArray().Select(option => option.GetString()).ToArray(),
+                                Answer = questionElement.GetProperty("Answer").GetString()
+                            };
+                            questions.Add(question);
+                        }
+
+                        return questions;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Lekce '{unitName}' nebyla nalezena.");
+                        return new List<PickFromThreeQuestion>();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("JSON soubor neobsahuje klíč 'units'.");
                     return new List<PickFromThreeQuestion>();
                 }
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error: {ex.Message}");
+            Console.WriteLine($"Chyba: {ex.Message}");
             return new List<PickFromThreeQuestion>();
         }
     }

@@ -25,10 +25,10 @@ namespace ITU_projekt.Templates
     /// </summary>
     public partial class Choice : UserControl
     {
-        public Choice()
+        public Choice(MainWindowViewModel _VM, string _unit)
         {
             InitializeComponent();
-            DataContext = new ChoiceViewModel();
+            DataContext = new ChoiceViewModel(_VM, _unit);
         }
     }
 }

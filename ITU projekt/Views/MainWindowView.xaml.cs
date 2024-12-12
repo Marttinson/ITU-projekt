@@ -30,12 +30,6 @@ namespace ITU_projekt.Views
             DataContext = new MainWindowViewModel();
         }
 
-        private void ShowTranslateWord(object sender, RoutedEventArgs e)
-        {
-            //MenuPanel.Visibility = Visibility.Hidden; // Skryje MenuPanel v MainWindow
-            MainContent.Content = new TranslateWord(); // Načte překlad slova 
-        }
-
         private void back_to_unit_selection(object sender, RoutedEventArgs e)
         {
             MainContent.Content = null; // Vymaže aktuální obsah

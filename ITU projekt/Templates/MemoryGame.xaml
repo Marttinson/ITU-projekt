@@ -63,6 +63,6 @@
                 CommandParameter="15" Command="{Binding ButtonPressedCommand}" />
 
         <Button Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="4" MaxHeight="50" MaxWidth="250" FontSize="25"
-                Content="Dokončit" Visibility="{Binding DoneButtonVisibility}" />
+                Content="Dokončit" Visibility="{Binding DoneButtonVisibility}" Command="{Binding Complete}" />
     </Grid>
 </UserControl>

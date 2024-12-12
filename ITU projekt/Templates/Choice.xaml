@@ -36,7 +36,7 @@
                     Command="{Binding EvaluateAnswerCommand}" CommandParameter="Možnost 3" Visibility="{Binding ButtonGroupVisibility}" />
 
             <Button Grid.Column="0" Grid.ColumnSpan="3" MaxHeight="40" MaxWidth="300" FontSize="25" Content="Další"
-                    Visibility="{Binding ContinueButtonVisibility}" />
+                    Visibility="{Binding ContinueButtonVisibility}" Command="{Binding NextQuestion}" />
         </Grid>
     </Grid>
 </UserControl>

@@ -37,7 +37,7 @@
         <Button Grid.Column="1" Grid.Row="2" MaxHeight="40" MaxWidth="250" FontSize="25" Content="Odpovědět" 
                 Visibility="{Binding ButtonOdpovedetVisibility}" Command="{Binding EvaluateAnswerCommand}" />
         <Button Grid.Column="1" Grid.Row="2" MaxHeight="40" MaxWidth="250" FontSize="25" Content="Další"
-                Visibility="{Binding ButtonDalsiVisibility}" />
+                Visibility="{Binding ButtonDalsiVisibility}" Command="{Binding NextQuestion}" />
     </Grid>
     
 

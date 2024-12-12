@@ -1,5 +1,6 @@
 ﻿using ITU_projekt.API;
 using ITU_projekt.Models;
+using ITU_projekt.Templates;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -91,16 +92,20 @@ public class ChoiceViewModel : INotifyPropertyChanged
     public string Option2 { get; set; }
     public string Option3 { get; set; }
 
-    public ChoiceViewModel()
+    private string unit;
+    private MainWindowViewModel VM;
+
+    public ChoiceViewModel(MainWindowViewModel _VM, string _unit)
     {
         EvaluateAnswerCommand = new RelayCommand(EvaluateAnswer);
+
+        JsonHandler jsonHandler = new JsonHandler();
 
         // Musí se upravit cesta (teď nejde testovat, takže až se UC někde použije)
         string filePath = "Data/Anglictina/Choice.json";
 
-        JsonHandler jsonHandler = new JsonHandler();
-
-        List<PickFromThreeQuestion> questions = jsonHandler.LoadOptionsQuestions(filePath);
+        unit = _unit;
+        List<PickFromThreeQuestion> questions = jsonHandler.LoadOptionsQuestions(filePath, unit);
 
         QuestionUtils qutils = new QuestionUtils();
 
@@ -114,6 +119,9 @@ public class ChoiceViewModel : INotifyPropertyChanged
         Option1 = question.Options[numbers[0]];
         Option2 = question.Options[numbers[1]];
         Option3 = question.Options[numbers[2]];
+
+        NextQuestion = new RelayCommand<object>(ExecuteNextQuestion);
+        VM = _VM;
     }
     private void EvaluateAnswer(object parameter)
     {
@@ -152,5 +160,19 @@ public class ChoiceViewModel : INotifyPropertyChanged
                     Button3Background = "Red";
                 break;
         }
+    }
+
+    public ICommand NextQuestion { get; }
+    private void ExecuteNextQuestion(object parameter)
+    {
+        Random random = new Random();
+        int randomNumber = random.Next(1, 4);
+
+        if (randomNumber == 1)
+            VM.CurrentUserControl = new TranslateWord(VM, unit);
+        else if (randomNumber == 2)
+            VM.CurrentUserControl = new WordMatching(VM, unit);
+        else if (randomNumber == 3)
+            VM.CurrentUserControl = new Choice(VM, unit);
     }
 }
