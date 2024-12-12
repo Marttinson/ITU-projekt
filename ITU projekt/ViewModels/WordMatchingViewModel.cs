@@ -200,12 +200,14 @@ public class WordMatchingViewModel : INotifyPropertyChanged
         SelectWordButtonCommand = new RelayCommand<string>(OnWordButtonSelected);
         SelectSlovoButtonCommand = new RelayCommand<string>(OnSlovoButtonSelected);
 
-        // Musí se upravit cesta (teď nejde testovat, takže až se UC někde použije)
-        string filePath = "Data/Anglictina/TranslateWord.json";
-
         JsonHandler jsonHandler = new JsonHandler();
 
-        List<TranslateWordQuestion> questions = jsonHandler.LoadTranslateWordQuestions(filePath);
+        // Musí se upravit cesta (teď nejde testovat, takže až se UC někde použije)
+        string filePath = "Data/Anglictina";
+
+        List<TranslateWordQuestion> questions = jsonHandler.LoadTranslateWordQuestions(filePath + "/TranslateWord.json", "Unit 1");
+        List<TranslateWordQuestion> userQuestions = jsonHandler.LoadTranslateWordUserQuestions(filePath + "/units.json", "Unit 1");
+        questions.AddRange(userQuestions);
 
         QuestionUtils qutils = new QuestionUtils();
 

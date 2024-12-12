@@ -60,12 +60,14 @@ public class TranslateWordViewModel : INotifyPropertyChanged
 
     public TranslateWordViewModel()
     {
-        // Musí se upravit cesta (teď nejde testovat, takže až se UC někde použije)
-        string filePath = "Data/Anglictina/TranslateWord.json";
-
         JsonHandler jsonHandler = new JsonHandler();
 
-        List<TranslateWordQuestion> questions = jsonHandler.LoadTranslateWordQuestions(filePath);
+        // Musí se upravit cesta (teď nejde testovat, takže až se UC někde použije)
+        string filePath = "Data/Anglictina";
+
+        List<TranslateWordQuestion> questions = jsonHandler.LoadTranslateWordQuestions(filePath + "/TranslateWord.json", "Unit 1");
+        List<TranslateWordQuestion> userQuestions = jsonHandler.LoadTranslateWordUserQuestions(filePath + "/units.json", "Unit 1");
+        questions.AddRange(userQuestions);
 
         QuestionUtils qutils = new QuestionUtils();
 

@@ -34,39 +34,103 @@ public class JsonHandler
     }
 
     // Funkce pro načtení otázek pro překlad slova
-    public List<TranslateWordQuestion> LoadTranslateWordQuestions(string filePath)
+    public List<TranslateWordQuestion> LoadTranslateWordQuestions(string filePath, string unit)
     {
         try
         {
             // Načítání JSON obsahu ze souboru
             string jsonContent = File.ReadAllText(filePath);
 
-            //Console.WriteLine(jsonContent);  // Výpis načteného obsahu pro kontrolu
+            // Načítání a deserializace JSON pole
+            using (JsonDocument doc = JsonDocument.Parse(jsonContent))
+            {
+                JsonElement root = doc.RootElement;
+                if (root.TryGetProperty("units", out JsonElement unitsElement))
+                {
+                    // Zkontrolujeme, zda lekce existuje v JSON
+                    if (unitsElement.TryGetProperty(unit, out JsonElement questionsElement))
+                    {
+                        List<TranslateWordQuestion> questions = new List<TranslateWordQuestion>();
+
+                        foreach (JsonElement questionElement in questionsElement.EnumerateArray())
+                        {
+                            TranslateWordQuestion question = new TranslateWordQuestion
+                            {
+                                ID = questionElement.GetProperty("ID").GetInt32(),
+                                QuestionText = questionElement.GetProperty("QuestionText").GetString(),
+                                Answer = questionElement.GetProperty("Answer").GetString()
+                            };
+                            questions.Add(question);
+                        }
+
+                        return questions;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Lekce '{unit}' nebyla nalezena v JSON souboru.");
+                        return new List<TranslateWordQuestion>();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("JSON soubor neobsahuje žádné jednotky.");
+                    return new List<TranslateWordQuestion>();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+            return new List<TranslateWordQuestion>();
+        }
+    }
+
+    // Funkce pro načtení otázek podle názvu lekce
+    public List<TranslateWordQuestion> LoadTranslateWordUserQuestions(string filePath, string unit)
+    {
+        try
+        {
+            // Načítání JSON obsahu ze souboru
+            string jsonContent = File.ReadAllText(filePath);
 
             // Načítání a deserializace JSON pole
             using (JsonDocument doc = JsonDocument.Parse(jsonContent))
             {
                 JsonElement root = doc.RootElement;
-                if (root.TryGetProperty("questions", out JsonElement questionsElement))
-                {
-                    List<TranslateWordQuestion> questions = new List<TranslateWordQuestion>();
 
-                    foreach (JsonElement questionElement in questionsElement.EnumerateArray())
+                if (root.TryGetProperty("units", out JsonElement unitsElement))
+                {
+                    foreach (JsonElement unitElement in unitsElement.EnumerateArray())
                     {
-                        TranslateWordQuestion question = new TranslateWordQuestion
+                        string name = unitElement.GetProperty("Name").GetString();
+                        if (name == unit)
                         {
-                            ID = questionElement.GetProperty("ID").GetInt32(),
-                            QuestionText = questionElement.GetProperty("QuestionText").GetString(),
-                            Answer = questionElement.GetProperty("Answer").GetString()
-                        };
-                        questions.Add(question);
+                            // Našli jsme jednotku podle názvu, nyní načítáme otázky
+                            List<TranslateWordQuestion> questions = new List<TranslateWordQuestion>();
+                            JsonElement userQuestionsElement = unitElement.GetProperty("UserQuestions");
+
+                            foreach (JsonElement questionElement in userQuestionsElement.EnumerateArray())
+                            {
+                                TranslateWordQuestion question = new TranslateWordQuestion
+                                {
+                                    ID = questionElement.GetProperty("ID").GetInt32(),
+                                    QuestionText = questionElement.GetProperty("QuestionText").GetString(),
+                                    Answer = questionElement.GetProperty("Answer").GetString()
+                                };
+                                questions.Add(question);
+                            }
+
+                            return questions;
+                        }
                     }
 
-                    return questions;
+                    // Pokud nebyla nalezena jednotka s daným názvem
+                    Console.WriteLine($"Unit with name {unit} not found.");
+                    return new List<TranslateWordQuestion>();
                 }
                 else
                 {
-                    Console.WriteLine("JSON soubor neobsahuje žádné otázky (JsonHandler.cs)");
+                    Console.WriteLine("JSON soubor neobsahuje jednotky.");
                     return new List<TranslateWordQuestion>();
                 }
             }
