@@ -7,7 +7,6 @@ using System.Linq;
 namespace ITU_projekt.API;
 public class QuestionUtils
 {
-    // Konstruktor pro předání seznamu otázek
     public QuestionUtils()
     {
 

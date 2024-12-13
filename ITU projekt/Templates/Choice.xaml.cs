@@ -20,9 +20,6 @@ using ITU_projekt.ViewModels;
 
 namespace ITU_projekt.Templates
 {
-    /// <summary>
-    /// Interakční logika pro Choice.xaml
-    /// </summary>
     public partial class Choice : UserControl
     {
         public Choice(MainWindowViewModel _VM, string _unit)

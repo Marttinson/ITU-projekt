@@ -17,6 +17,7 @@ namespace ITU_projekt.ViewModels;
 
 public class WordMatchingViewModel : INotifyPropertyChanged
 {
+    //  Nastavení, aby bylo možné měnit barvu tlačítek, podle toho zda jsou stisknuty nebo spojeny
     private Brush _word1Background = new SolidColorBrush(Colors.Transparent);
     private Brush _word2Background = new SolidColorBrush(Colors.Transparent);
     private Brush _word3Background = new SolidColorBrush(Colors.Transparent);
@@ -159,6 +160,7 @@ public class WordMatchingViewModel : INotifyPropertyChanged
         }
     }
 
+    // Vlastnost viditelnosti tlačítka sloužící na pokračování na další lekci
     private Visibility completionButtonVisibility = Visibility.Collapsed;
     public Visibility CompletionButtonVisibility
     {
@@ -178,6 +180,7 @@ public class WordMatchingViewModel : INotifyPropertyChanged
 
     private List<TranslateWordQuestion> randomQuestions;
 
+    // Obsah jednotlivých tlačítek
     public string Word1 { get; set; }
     public string Word2 { get; set; }
     public string Word3 { get; set; }
@@ -193,6 +196,7 @@ public class WordMatchingViewModel : INotifyPropertyChanged
     public List<int> wordNumbers;
     public List<int> slovoNumbers;
 
+    // Listy obsahující již spojené slova
     public List<string> usedWord = new List<string>();
     public List<string> usedSlovo = new List<string>();
 
@@ -203,6 +207,7 @@ public class WordMatchingViewModel : INotifyPropertyChanged
         SelectWordButtonCommand = new RelayCommand<string>(OnWordButtonSelected);
         SelectSlovoButtonCommand = new RelayCommand<string>(OnSlovoButtonSelected);
 
+        // Načítání otázek ze souborů
         JsonHandler jsonHandler = new JsonHandler();
 
         // Musí se upravit cesta (teď nejde testovat, takže až se UC někde použije)
@@ -239,36 +244,44 @@ public class WordMatchingViewModel : INotifyPropertyChanged
         NextQuestion = new RelayCommand<object>(ExecuteNextQuestion);
     }
 
+    // Funkce vykonávající se při stisku tlačítka na jedné straně
     private void OnWordButtonSelected(string wordButtonValue)
     {
+        // Kontrola, zda uživatel nekliknul na již spojené tlačítko
         if (!usedWord.Contains(wordButtonValue))
         {
             selectedWordButton = wordButtonValue;
             UpdateWordButtonColors();
         }
 
+        // Kontrola, zda není stisknuto tlačítko na obou stranách
         if (!string.IsNullOrEmpty(selectedSlovoButton) && !string.IsNullOrEmpty(selectedWordButton))
         {
             EvaluateButtonPair(selectedWordButton, selectedSlovoButton);
         }
     }
 
+    // Funkce vykonávající se při stisku tlačítka na druhé straně
     private void OnSlovoButtonSelected(string slovoButtonValue)
     {
+        // Kontrola, zda uživatel nekliknul na již spojené tlačítko
         if (!usedSlovo.Contains(slovoButtonValue))
         {
             selectedSlovoButton = slovoButtonValue;
             UpdateSlovoButtonColors();
         }
 
+        // Kontrola, zda není stisknuto tlačítko na obou stranách
         if (!string.IsNullOrEmpty(selectedWordButton) && !string.IsNullOrEmpty(selectedSlovoButton))
         {
             EvaluateButtonPair(selectedWordButton, selectedSlovoButton);
         }
     }
 
+    // Kontrola, zda jsou stisknutá tlačítka se stejném ID (souvisejí spolu) na obou stranách
     private void EvaluateButtonPair(string word, string slovo)
     {
+        // Samotná kontrola a změna barvy
         if (randomQuestions[wordNumbers[int.Parse(word)]].ID == randomQuestions[slovoNumbers[int.Parse(slovo)]].ID)
         {
             SetButtonColor(word, slovo, Colors.Green);
@@ -277,6 +290,7 @@ public class WordMatchingViewModel : INotifyPropertyChanged
             usedSlovo.Add(slovo);
         }
 
+        // Kontrola, zda nejsou již spojeny všechna slova
         if (usedWord.Count == 5)
             CompletionButtonVisibility = Visibility.Visible;
 
@@ -287,6 +301,7 @@ public class WordMatchingViewModel : INotifyPropertyChanged
         UpdateSlovoButtonColors();
     }
 
+    // Funkce měnící barvy tlačítek na jedné straně zpět na výchozí
     private void UpdateWordButtonColors()
     {
         // Resetovat barvy všech tlačítek na výchozí (transparentní)
@@ -309,6 +324,7 @@ public class WordMatchingViewModel : INotifyPropertyChanged
         else if (selectedWordButton == "4") Word5Background = new SolidColorBrush(Colors.Gray);
     }
 
+    // Funkce měnící barvy tlačítek na druhé straně zpět na výchozí
     private void UpdateSlovoButtonColors()
     {
         // Resetovat barvy všech tlačítek na výchozí (transparentní)
@@ -331,6 +347,7 @@ public class WordMatchingViewModel : INotifyPropertyChanged
         else if (selectedSlovoButton == "4") Slovo5Background = new SolidColorBrush(Colors.Gray);
     }
 
+    // Funkce pro nastavení barvy tlačítka
     private void SetButtonColor(string word, string slovo, Color color)
     {
         // Nastavit barvu tlačítka na zelenou pro správně spárovaná tlačítka
@@ -347,9 +364,12 @@ public class WordMatchingViewModel : INotifyPropertyChanged
         if (slovo == "4") Slovo5Background = new SolidColorBrush(color);
     }
 
+    // Funkce pro pokračování na další otázku
     public ICommand NextQuestion { get; }
     private void ExecuteNextQuestion(object parameter)
     {
+        // Vygenerování náhodného čísla v intervalu <1; 3> a podle toho zvolení následující otázky,
+        // všechny mají stejnou pravděpodobnost
         Random random = new Random();
         int randomNumber = random.Next(1, 4);
 

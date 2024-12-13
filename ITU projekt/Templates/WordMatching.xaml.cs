@@ -17,9 +17,6 @@ using System.Windows.Shapes;
 
 namespace ITU_projekt.Templates
 {
-    /// <summary>
-    /// Interakční logika pro WordMatching.xaml
-    /// </summary>
     public partial class WordMatching : UserControl
     {   
         public WordMatching(MainWindowViewModel _VM, string _unit)

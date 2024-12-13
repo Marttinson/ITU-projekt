@@ -81,8 +81,9 @@ class UnitSelectionViewModel : INotifyPropertyChanged
             //MessageBox.Show(unit + " limited");
 
             //VM.CurrentUserControl = new MemoryGame(VM);
-
-            
+    
+            // Vygenerování náhodného čísla v intervalu <1; 3> a podle toho zvolení počáteční otázky,
+            // všechny mají stejnou pravděpodobnost
             Random random = new Random();
             int randomNumber = random.Next(1, 4);
 

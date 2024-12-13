@@ -13,6 +13,7 @@ using System.Windows.Input;
 namespace ITU_projekt.ViewModels;
 public class ChoiceViewModel : INotifyPropertyChanged
 {
+    // Vlastnosti barvy pozadí tlačítek sloužící pro odpovědi
     private string _button1Background = "Transparent";
     public string Button1Background
     {
@@ -46,17 +47,7 @@ public class ChoiceViewModel : INotifyPropertyChanged
         }
     }
 
-    private string _textToTranslate;
-    public string TextToTranslate
-    {
-        get => _textToTranslate;
-        set
-        {
-            _textToTranslate = value;
-            OnPropertyChanged(nameof(TextToTranslate));
-        }
-    }
-
+    // Spojená viditelnost tlačítek volby
     private Visibility _buttonGroupVisibility = Visibility.Visible;
     public Visibility ButtonGroupVisibility
     {
@@ -68,6 +59,19 @@ public class ChoiceViewModel : INotifyPropertyChanged
         }
     }
 
+    // Znění otázky
+    private string _textToTranslate;
+    public string TextToTranslate
+    {
+        get => _textToTranslate;
+        set
+        {
+            _textToTranslate = value;
+            OnPropertyChanged(nameof(TextToTranslate));
+        }
+    }
+
+    // Vlastnost viditelnosti tlačítka sloužící pro přechod na další otázku
     private Visibility _continueButtonVisibility = Visibility.Collapsed;
     public Visibility ContinueButtonVisibility
     {
@@ -88,6 +92,8 @@ public class ChoiceViewModel : INotifyPropertyChanged
     public ICommand EvaluateAnswerCommand { get; }
 
     private PickFromThreeQuestion question;
+    
+    // Obsahy tlačítek volby
     public string Option1 { get; set; }
     public string Option2 { get; set; }
     public string Option3 { get; set; }
@@ -99,6 +105,7 @@ public class ChoiceViewModel : INotifyPropertyChanged
     {
         EvaluateAnswerCommand = new RelayCommand(EvaluateAnswer);
 
+        // Načítání otázek ze souborů
         JsonHandler jsonHandler = new JsonHandler();
 
         // Musí se upravit cesta (teď nejde testovat, takže až se UC někde použije)
@@ -112,6 +119,7 @@ public class ChoiceViewModel : INotifyPropertyChanged
         question = qutils.GetRandomOptionsQuestions(questions, 1)[0];
         TextToTranslate = question.QuestionText;
 
+        // Náhodné seřazení odpovědí na tlačítka
         List<int> numbers = Enumerable.Range(0, 3).ToList();
         Random random = new Random();
         numbers = numbers.OrderBy(x => random.Next()).ToList();
@@ -123,6 +131,8 @@ public class ChoiceViewModel : INotifyPropertyChanged
         NextQuestion = new RelayCommand<object>(ExecuteNextQuestion);
         VM = _VM;
     }
+
+    // Funkce sloužící pro kontrolu, zda bylo zmáčknuto tlačítko se správnou odpovědí
     private void EvaluateAnswer(object parameter)
     {
         string selectedOption = parameter as string;
@@ -162,9 +172,12 @@ public class ChoiceViewModel : INotifyPropertyChanged
         }
     }
 
+    // Funkce sloužící pro přechod na další otázku
     public ICommand NextQuestion { get; }
     private void ExecuteNextQuestion(object parameter)
     {
+        // Vygenerování náhodného čísla v intervalu <1; 3> a podle toho zvolení následující otázky,
+        // všechny mají stejnou pravděpodobnost
         Random random = new Random();
         int randomNumber = random.Next(1, 4);
 

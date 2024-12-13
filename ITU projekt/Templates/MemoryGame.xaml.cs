@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 
 namespace ITU_projekt.Templates
 {
-    /// <summary>
-    /// Interakční logika pro MemoryGame.xaml
-    /// </summary>
     public partial class MemoryGame : UserControl
     {
         public MemoryGame(MainWindowViewModel _VM)

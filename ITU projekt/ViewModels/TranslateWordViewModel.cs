@@ -13,6 +13,7 @@ using System.Windows.Input;
 namespace ITU_projekt.ViewModels;
 public class TranslateWordViewModel : INotifyPropertyChanged
 {
+    // Text, který se vypíše uživateli, a obsahuje co má uživatel překládat
     private string _wordToTranslate;
     public string WordToTranslate
     {
@@ -24,6 +25,7 @@ public class TranslateWordViewModel : INotifyPropertyChanged
         }
     }
 
+    // Vlastnost pro viditelnost tlačítka na validaci odpovědi
     private Visibility buttonOdpovedetVisibility = Visibility.Visible;
     public Visibility ButtonOdpovedetVisibility
     {
@@ -35,6 +37,7 @@ public class TranslateWordViewModel : INotifyPropertyChanged
         }
     }
 
+    // Vlastnost pro viditelnost tlačítka sloužící pro pokračování na další otázku
     private Visibility buttonDalsiVisibility = Visibility.Collapsed;
     public Visibility ButtonDalsiVisibility
     {
@@ -46,6 +49,7 @@ public class TranslateWordViewModel : INotifyPropertyChanged
         }
     }
 
+    // Hodnota, kterou uživatel zadal do textového pole po kliknutí na tlačítko pro vyhodnocení odpovědi
     private string _userAnswer;
     public string UserAnswer
     {
@@ -63,6 +67,7 @@ public class TranslateWordViewModel : INotifyPropertyChanged
 
     public TranslateWordViewModel(MainWindowViewModel _VM, string _unit)
     {
+        // Načtení otázek ze souborů, pro konkrétní lekci
         JsonHandler jsonHandler = new JsonHandler();
 
         // Musí se upravit cesta (teď nejde testovat, takže až se UC někde použije)
@@ -75,6 +80,7 @@ public class TranslateWordViewModel : INotifyPropertyChanged
 
         QuestionUtils qutils = new QuestionUtils();
 
+        // Vybrání náhodné otázky
         question = qutils.GetRandomTranslateWordQuestions(questions, 1)[0];
         WordToTranslate = question.QuestionText;
 
@@ -83,6 +89,7 @@ public class TranslateWordViewModel : INotifyPropertyChanged
         VM = _VM;
     }
 
+    // Funkce kontrolující, zda je zadaný překlad správně
     public ICommand EvaluateAnswerCommand { get; }
     private void EvaluateAnswer()
     {
@@ -97,9 +104,12 @@ public class TranslateWordViewModel : INotifyPropertyChanged
         }
     }
 
+    // Funkce sloužící pro pokračování na další otázku
     public ICommand NextQuestion { get; }
     private void ExecuteNextQuestion(object parameter)
     {
+        // Vygenerování náhodného čísla v intervalu <1; 3> a podle toho zvolení následující otázky,
+        // všechny mají stejnou pravděpodobnost
         Random random = new Random();
         int randomNumber = random.Next(1, 4);
 

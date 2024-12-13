@@ -25,8 +25,10 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <!-- Nadpis -->
         <TextBlock Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Text="Vyber dvojice" FontSize="32"  VerticalAlignment="Center" HorizontalAlignment="Center" />
-
+        
+        <!-- Tlačítka rozdělená do dvojic podle řádků -->
         <Button Grid.Column="1" Grid.Row="2" MaxHeight="50" MaxWidth="200" FontSize="22" Content="{Binding Word1}" 
                 CommandParameter="0" Command="{Binding SelectWordButtonCommand}" Background="{Binding Word1Background}" />
         <Button Grid.Column="2" Grid.Row="2" MaxHeight="50" MaxWidth="200" FontSize="22" Content="{Binding Slovo1}" 
@@ -52,6 +54,7 @@
         <Button Grid.Column="2" Grid.Row="6" MaxHeight="50" MaxWidth="200" FontSize="22" Content="{Binding Slovo5}" 
                 CommandParameter="4" Command="{Binding SelectSlovoButtonCommand}" Background="{Binding Slovo5Background}" />
 
+        <!-- Tlačítko, které se objeví až po dokončení otázky a slouží pro přesun na další otázku -->
         <Button Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2" MaxHeight="40" MaxWidth="250" FontSize="25" 
                 Content="Další" Visibility="{Binding CompletionButtonVisibility}" Command="{Binding NextQuestion}" />
 

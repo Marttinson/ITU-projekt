@@ -10,6 +10,7 @@ using System.Linq;
 
 namespace ITU_projekt.API;
 
+// Třída reprezentující strukturu otázky pro překlad
 public class TranslateWordQuestion
 {
     public int ID { get; set; }
@@ -17,6 +18,7 @@ public class TranslateWordQuestion
     public string Answer { get; set; }
 }
 
+// Třída reprezentující strukturu otázky pro výběr ze tří možností
 public class PickFromThreeQuestion
 {
     public int ID { get; set; }
@@ -142,7 +144,7 @@ public class JsonHandler
         }
     }
 
-    // Načtení otázek pro pexeso
+    // Načtení otázek pro pexeso (Načtení všech otazek, bez ohledu na lekce, poskytnutých v základním json souboru)
     public List<TranslateWordQuestion> LoadAllQuestions(string filePath)
     {
         try
