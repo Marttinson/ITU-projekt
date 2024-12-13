@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="ITU_projekt.Templates.TranslateWord"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:av="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             mc:Ignorable="av"
+             Width="auto" Height="auto" av:DesignHeight="229" av:DesignWidth="429">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="6*" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="8*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Rectangle Grid.Column="1" Grid.Row="1" Fill="Gray" />
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="9*" />
+                <ColumnDefinition Width="0.5*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="6*" />
+                <RowDefinition Height="4*" />
+            </Grid.RowDefinitions>
+            
+            <!-- Slovo, které se má přeložit -->
+            <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28"
+                       Text="{Binding WordToTranslate}" />
+            
+            <!-- Textové pole, do kterého se píše odpověď -->
+            <TextBox x:Name="AnswerTextBox" Grid.Column="1" Grid.Row="1" MaxHeight="35" TextAlignment="Center" FontSize="20"
+                     VerticalContentAlignment="Center" Text="{Binding UserAnswer, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+        <!-- Tlačítko pro kontrolu odpovědi -->
+        <Button Grid.Column="1" Grid.Row="2" MaxHeight="40" MaxWidth="250" FontSize="25" Content="Odpovědět" 
+                Visibility="{Binding ButtonOdpovedetVisibility}" Command="{Binding EvaluateAnswerCommand}" />
+        <!-- Tlačítko, které se objeví v případě správné odpovědi a slouží pro přesunutí na další otázku -->
+        <Button Grid.Column="1" Grid.Row="2" MaxHeight="40" MaxWidth="250" FontSize="25" Content="Další"
+                Visibility="{Binding ButtonDalsiVisibility}" Command="{Binding NextQuestion}" />
+    </Grid>
+    
+
+</UserControl>

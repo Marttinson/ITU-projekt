@@ -6,6 +6,18 @@
     <RootNamespace>ITU_projekt</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <Name>ITU projekt</Name>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Questions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
 </Project>

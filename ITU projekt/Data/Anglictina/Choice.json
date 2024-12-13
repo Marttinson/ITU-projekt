@@ -1,0 +1,64 @@
+{
+  "units": {
+    "Unit 1": [
+      {
+        "ID": 1,
+        "QuestionText": "What is the capital city of France?",
+        "Options": [ "Paris", "London", "Berlin" ],
+        "Answer": "Paris"
+      },
+      {
+        "ID": 2,
+        "QuestionText": "Which planet is known as the Red Planet?",
+        "Options": [ "Earth", "Mars", "Venus" ],
+        "Answer": "Mars"
+      },
+      {
+        "ID": 3,
+        "QuestionText": "What is the largest mammal?",
+        "Options": [ "Elephant", "Blue Whale", "Giraffe" ],
+        "Answer": "Blue Whale"
+      }
+    ],
+    "Unit 2": [
+      {
+        "ID": 4,
+        "QuestionText": "What is the smallest prime number?",
+        "Options": [ "1", "2", "3" ],
+        "Answer": "2"
+      },
+      {
+        "ID": 5,
+        "QuestionText": "How many continents are there?",
+        "Options": [ "5", "6", "7" ],
+        "Answer": "7"
+      },
+      {
+        "ID": 6,
+        "QuestionText": "Which gas do plants use for photosynthesis?",
+        "Options": [ "Oxygen", "Carbon Dioxide", "Nitrogen" ],
+        "Answer": "Carbon Dioxide"
+      }
+    ],
+    "Unit 3": [
+      {
+        "ID": 7,
+        "QuestionText": "Who wrote 'Romeo and Juliet'?",
+        "Options": [ "Shakespeare", "Dickens", "Hemingway" ],
+        "Answer": "Shakespeare"
+      },
+      {
+        "ID": 8,
+        "QuestionText": "Which element has the chemical symbol 'O'?",
+        "Options": [ "Oxygen", "Osmium", "Oxide" ],
+        "Answer": "Oxygen"
+      },
+      {
+        "ID": 9,
+        "QuestionText": "How many sides does a hexagon have?",
+        "Options": [ "5", "6", "7" ],
+        "Answer": "6"
+      }
+    ]
+  }
+}

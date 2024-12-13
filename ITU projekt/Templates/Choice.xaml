@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="ITU_projekt.Templates.Choice"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ITU_projekt.Templates"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="6*" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="8*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <!-- Obdelník v pozadí -->
+        <Rectangle Grid.Column="1" Grid.Row="1" Fill="Gray" />
+        
+        <!-- Text znění otázky -->
+        <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28" Text="{Binding TextToTranslate}" />
+        
+        <!-- Grid pro definici tlačítek -->
+        <Grid Grid.Column="1" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Tlačítka volby -->
+            <Button Grid.Column="0" MaxHeight="40" MaxWidth="200" FontSize="22" Content="{Binding Option1}" Background="{Binding Button1Background}"
+                    Command="{Binding EvaluateAnswerCommand}" CommandParameter="Možnost 1" Visibility="{Binding ButtonGroupVisibility}" />
+            <Button Grid.Column="1" MaxHeight="40" MaxWidth="200" FontSize="22" Content="{Binding Option2}" Background="{Binding Button2Background}"
+                    Command="{Binding EvaluateAnswerCommand}" CommandParameter="Možnost 2" Visibility="{Binding ButtonGroupVisibility}" />
+            <Button Grid.Column="2" MaxHeight="40" MaxWidth="200" FontSize="22" Content="{Binding Option3}" Background="{Binding Button3Background}"
+                    Command="{Binding EvaluateAnswerCommand}" CommandParameter="Možnost 3" Visibility="{Binding ButtonGroupVisibility}" />
+
+            <!-- Tlačítko pro pokračování na další otázku -->
+            <Button Grid.Column="0" Grid.ColumnSpan="3" MaxHeight="40" MaxWidth="300" FontSize="25" Content="Další"
+                    Visibility="{Binding ContinueButtonVisibility}" Command="{Binding NextQuestion}" />
+        </Grid>
+    </Grid>
+</UserControl>

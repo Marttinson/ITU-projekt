@@ -1,0 +1,91 @@
+﻿<Window x:Class="ITU_projekt.Views.MainWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:ITU_projekt.Views"
+        xmlns:viewModels="clr-namespace:ITU_projekt.ViewModels"
+        xmlns:templates="clr-namespace:ITU_projekt.Templates"
+        WindowStartupLocation="CenterScreen"
+        Width="800"
+        Height="450"
+        Title="ITU Aplikace"
+        ResizeMode="CanResizeWithGrip"
+    >
+
+    <Window.DataContext>
+        <viewModels:MainWindowViewModel />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <!-- Konvertor pro výšku tlačítek (10% výšky okna) -->
+        <local:HeightConverter x:Key="HeightConverter"/>
+        <!-- Konvertor pro šířku tlačítek (50% šířky okna) -->
+        <local:WidthConverter x:Key="WidthConverter"/>
+    </Window.Resources>
+
+    <Grid>
+        <!-- Definice sloupců a řádků -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <!-- Horní panel s tlačítky -->
+            <RowDefinition Height="8*" />
+            <!-- Střední část s výběrem lekcí -->
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <!-- Levý sloupec pro výběr jazyka -->
+            <ColumnDefinition Width="5*" />
+            <!-- Střední část pro výběr lekcí -->
+            <ColumnDefinition Width="*" />
+            <!-- Pravý sloupec pro menu -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Backgroung -->
+        <Rectangle Grid.Row="0"  Grid.Column="0" Grid.ColumnSpan="3" Fill="{DynamicResource SettingsPanelBackground}" />
+
+        <!-- Menu -->
+        <Button     x:Name="BackToUnitSelection" BorderThickness="1" BorderBrush="Gray"
+                    Grid.Row="0" Grid.Column="0" 
+                    Click="back_to_unit_selection" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch" 
+                    HorizontalContentAlignment="Stretch" 
+                    VerticalContentAlignment="Stretch" >
+            <Viewbox>
+                <TextBlock Text="Menu" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Viewbox>
+        </Button>
+
+        <!-- Title -->
+        <Viewbox Grid.Row="0" Grid.Column="1">
+            <TextBlock  Text="ITU Aplikace" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Viewbox>
+    
+        <!-- Tlacitko pro vysunuti menu -->
+        <Button     Grid.Row="0" Grid.Column="2" BorderThickness="1" BorderBrush="Gray"
+                    Click="MenuButton_Click" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch" 
+                    HorizontalContentAlignment="Stretch" 
+                    VerticalContentAlignment="Stretch" 
+                    Background="{DynamicResource SideMenuButtonColor}">
+            <Viewbox>
+                <TextBlock Text="Nastavení" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Viewbox>
+        </Button>
+
+        <!-- Here will be tasks inserted -->
+
+        <ContentControl x:Name="MainContent" Grid.Column="1" Grid.Row="1" Content="{Binding CurrentUserControl}"/>
+
+        <!-- Bocni menu -->
+        <Grid x:Name="RightSideMenu" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Background="{DynamicResource SettingsPanelBackground}" Width="200" Opacity="0">
+            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch" >
+                <CheckBox x:Name="DarkModeCheckBox" Content="Dark Mode" 
+                  VerticalAlignment="Top" HorizontalAlignment="Left"
+                  Margin="10" Checked="DarkModeCheckBox_Checked" 
+                  Unchecked="DarkModeCheckBox_Unchecked"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

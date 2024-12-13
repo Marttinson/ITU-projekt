@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="ITU_projekt.Templates.UnitSelection"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ITU_projekt.Templates"
+             xmlns:viewModels="clr-namespace:ITU_projekt.ViewModels">
+
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ItemsControl Name="IC" ItemsSource="{Binding Units}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Border Margin="5" BorderThickness="1" BorderBrush="Gray">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="5*" />
+                                        <!-- Left side, bigger button -->
+                                        <ColumnDefinition Width="1*" />
+                                        <!-- Right side, smaller button -->
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="5*" />
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Left Side - Start Exercise -->
+                                    <Button Content="{Binding Name}" 
+                                            Command="{Binding DataContext.StartUnitCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding ID}"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            FontSize="16" 
+                                            Height="50" 
+                                            Grid.Column="0"
+                                            Grid.Row="0"
+                                            BorderBrush="Transparent" 
+                                            Background="{DynamicResource PrimaryButtonBackground}" 
+                                            Margin="5" />
+
+                                    <!-- Right Side - Open Menu with Settings Icon -->
+                                    <Button Content="⚙" 
+                                                Click="OpenSettingsButton_Click" 
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Stretch" 
+                                                FontSize="16" 
+                                                Height="50" 
+                                                Grid.Column="1"
+                                                Grid.Row="0"
+                                                BorderBrush="Transparent" 
+                                                Background="{DynamicResource UnitSelectionBackground}"
+                                                Margin="5"/>
+
+                                    <StackPanel x:Name="SettingsPanel" 
+                                                Visibility="Collapsed"
+                                                Grid.Row="1"
+                                                Grid.ColumnSpan="2"
+                                                Background="{DynamicResource SettingsPanelBackground}">
+                                        <TextBlock Text="{Binding Description}" />
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Button Content="Add custom questions" 
+                                                    Command="{Binding DataContext.AddCustomQuestions, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding ID}" 
+                                                    Grid.Column="0" />
+                                            <Button Content="View Statistics" 
+                                                    Command="{Binding DataContext.ViewStatistics, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding ID}"
+                                                    Grid.Column="1" />
+                                        </Grid>
+                                            <Button Content="Endless Mode" 
+                                                    Command="{Binding DataContext.StartUnitCommand_endless, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding ID}" />      
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
