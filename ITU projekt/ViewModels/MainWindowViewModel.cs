@@ -178,7 +178,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
             }
         }
 
-        CurrentUserControl = new UnitSelection();
+        CurrentUserControl = new UnitSelection(this);
         BackToMenuVisibility = Visibility.Hidden;
     }
 
@@ -210,7 +210,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
             // clean up
         }*/
         BackToMenuVisibility = Visibility.Hidden;
-        CurrentUserControl = new UnitSelection();
+        CurrentUserControl = new UnitSelection(this);
     }
 
     private void ExecuteShowStatistics(UnitModel model)

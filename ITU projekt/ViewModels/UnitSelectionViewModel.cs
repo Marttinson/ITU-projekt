@@ -41,6 +41,7 @@ class UnitSelectionViewModel : INotifyPropertyChanged
     public ICommand AddCustomQuestions { get; set; }
     public ICommand StartUnitCommand { get; set; }
     public ICommand StartUnitCommand_endless { get; set; }
+    public ICommand ViewStatistics { get; set; }
 
     private MainWindowViewModel VM;
     public UnitSelectionViewModel(MainWindowViewModel _VM)
