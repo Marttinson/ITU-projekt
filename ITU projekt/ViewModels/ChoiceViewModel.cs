@@ -9,15 +9,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media; // Nezapomeň přidat tento using pro práci s Brush
 using System.IO;
-
 
 namespace ITU_projekt.ViewModels;
 public class ChoiceViewModel : INotifyPropertyChanged
 {
     // Vlastnosti barvy pozadí tlačítek sloužící pro odpovědi
-    private string _button1Background = "Transparent";
-    public string Button1Background
+    private Brush _button1Background = (Brush)Application.Current.Resources["PrimaryButtonBackground"];
+    public Brush Button1Background
     {
         get => _button1Background;
         set
@@ -27,8 +27,8 @@ public class ChoiceViewModel : INotifyPropertyChanged
         }
     }
 
-    private string _button2Background = "Transparent";
-    public string Button2Background
+    private Brush _button2Background = (Brush)Application.Current.Resources["PrimaryButtonBackground"];
+    public Brush Button2Background
     {
         get => _button2Background;
         set
@@ -38,8 +38,8 @@ public class ChoiceViewModel : INotifyPropertyChanged
         }
     }
 
-    private string _button3Background = "Transparent";
-    public string Button3Background
+    private Brush _button3Background = (Brush)Application.Current.Resources["PrimaryButtonBackground"];
+    public Brush Button3Background
     {
         get => _button3Background;
         set
@@ -94,7 +94,7 @@ public class ChoiceViewModel : INotifyPropertyChanged
     public ICommand EvaluateAnswerCommand { get; }
 
     private PickFromThreeQuestion question;
-    
+
     // Obsahy tlačítek volby
     public string Option1 { get; set; }
     public string Option2 { get; set; }
@@ -116,6 +116,7 @@ public class ChoiceViewModel : INotifyPropertyChanged
 
         unit = _unit;
         List<PickFromThreeQuestion> questions = jsonHandler.LoadOptionsQuestions(jsonPath, unit);
+        Console.WriteLine(questions);
 
         QuestionUtils qutils = new QuestionUtils();
 
@@ -153,7 +154,7 @@ public class ChoiceViewModel : INotifyPropertyChanged
                 }
                 else
                     // CHYBA STAT
-                    Button1Background = "Red";
+                    Button1Background = Brushes.Red; // Nastavení červené barvy, pokud je odpověď špatná
                 break;
             case "Možnost 2":
                 // Logika pro Možnost 2
@@ -165,7 +166,7 @@ public class ChoiceViewModel : INotifyPropertyChanged
                 }
                 else
                     // CHYBA STAT
-                    Button2Background = "Red";
+                    Button2Background = Brushes.Red;
                 break;
             case "Možnost 3":
                 // Logika pro Možnost 3
@@ -177,7 +178,7 @@ public class ChoiceViewModel : INotifyPropertyChanged
                 }
                 else
                     // CHYBA STAT
-                    Button3Background = "Red";
+                    Button3Background = Brushes.Red;
                 break;
         }
     }
@@ -191,6 +192,7 @@ public class ChoiceViewModel : INotifyPropertyChanged
         {
             if (turn == 10)
             {
+                // Vrací se zpět do menu
                 VM.CurrentUserControl = new UnitSelection(VM);
                 return;
             }

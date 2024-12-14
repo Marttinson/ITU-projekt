@@ -40,6 +40,13 @@ public class JsonHandler
     {
         try
         {
+            // Kontrola, zda soubor existuje
+            if (!File.Exists(filePath))
+            {
+                // Pokud soubor neexistuje, zavoláme funkci pro vytvoření nového souboru
+                CreateTranslateWordFile();
+            }
+
             // Načítání JSON obsahu ze souboru
             string jsonContent = File.ReadAllText(filePath);
 
@@ -92,6 +99,13 @@ public class JsonHandler
     {
         try
         {
+            // Kontrola, zda soubor existuje
+            if (!File.Exists(filePath))
+            {
+                // Pokud soubor neexistuje, zavoláme funkci pro vytvoření nového souboru
+                CreateTranslateWordFile();
+            }
+
             // Načítání JSON obsahu ze souboru
             string jsonContent = File.ReadAllText(filePath);
 
@@ -145,12 +159,18 @@ public class JsonHandler
         }
     }
 
-
     // Načtení otázek pro pexeso (Načtení všech otazek, bez ohledu na lekce, poskytnutých v základním json souboru)
     public List<TranslateWordQuestion> LoadAllQuestions(string filePath)
     {
         try
         {
+            // Kontrola, zda soubor existuje
+            if (!File.Exists(filePath))
+            {
+                // Pokud soubor neexistuje, zavoláme funkci pro vytvoření nového souboru
+                CreateTranslateWordFile();
+            }
+
             // Načtení obsahu JSON ze souboru
             string jsonContent = File.ReadAllText(filePath);
 
@@ -198,29 +218,41 @@ public class JsonHandler
     {
         try
         {
-            // Načtení obsahu JSON ze souboru
+            // Check if the file exists
+            if (!File.Exists(filePath))
+            {
+                CreateChoiceFile();
+            }
+
+            // Read the JSON content from the file
             string jsonContent = File.ReadAllText(filePath);
 
-            // Načtení a deserializace JSON
+            // Deserialize the JSON content
             using (JsonDocument doc = JsonDocument.Parse(jsonContent))
             {
                 JsonElement root = doc.RootElement;
+
+                // Check if the 'units' property exists
                 if (root.TryGetProperty("units", out JsonElement unitsElement))
                 {
-                    // Najdi pole otázek podle názvu lekce (unitName)
-                    if (unitsElement.TryGetProperty(unitName, out JsonElement questionsElement))
+                    // Check if the specified unit exists in the 'units' property
+                    if (unitsElement.TryGetProperty(unitName, out JsonElement unitElement))
                     {
                         List<PickFromThreeQuestion> questions = new List<PickFromThreeQuestion>();
 
-                        foreach (JsonElement questionElement in questionsElement.EnumerateArray())
+                        // Iterate through each question in the specified unit
+                        foreach (JsonElement questionElement in unitElement.EnumerateArray())
                         {
                             PickFromThreeQuestion question = new PickFromThreeQuestion
                             {
                                 ID = questionElement.GetProperty("ID").GetInt32(),
                                 QuestionText = questionElement.GetProperty("QuestionText").GetString(),
-                                Options = questionElement.GetProperty("Options").EnumerateArray().Select(option => option.GetString()).ToArray(),
+                                Options = questionElement.GetProperty("Options").EnumerateArray()
+                                                  .Select(option => option.GetString())
+                                                  .ToArray(),
                                 Answer = questionElement.GetProperty("Answer").GetString()
                             };
+
                             questions.Add(question);
                         }
 
@@ -241,13 +273,288 @@ public class JsonHandler
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Chyba: {ex.Message}");
+            Console.WriteLine($"Chyba při načítání souboru: {ex.Message}");
             return new List<PickFromThreeQuestion>();
         }
     }
 
-    // Load units
-    public static ObservableCollection<UnitModel> LoadUnits()
+
+    // Vytvoření dat pro překlad
+    public void CreateTranslateWordFile()
+    {
+        // Cesta k adresáři AppData + "ITU"
+        string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ITU");
+
+        // Cesta k souboru JSON
+        string filePath = Path.Combine(appDataPath, "TranslateWord.json");
+
+        // Obsah JSON
+        string jsonString = @"
+        {
+          ""units"": {
+            ""Unit 1"": [
+              { ""ID"": 1, ""QuestionText"": ""Pes"", ""Answer"": ""Dog"" },
+              { ""ID"": 2, ""QuestionText"": ""Kočka"", ""Answer"": ""Cat"" },
+              { ""ID"": 3, ""QuestionText"": ""Kůň"", ""Answer"": ""Horse"" },
+              { ""ID"": 4, ""QuestionText"": ""Králík"", ""Answer"": ""Rabbit"" },
+              { ""ID"": 5, ""QuestionText"": ""Pták"", ""Answer"": ""Bird"" },
+              { ""ID"": 6, ""QuestionText"": ""Krab"", ""Answer"": ""Crab"" },
+              { ""ID"": 7, ""QuestionText"": ""Pes"", ""Answer"": ""Dog"" },
+              { ""ID"": 8, ""QuestionText"": ""Koala"", ""Answer"": ""Koala"" },
+              { ""ID"": 9, ""QuestionText"": ""Lev"", ""Answer"": ""Lion"" },
+              { ""ID"": 10, ""QuestionText"": ""Slon"", ""Answer"": ""Elephant"" }
+            ],
+            ""Unit 2"": [
+              { ""ID"": 11, ""QuestionText"": ""Jablko"", ""Answer"": ""Apple"" },
+              { ""ID"": 12, ""QuestionText"": ""Hruška"", ""Answer"": ""Pear"" },
+              { ""ID"": 13, ""QuestionText"": ""Banán"", ""Answer"": ""Banana"" },
+              { ""ID"": 14, ""QuestionText"": ""Mrkev"", ""Answer"": ""Carrot"" },
+              { ""ID"": 15, ""QuestionText"": ""Rajče"", ""Answer"": ""Tomato"" },
+              { ""ID"": 16, ""QuestionText"": ""Cibule"", ""Answer"": ""Onion"" },
+              { ""ID"": 17, ""QuestionText"": ""Okurka"", ""Answer"": ""Cucumber"" },
+              { ""ID"": 18, ""QuestionText"": ""Celer"", ""Answer"": ""Celery"" },
+              { ""ID"": 19, ""QuestionText"": ""Brambory"", ""Answer"": ""Potatoes"" },
+              { ""ID"": 20, ""QuestionText"": ""Kapusta"", ""Answer"": ""Cabbage"" }
+            ],
+            ""Unit 3"": [
+              { ""ID"": 21, ""QuestionText"": ""Červená"", ""Answer"": ""Red"" },
+              { ""ID"": 22, ""QuestionText"": ""Modrá"", ""Answer"": ""Blue"" },
+              { ""ID"": 23, ""QuestionText"": ""Zelená"", ""Answer"": ""Green"" },
+              { ""ID"": 24, ""QuestionText"": ""Žlutá"", ""Answer"": ""Yellow"" },
+              { ""ID"": 25, ""QuestionText"": ""Oranžová"", ""Answer"": ""Orange"" },
+              { ""ID"": 26, ""QuestionText"": ""Bílá"", ""Answer"": ""White"" },
+              { ""ID"": 27, ""QuestionText"": ""Černá"", ""Answer"": ""Black"" },
+              { ""ID"": 28, ""QuestionText"": ""Hnědá"", ""Answer"": ""Brown"" },
+              { ""ID"": 29, ""QuestionText"": ""Šedá"", ""Answer"": ""Gray"" },
+              { ""ID"": 30, ""QuestionText"": ""Růžová"", ""Answer"": ""Pink"" }
+            ],
+            ""Unit 4"": [
+              { ""ID"": 31, ""QuestionText"": ""Slunce"", ""Answer"": ""Sun"" },
+              { ""ID"": 32, ""QuestionText"": ""Déšť"", ""Answer"": ""Rain"" },
+              { ""ID"": 33, ""QuestionText"": ""Sníh"", ""Answer"": ""Snow"" },
+              { ""ID"": 34, ""QuestionText"": ""Vítr"", ""Answer"": ""Wind"" },
+              { ""ID"": 35, ""QuestionText"": ""Oblaka"", ""Answer"": ""Clouds"" },
+              { ""ID"": 36, ""QuestionText"": ""Bouřka"", ""Answer"": ""Thunderstorm"" },
+              { ""ID"": 37, ""QuestionText"": ""Mlha"", ""Answer"": ""Fog"" },
+              { ""ID"": 38, ""QuestionText"": ""Teplo"", ""Answer"": ""Heat"" },
+              { ""ID"": 39, ""QuestionText"": ""Chladno"", ""Answer"": ""Cold"" },
+              { ""ID"": 40, ""QuestionText"": ""Počasí"", ""Answer"": ""Weather"" }
+            ],
+            ""Unit 5"": [
+              { ""ID"": 41, ""QuestionText"": ""Leden"", ""Answer"": ""January"" },
+              { ""ID"": 42, ""QuestionText"": ""Únor"", ""Answer"": ""February"" },
+              { ""ID"": 43, ""QuestionText"": ""Březen"", ""Answer"": ""March"" },
+              { ""ID"": 44, ""QuestionText"": ""Duben"", ""Answer"": ""April"" },
+              { ""ID"": 45, ""QuestionText"": ""Květen"", ""Answer"": ""May"" },
+              { ""ID"": 46, ""QuestionText"": ""Červen"", ""Answer"": ""June"" },
+              { ""ID"": 47, ""QuestionText"": ""Červenec"", ""Answer"": ""July"" },
+              { ""ID"": 48, ""QuestionText"": ""Srpen"", ""Answer"": ""August"" },
+              { ""ID"": 49, ""QuestionText"": ""Září"", ""Answer"": ""September"" },
+              { ""ID"": 50, ""QuestionText"": ""Říjen"", ""Answer"": ""October"" }
+            ]
+          }
+        }";
+
+        // Přečtení JSON stringu a serializace do objektu
+        var jsonObject = JsonConvert.DeserializeObject(jsonString);
+
+        // Uložení do souboru
+        File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonObject, Formatting.Indented));
+    }
+
+    // Vytvoření dat pro výběr ze tří
+    public void CreateChoiceFile()
+    {
+        // Cesta k adresáři AppData + "ITU"
+        string appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ITU");
+
+        // Cesta k souboru JSON
+        string filePath = Path.Combine(appDataPath, "Choice.json");
+
+        {
+            // Vytvoření JSON jako textového řetězce
+            string jsonContent = @"
+{
+  ""units"": {
+    ""Unit 1"": [
+      {
+        ""ID"": 1,
+        ""QuestionText"": ""How do you say 'pes' in English?"",
+        ""Options"": [ ""Dog"", ""Cat"", ""Horse"" ],
+        ""Answer"": ""Dog""
+      },
+      {
+        ""ID"": 2,
+        ""QuestionText"": ""How do you say 'kočka' in English?"",
+        ""Options"": [ ""Rabbit"", ""Cat"", ""Bird"" ],
+        ""Answer"": ""Cat""
+      },
+      {
+        ""ID"": 3,
+        ""QuestionText"": ""How do you say 'slon' in English?"",
+        ""Options"": [ ""Elephant"", ""Lion"", ""Bear"" ],
+        ""Answer"": ""Elephant""
+      },
+      {
+        ""ID"": 4,
+        ""QuestionText"": ""What animal is known for its black and white fur?"",
+        ""Options"": [ ""Koala"", ""Penguin"", ""Panda"" ],
+        ""Answer"": ""Panda""
+      },
+      {
+        ""ID"": 5,
+        ""QuestionText"": ""Which animal is the king of the jungle?"",
+        ""Options"": [ ""Lion"", ""Tiger"", ""Bear"" ],
+        ""Answer"": ""Lion""
+      }
+    ],
+    ""Unit 2"": [
+      {
+        ""ID"": 6,
+        ""QuestionText"": ""How do you say 'jablko' in English?"",
+        ""Options"": [ ""Apple"", ""Banana"", ""Orange"" ],
+        ""Answer"": ""Apple""
+      },
+      {
+        ""ID"": 7,
+        ""QuestionText"": ""How do you say 'hruška' in English?"",
+        ""Options"": [ ""Pear"", ""Grapes"", ""Plum"" ],
+        ""Answer"": ""Pear""
+      },
+      {
+        ""ID"": 8,
+        ""QuestionText"": ""What fruit is known for having a thick skin and a sweet, juicy inside?"",
+        ""Options"": [ ""Orange"", ""Lemon"", ""Apple"" ],
+        ""Answer"": ""Orange""
+      },
+      {
+        ""ID"": 9,
+        ""QuestionText"": ""How do you say 'rajče' in English?"",
+        ""Options"": [ ""Tomato"", ""Cucumber"", ""Lettuce"" ],
+        ""Answer"": ""Tomato""
+      },
+      {
+        ""ID"": 10,
+        ""QuestionText"": ""Which vegetable is orange and often used in salads?"",
+        ""Options"": [ ""Carrot"", ""Cucumber"", ""Spinach"" ],
+        ""Answer"": ""Carrot""
+      }
+    ],
+    ""Unit 3"": [
+      {
+        ""ID"": 11,
+        ""QuestionText"": ""How do you say 'červená' in English?"",
+        ""Options"": [ ""Red"", ""Blue"", ""Green"" ],
+        ""Answer"": ""Red""
+      },
+      {
+        ""ID"": 12,
+        ""QuestionText"": ""How do you say 'modrá' in English?"",
+        ""Options"": [ ""Pink"", ""Blue"", ""Yellow"" ],
+        ""Answer"": ""Blue""
+      },
+      {
+        ""ID"": 13,
+        ""QuestionText"": ""How do you say 'zelená' in English?"",
+        ""Options"": [ ""Green"", ""Black"", ""White"" ],
+        ""Answer"": ""Green""
+      },
+      {
+        ""ID"": 14,
+        ""QuestionText"": ""What color is associated with the sky on a clear day?"",
+        ""Options"": [ ""Red"", ""Blue"", ""Yellow"" ],
+        ""Answer"": ""Blue""
+      },
+      {
+        ""ID"": 15,
+        ""QuestionText"": ""How do you say 'žlutá' in English?"",
+        ""Options"": [ ""Orange"", ""Yellow"", ""Pink"" ],
+        ""Answer"": ""Yellow""
+      }
+    ],
+    ""Unit 4"": [
+      {
+        ""ID"": 16,
+        ""QuestionText"": ""What is the opposite of sunny weather?"",
+        ""Options"": [ ""Rainy"", ""Windy"", ""Snowy"" ],
+        ""Answer"": ""Rainy""
+      },
+      {
+        ""ID"": 17,
+        ""QuestionText"": ""What is the weather like when snow falls?"",
+        ""Options"": [ ""Snowy"", ""Cloudy"", ""Windy"" ],
+        ""Answer"": ""Snowy""
+      },
+      {
+        ""ID"": 18,
+        ""QuestionText"": ""What do you call strong winds during a storm?"",
+        ""Options"": [ ""Tornado"", ""Hurricane"", ""Thunderstorm"" ],
+        ""Answer"": ""Hurricane""
+      },
+      {
+        ""ID"": 19,
+        ""QuestionText"": ""What is the weather like when it's very hot?"",
+        ""Options"": [ ""Cold"", ""Warm"", ""Hot"" ],
+        ""Answer"": ""Hot""
+      },
+      {
+        ""ID"": 20,
+        ""QuestionText"": ""How do you say 'déšť' in English?"",
+        ""Options"": [ ""Rain"", ""Snow"", ""Wind"" ],
+        ""Answer"": ""Rain""
+      }
+    ],
+    ""Unit 5"": [
+      {
+        ""ID"": 21,
+        ""QuestionText"": ""What is the first month of the year?"",
+        ""Options"": [ ""January"", ""February"", ""March"" ],
+        ""Answer"": ""January""
+      },
+      {
+        ""ID"": 22,
+        ""QuestionText"": ""Which month comes after January?"",
+        ""Options"": [ ""February"", ""March"", ""April"" ],
+        ""Answer"": ""February""
+      },
+      {
+        ""ID"": 23,
+        ""QuestionText"": ""How do you say 'středa' in English?"",
+        ""Options"": [ ""Monday"", ""Tuesday"", ""Wednesday"" ],
+        ""Answer"": ""Wednesday""
+      },
+      {
+        ""ID"": 24,
+        ""QuestionText"": ""Which month is the middle of the year?"",
+        ""Options"": [ ""June"", ""December"", ""August"" ],
+        ""Answer"": ""June""
+      },
+      {
+        ""ID"": 25,
+        ""QuestionText"": ""How do you say 'pátek' in English?"",
+        ""Options"": [ ""Thursday"", ""Friday"", ""Saturday"" ],
+        ""Answer"": ""Friday""
+      }
+    ]
+  }
+}
+";
+
+            // Zápis JSON jako textového řetězce do souboru
+            try
+            {
+                File.WriteAllText(filePath, jsonContent);
+                Console.WriteLine("JSON soubor byl úspěšně vytvořen jako textový řetězec.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Chyba při vytváření souboru: {ex.Message}");
+            }
+        }
+    }
+
+        // Load units
+        public static ObservableCollection<UnitModel> LoadUnits()
     {
         try
         {
