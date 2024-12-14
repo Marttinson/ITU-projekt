@@ -34,8 +34,8 @@
                                             BorderBrush="Transparent"
                                             Background="{DynamicResource PrimaryButtonBackground}"
                                             Margin="5"
-                                            Command="{Binding DataContext.StartUnitCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                            CommandParameter="{Binding}">
+                                            Click="Start_Click"
+                                            Tag="{Binding ID}">
                                         <Viewbox>
                                             <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Viewbox>
@@ -89,8 +89,8 @@
                                         </Grid>
 
                                         <Button 
-                                                Command="{Binding DataContext.StartUnitCommand_endless, RelativeSource={RelativeSource AncestorType=Window}}"
-                                                CommandParameter="{Binding}">
+                                                Click="StartEndless_Click"
+                                                Tag="{Binding ID}">
                                             <Viewbox>
                                                 <TextBlock Text="Endless Mode" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                             </Viewbox>

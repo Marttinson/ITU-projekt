@@ -227,6 +227,8 @@ public class MainWindowViewModel : INotifyPropertyChanged
         BackToMenuVisibility = Visibility.Visible;
     }
 
+
+    /* ODDELAT*/
     private void ExecuteStartUnitCommand_ENDLESS(UnitModel model)
     {
         MessageBox.Show("Unit " + model.ID + " endless");
@@ -253,6 +255,8 @@ public class MainWindowViewModel : INotifyPropertyChanged
         MessageBox.Show("Unit " + model.ID + " limited VM");
         BackToMenuVisibility = Visibility.Visible;
     }
+
+    /* Oddelat */
 
     protected void OnPropertyChanged([CallerMemberName] string name = null)
     {
