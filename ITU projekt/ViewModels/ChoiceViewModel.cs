@@ -157,7 +157,7 @@ public class ChoiceViewModel : INotifyPropertyChanged
                 {
                     // CHYBA STAT
                     VM.incrementWrong();
-                    Button1Background = "Red";
+                    Button1Background = new SolidColorBrush(Colors.Red);
                 }
                 break;
             case "Možnost 2":
@@ -173,7 +173,7 @@ public class ChoiceViewModel : INotifyPropertyChanged
                 {
                     // CHYBA STAT
                     VM.incrementWrong();
-                    Button2Background = "Red";
+                    Button2Background = new SolidColorBrush(Colors.Red);
                 }
                 break;
             case "Možnost 3":
@@ -189,7 +189,7 @@ public class ChoiceViewModel : INotifyPropertyChanged
                 { 
                     // CHYBA STAT
                     VM.incrementWrong();
-                    Button3Background = "Red";
+                    Button3Background = new SolidColorBrush(Colors.Red);
                 }
                 break;
         }
