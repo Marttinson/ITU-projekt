@@ -22,10 +22,10 @@ namespace ITU_projekt.Templates
 {
     public partial class Choice : UserControl
     {
-        public Choice(MainWindowViewModel _VM, string _unit)
+        public Choice(MainWindowViewModel _VM, string _unit, ref int turn)
         {
             InitializeComponent();
-            DataContext = new ChoiceViewModel(_VM, _unit);
+            DataContext = new ChoiceViewModel(_VM, _unit, ref turn);
         }
     }
 }

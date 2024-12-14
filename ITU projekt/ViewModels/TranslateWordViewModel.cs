@@ -65,8 +65,9 @@ public class TranslateWordViewModel : INotifyPropertyChanged
     private TranslateWordQuestion question;
     private string unit;
     MainWindowViewModel VM;
+    private int turn;
 
-    public TranslateWordViewModel(MainWindowViewModel _VM, string _unit)
+    public TranslateWordViewModel(MainWindowViewModel _VM, string _unit, ref int _turn)
     {
         // Načtení otázek ze souborů, pro konkrétní lekci
         JsonHandler jsonHandler = new JsonHandler();
@@ -88,11 +89,12 @@ public class TranslateWordViewModel : INotifyPropertyChanged
         EvaluateAnswerCommand = new RelayCommand(_ => EvaluateAnswer());
         NextQuestion = new RelayCommand<object>(ExecuteNextQuestion);
         VM = _VM;
+        turn = _turn;
     }
 
     // Funkce kontrolující, zda je zadaný překlad správně
     public ICommand EvaluateAnswerCommand { get; }
-    private void EvaluateAnswer()
+    public void EvaluateAnswer()
     {
         if (string.Equals(UserAnswer, question.Answer, StringComparison.OrdinalIgnoreCase)) // Nahraďte skutečnou logikou
         {
@@ -113,17 +115,30 @@ public class TranslateWordViewModel : INotifyPropertyChanged
     public ICommand NextQuestion { get; }
     private void ExecuteNextQuestion(object parameter)
     {
+        // Kontrola, zda již neproběhlo 10 otázek
+        if (turn > 0)
+        {
+            if (turn == 10)
+            {
+                VM.LessonFinished();
+                VM.CurrentUserControl = new UnitSelection(VM);
+                return;
+            }
+            else
+                turn++;
+        }
+
         // Vygenerování náhodného čísla v intervalu <1; 3> a podle toho zvolení následující otázky,
         // všechny mají stejnou pravděpodobnost
         Random random = new Random();
         int randomNumber = random.Next(1, 4);
 
         if (randomNumber == 1)
-            VM.CurrentUserControl = new TranslateWord(VM, unit);
+            VM.CurrentUserControl = new TranslateWord(VM, unit, ref turn);
         else if (randomNumber == 2)
-            VM.CurrentUserControl = new WordMatching(VM, unit);
+            VM.CurrentUserControl = new WordMatching(VM, unit, ref turn);
         else if (randomNumber == 3)
-            VM.CurrentUserControl = new Choice(VM, unit);
+            VM.CurrentUserControl = new Choice(VM, unit, ref turn);
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

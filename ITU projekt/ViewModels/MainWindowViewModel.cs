@@ -12,6 +12,7 @@ using System.Printing;
 using System.Windows.Input;
 using System.Data.Common;
 using ITU_projekt.API;
+using System.Diagnostics;
 
 
 namespace ITU_projekt.ViewModels;
@@ -166,15 +167,13 @@ public class MainWindowViewModel : INotifyPropertyChanged
         JsonHandler.SaveStreakSymbol(StreakSymbol);
     }
 
-    // TODO ukonceni lekce
+
     // Vraceni zpet do hlavniho menu
     public void BackToMenuCommandExecute(object parameter)
     {
-        // TODO Ukoncit lekci nebo whatever atd...
-        /*if (_CurrentUserControl.GetType() == typeof(specific UC))
-        {
-            // clean up
-        }*/
+        wrong_answers = 0;
+        right_answers = 0;
+        currentUnit = null;
         BackToMenuVisibility = Visibility.Hidden;
         CurrentUserControl = new UnitSelection(this);
     }
@@ -193,16 +192,14 @@ public class MainWindowViewModel : INotifyPropertyChanged
         BackToMenuVisibility = Visibility.Visible;
     }
 
-
-
+    // Saves new error rate
     private void SaveStatistic()
     {
-        JsonHandler.SaveStatistic(currentUnit.ID, wrong_answers / (wrong_answers + right_answers));
+        JsonHandler.SaveStatistic(currentUnit.ID, (float)wrong_answers / (float)(right_answers));
     }
 
-
-    // TODOs:
     // Call this when lesson is finished
+    // Handles streak and back to menu button visibility
     public void LessonFinished()
     {
         Streak s = JsonHandler.ReadStreak();
@@ -221,6 +218,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         }
 
         SaveStatistic();
+        BackToMenuVisibility = Visibility.Hidden;
     }
 
     // Call this when start of lesson

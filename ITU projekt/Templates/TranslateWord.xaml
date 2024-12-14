@@ -36,7 +36,8 @@
             
             <!-- Textové pole, do kterého se píše odpověď -->
             <TextBox x:Name="AnswerTextBox" Grid.Column="1" Grid.Row="1" MaxHeight="35" TextAlignment="Center" FontSize="20"
-                     VerticalContentAlignment="Center" Text="{Binding UserAnswer, UpdateSourceTrigger=PropertyChanged}" />
+                     VerticalContentAlignment="Center" Text="{Binding UserAnswer, UpdateSourceTrigger=PropertyChanged}"
+                     KeyDown="TextBox_KeyDown" />
         </Grid>
         <!-- Tlačítko pro kontrolu odpovědi -->
         <Button Grid.Column="1" Grid.Row="2" MaxHeight="40" MaxWidth="250" FontSize="25" Content="Odpovědět" 

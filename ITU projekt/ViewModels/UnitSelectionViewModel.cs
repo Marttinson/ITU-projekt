@@ -11,6 +11,7 @@ using ITU_projekt.API;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows;
+using System.Diagnostics;
 
 namespace ITU_projekt.ViewModels;
 
@@ -56,33 +57,54 @@ class UnitSelectionViewModel : INotifyPropertyChanged
         var id = parameter as int?;
         if (id.HasValue)
         {
-            // TODO LOGIC
             string unit = "Unit " + parameter;
-            //MessageBox.Show(unit + " limited");
-
-            //VM.CurrentUserControl = new MemoryGame(VM);
 
             // Vygenerování náhodného čísla v intervalu <1; 3> a podle toho zvolení počáteční otázky,
             // všechny mají stejnou pravděpodobnost
             Random random = new Random();
             int randomNumber = random.Next(1, 4);
 
-            if (randomNumber == 1)
-                VM.CurrentUserControl = new TranslateWord(VM, unit);
+            // Set UnitModel for saving statistics
+            if (parameter is int uid)
+            {
+                VM.setUnitModel(Units[uid-1]);
+            }
+            else
+            {
+                MessageBox.Show("Unit ID parsing failed");
+                return;
+            }
+            
+
+            int turn = 1;
+            if(randomNumber == 1)
+                VM.CurrentUserControl = new TranslateWord(VM, unit, ref turn);
             else if (randomNumber == 2)
-                VM.CurrentUserControl = new WordMatching(VM, unit);
+                VM.CurrentUserControl = new Choice(VM, unit, ref turn);
             else if (randomNumber == 3)
-                VM.CurrentUserControl = new Choice(VM, unit);
+                VM.CurrentUserControl = new Choice(VM, unit, ref turn);
         }
     }
 
-    // Start endless lesson
-    public void ExecuteStartUnitCommand_ENDLESS(object parameter)
+    private void ExecuteStartUnitCommand_ENDLESS(object parameter)
     {
         var id = parameter as int?;
         if (id.HasValue)
         {
-            // TODO LOGIC
+            string unit = "Unit " + parameter;
+
+            // Vygenerování náhodného čísla v intervalu <1; 3> a podle toho zvolení počáteční otázky,
+            // všechny mají stejnou pravděpodobnost
+            Random random = new Random();
+            int randomNumber = random.Next(1, 4);
+
+            int turn = -1;
+            if (randomNumber == 1)
+                VM.CurrentUserControl = new TranslateWord(VM, unit, ref turn);
+            else if (randomNumber == 2)
+                VM.CurrentUserControl = new WordMatching(VM, unit, ref turn);
+            else if (randomNumber == 3)
+                VM.CurrentUserControl = new Choice(VM, unit, ref turn);
         }
     }
 }

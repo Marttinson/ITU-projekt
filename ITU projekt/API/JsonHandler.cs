@@ -9,6 +9,7 @@ using System.Windows;
 using System.Linq;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 namespace ITU_projekt.API;
 
@@ -667,6 +668,7 @@ public class JsonHandler
         {
             // Get path
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            Debug.WriteLine($"AppData Path: {appDataPath}");
 
             // Construct the full path 
             string jsonPath = Path.Combine(appDataPath, "ITU", "lekce.json");
@@ -675,6 +677,7 @@ public class JsonHandler
 
             // Find the unit with the specified ID
             var unit = units.FirstOrDefault(u => u.ID == iD);
+
 
             if (unit != null)
             {
@@ -695,5 +698,6 @@ public class JsonHandler
             MessageBox.Show($"An error occurred while saving the statistic: {ex.Message}");
         }
     }
+
 
 }

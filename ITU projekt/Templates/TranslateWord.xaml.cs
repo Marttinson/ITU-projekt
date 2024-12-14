@@ -21,9 +21,31 @@ namespace ITU_projekt.Templates;
 
 public partial class TranslateWord : UserControl
 {
-    public TranslateWord(MainWindowViewModel VM, string unit)
+    public TranslateWord(MainWindowViewModel VM, string unit, ref int turn)
     {
         InitializeComponent();
-        DataContext = new TranslateWordViewModel(VM, unit);
+        DataContext = new TranslateWordViewModel(VM, unit, ref turn);
+    }
+
+    private void TextBox_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Enter)
+        {
+            if (DataContext is TranslateWordViewModel viewModel)
+            {
+                if (viewModel.ButtonOdpovedetVisibility == Visibility.Visible)
+                {
+                    if (viewModel.EvaluateAnswerCommand.CanExecute(null))
+                        viewModel.EvaluateAnswerCommand.Execute(null);
+                }
+                else
+                {
+                    if (viewModel.NextQuestion.CanExecute(null))
+                        viewModel.NextQuestion.Execute(null);
+                }
+
+                    e.Handled = true;
+            }
+        }
     }
 }

@@ -1,20 +1,21 @@
 TODO
--- komenty (MainWindow - trochu, UnitModel -- done, UnitSelection -- done, Graph -- done, CustomUserWordList -- done)
+
 -- smazat nepotrebny soubory
-
-
-// Musim pockat na dodelany lessony
--- statistiky  			-- pres MWVM
--- propojit streak  	-- pres MWVM
--- back to menu button	-- pres MWVM
 
 
 -- Další hra	== poslech?
 
 
--- viewboxy	(UnitSelection -- kinda done, CustomUserWordList -- kinda)
+-- viewboxy	(UnitSelection -- kinda done, CustomUserWordList -- kinda done)
 
 
 -- spousta erroru s bindingem	---- idk
 -- save button visibility
 -- rounded corners == slozity nechce se mi
+
+
+
+-- komenty (MainWindow - trochu, UnitModel -- done, UnitSelection -- done, Graph -- done, CustomUserWordList -- done)			-- HOTOVO
+-- statistiky  			-- pres MWVM		-- HOTOVO
+-- propojit streak  	-- pres MWVM		-- HOTOVO
+-- back to menu button	-- pres MWVM		-- HOTOVO
