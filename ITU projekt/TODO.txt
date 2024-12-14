@@ -1,7 +1,6 @@
 TODO
--- komenty (MainWindow - trochu, UnitModel -- done, UnitSelection -- done, Graph -- done, CustomUserWordList)
+-- komenty (MainWindow - trochu, UnitModel -- done, UnitSelection -- done, Graph -- done, CustomUserWordList -- done)
 -- smazat nepotrebny soubory
--- message boxy oddelat
 
 
 // Musim pockat na dodelany lessony
