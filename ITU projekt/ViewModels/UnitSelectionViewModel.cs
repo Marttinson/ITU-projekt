@@ -49,33 +49,17 @@ class UnitSelectionViewModel : INotifyPropertyChanged
         // Load Units
         Units = JsonHandler.LoadUnits();
 
-        // Connect Commands
-        AddCustomQuestions = new RelayCommand(ExecuteAddCustomQuestions);
-        StartUnitCommand = new RelayCommand(ExecuteStartUnitCommand);
-        StartUnitCommand_endless = new RelayCommand(ExecuteStartUnitCommand_ENDLESS);
-        ViewStatistics = new RelayCommand(ExecuteViewStatistics);
-
         VM = _VM;
     }
 
-    // TODO CUSTOM Qs
-    private void ExecuteAddCustomQuestions(object parameter)
-    {
-        var id = parameter as int?;
-        if (id.HasValue)
-        {
-            // TODO LOGIC
-            MessageBox.Show("Unit " + parameter + " custom");
-        }
-        else { MessageBox.Show("ID error"); }
-    }
-
     // TODO START LECTION -> send to MainWindowViewModel
-    private void ExecuteStartUnitCommand(object parameter)
+    public void ExecuteStartUnitCommand(object parameter)
     {
+        MessageBox.Show("Start");
         var id = parameter as int?;
         if (id.HasValue)
         {
+            MessageBox.Show("Unit " + id + " limited          asdasdasd");
             // TODO LOGIC
             string unit = "Unit " + parameter;
             //MessageBox.Show(unit + " limited");
@@ -95,24 +79,14 @@ class UnitSelectionViewModel : INotifyPropertyChanged
                 VM.CurrentUserControl = new Choice(VM, unit);
         }
     }
-    private void ExecuteStartUnitCommand_ENDLESS(object parameter)
+    public void ExecuteStartUnitCommand_ENDLESS(object parameter)
     {
+        MessageBox.Show("Endless");
         var id = parameter as int?;
         if (id.HasValue)
         {
             // TODO LOGIC
-            MessageBox.Show("Unit " + parameter + " endless");
-        }
-    }
-
-    // TODO VIEW STATISTICS ->send to MainWindowViewModel
-    private void ExecuteViewStatistics(object parameter)
-    {
-        var id = parameter as int?;
-        if (id.HasValue)
-        {
-            // TODO LOGIC
-            MessageBox.Show("Unit " + parameter + " statistics");
+            MessageBox.Show("Unit " + id + " endless           asdsadasd");
         }
     }
 }

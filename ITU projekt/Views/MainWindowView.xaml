@@ -9,17 +9,16 @@
         Height="450"
         Title="ITU Aplikace"
         ResizeMode="CanResizeWithGrip"
+        xmlns:converters="clr-namespace:ITU_projekt.Converters"
     >
-
-    <Window.DataContext>
-        <viewModels:MainWindowViewModel />
-    </Window.DataContext>
 
     <Window.Resources>
         <!-- Konvertor pro výšku tlačítek (10% výšky okna) -->
         <local:HeightConverter x:Key="HeightConverter"/>
         <!-- Konvertor pro šířku tlačítek (50% šířky okna) -->
         <local:WidthConverter x:Key="WidthConverter"/>
+        <!-- Konvertor pro vizualizaci kompletace streaku -->
+        <converters:BoolToColorConverter x:Key="BoolToColorConverter"/>
     </Window.Resources>
 
     <Grid>
@@ -32,11 +31,11 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" MinWidth="150"/>
             <!-- Levý sloupec pro výběr jazyka -->
             <ColumnDefinition Width="5*" />
             <!-- Střední část pro výběr lekcí -->
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" MinWidth="150"/>
             <!-- Pravý sloupec pro menu -->
         </Grid.ColumnDefinitions>
 
@@ -44,47 +43,65 @@
         <Rectangle Grid.Row="0"  Grid.Column="0" Grid.ColumnSpan="3" Fill="{DynamicResource SettingsPanelBackground}" />
 
         <!-- Menu -->
-        <Button     x:Name="BackToUnitSelection" BorderThickness="1" BorderBrush="Gray"
-                    Grid.Row="0" Grid.Column="0" 
-                    Click="back_to_unit_selection" 
+        <Button  Grid.Row="0" Grid.Column="0"   x:Name="BackToMenuButton"
+                    BorderThickness="0"
+                    Command="{Binding BackToMenuCommand, FallbackValue=null}" 
                     HorizontalAlignment="Stretch" 
                     VerticalAlignment="Stretch" 
                     HorizontalContentAlignment="Stretch" 
-                    VerticalContentAlignment="Stretch" >
+                    VerticalContentAlignment="Stretch" 
+                    Visibility="{Binding BackToMenuVisibility}"
+                    >
             <Viewbox>
                 <TextBlock Text="Menu" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Viewbox>
         </Button>
 
-        <!-- Title -->
+        <!-- Title and Icon -->
         <Viewbox Grid.Row="0" Grid.Column="1">
-            <TextBlock  Text="ITU Aplikace" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Grid  HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{DynamicResource SettingsPanelBackground}">
+                    <!-- Streak Icon -->
+                    <TextBlock Text="{Binding StreakSymbol}" Foreground="{Binding IsLessonCompletedToday, Converter={StaticResource BoolToColorConverter}}" FontWeight="Bold"/>
+                    <!-- Title Text -->
+                    <TextBlock Text="ITU Aplikace" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
         </Viewbox>
-    
+
         <!-- Tlacitko pro vysunuti menu -->
-        <Button     Grid.Row="0" Grid.Column="2" BorderThickness="1" BorderBrush="Gray"
-                    Click="MenuButton_Click" 
-                    HorizontalAlignment="Stretch" 
-                    VerticalAlignment="Stretch" 
-                    HorizontalContentAlignment="Stretch" 
-                    VerticalContentAlignment="Stretch" 
-                    Background="{DynamicResource SideMenuButtonColor}">
+        <Button    Grid.Row="0" Grid.Column="2"   
+                        BorderThickness="0"
+                        Click="MenuButton_Click" 
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch" 
+                        HorizontalContentAlignment="Stretch" 
+                        VerticalContentAlignment="Stretch" 
+                        >
             <Viewbox>
                 <TextBlock Text="Nastavení" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Viewbox>
         </Button>
 
         <!-- Here will be tasks inserted -->
+        <ContentControl x:Name="MainContent" Grid.Column="1" Grid.Row="1" Content="{Binding CurrentUserControl}">
+            <ContentControl.Template>
+                <ControlTemplate TargetType="ContentControl">
 
-        <ContentControl x:Name="MainContent" Grid.Column="1" Grid.Row="1" Content="{Binding CurrentUserControl}"/>
+                    <ContentPresenter Content="{TemplateBinding Content}" />
+
+                </ControlTemplate>
+            </ContentControl.Template>
+        </ContentControl>
 
         <!-- Bocni menu -->
-        <Grid x:Name="RightSideMenu" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Background="{DynamicResource SettingsPanelBackground}" Width="200" Opacity="0">
-            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch" >
+        <Grid x:Name="RightSideMenu" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Background="{DynamicResource SettingsPanelBackground}" Width="0" MaxWidth="150">
+            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
                 <CheckBox x:Name="DarkModeCheckBox" Content="Dark Mode" 
-                  VerticalAlignment="Top" HorizontalAlignment="Left"
+                  VerticalAlignment="Top" HorizontalAlignment="Center"
                   Margin="10" Checked="DarkModeCheckBox_Checked" 
                   Unchecked="DarkModeCheckBox_Unchecked"/>
+                <Button HorizontalAlignment="Center" Content="Change Streak Icon" Command="{Binding ChangeStreakIcon}" />
             </StackPanel>
         </Grid>
     </Grid>

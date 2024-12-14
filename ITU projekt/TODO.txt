@@ -1,0 +1,16 @@
+TODO
+-- komenty
+-- viewboxy	(UnitSelection, CustomUserWordList, Graph)
+-- spravit side menu
+-- graf toggle button highlight
+-- rounded corners
+
+
+-- message boxy oddelat
+-- statistiky
+-- propojeni lekci a menu
+-- celkove to poskládat dohromady
+
+
+-- spousta erroru s bindingem	---- idk
+-- save button visibility

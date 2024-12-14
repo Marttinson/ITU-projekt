@@ -25,55 +25,76 @@
                                     </Grid.RowDefinitions>
 
                                     <!-- Left Side - Start Exercise -->
-                                    <Button Content="{Binding Name}" 
-                                            Command="{Binding DataContext.StartUnitCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                            CommandParameter="{Binding ID}"
-                                            HorizontalAlignment="Stretch"
+                                    <Button HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
-                                            FontSize="16" 
-                                            Height="50" 
+                                            FontSize="16"
+                                            Height="50"
                                             Grid.Column="0"
                                             Grid.Row="0"
-                                            BorderBrush="Transparent" 
-                                            Background="{DynamicResource PrimaryButtonBackground}" 
-                                            Margin="5" />
+                                            BorderBrush="Transparent"
+                                            Background="{DynamicResource PrimaryButtonBackground}"
+                                            Margin="5"
+                                            Click="Start_Click"
+                                            Tag="{Binding ID}">
+                                        <Viewbox>
+                                            <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Viewbox>
+                                    </Button>
 
                                     <!-- Right Side - Open Menu with Settings Icon -->
-                                    <Button Content="⚙" 
-                                                Click="OpenSettingsButton_Click" 
-                                                HorizontalAlignment="Stretch"
-                                                VerticalAlignment="Stretch" 
-                                                FontSize="16" 
-                                                Height="50" 
-                                                Grid.Column="1"
-                                                Grid.Row="0"
-                                                BorderBrush="Transparent" 
-                                                Background="{DynamicResource UnitSelectionBackground}"
-                                                Margin="5"/>
+                                    <Button HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            FontSize="16"
+                                            Height="50"
+                                            Grid.Column="1"
+                                            Grid.Row="0"
+                                            BorderBrush="Transparent"
+                                            Background="{DynamicResource UnitSelectionBackground}"
+                                            Margin="5"
+                                            Click="OpenSettingsButton_Click">
+                                        <Viewbox>
+                                            <TextBlock Text="⚙" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Viewbox>
+                                    </Button>
 
-                                    <StackPanel x:Name="SettingsPanel" 
-                                                Visibility="Collapsed"
-                                                Grid.Row="1"
-                                                Grid.ColumnSpan="2"
-                                                Background="{DynamicResource SettingsPanelBackground}">
-                                        <TextBlock Text="{Binding Description}" />
+                                    <!-- Settings Panel -->
+                                    <StackPanel x:Name="SettingsPanel" Visibility="Collapsed" Grid.Row="1" Grid.ColumnSpan="2" Background="{DynamicResource SettingsPanelBackground}">
+                                        <TextBlock Text="{Binding Description}" 
+                                                   TextWrapping="Wrap" 
+                                                   MaxWidth="300" 
+                                                   VerticalAlignment="Top" 
+                                                   HorizontalAlignment="Center"/>
+
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
-                                            <Button Content="Add custom questions" 
-                                                    Command="{Binding DataContext.AddCustomQuestions, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                    CommandParameter="{Binding ID}" 
-                                                    Grid.Column="0" />
-                                            <Button Content="View Statistics" 
-                                                    Command="{Binding DataContext.ViewStatistics, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                    CommandParameter="{Binding ID}"
-                                                    Grid.Column="1" />
+                                            <Button 
+                                                    Command="{Binding DataContext.AddCustomQuestionsCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                    CommandParameter="{Binding}"
+                                                    Grid.Column="0">
+                                                <Viewbox>
+                                                    <TextBlock Text="Add custom questions" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Viewbox>
+                                            </Button>
+                                            <Button 
+                                                    Command="{Binding DataContext.ShowStatisticsCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                    CommandParameter="{Binding}"
+                                                    Grid.Column="1">
+                                                <Viewbox>
+                                                    <TextBlock Text="View Statistics" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Viewbox>
+                                            </Button>
                                         </Grid>
-                                            <Button Content="Endless Mode" 
-                                                    Command="{Binding DataContext.StartUnitCommand_endless, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                    CommandParameter="{Binding ID}" />      
+
+                                        <Button 
+                                                Click="StartEndless_Click"
+                                                Tag="{Binding ID}">
+                                            <Viewbox>
+                                                <TextBlock Text="Endless Mode" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Viewbox>
+                                        </Button>
                                     </StackPanel>
                                 </Grid>
                             </Border>

@@ -1,0 +1,165 @@
+﻿using ITU_projekt.Models;
+using OxyPlot.Axes;
+using OxyPlot.Series;
+using OxyPlot;
+using System.ComponentModel;
+using System.Windows.Input;
+using System;
+
+public class GraphViewModel : INotifyPropertyChanged
+{
+    private int _xAxisRange;
+    private bool _showAll;
+    private PlotModel _plotModel;
+    private UnitModel _model;
+
+    public GraphViewModel(UnitModel model)
+    {
+        _xAxisRange = model.ErrorRates.Count / 2; // Default
+        _showAll = false;
+        _model = model;
+
+        _plotModel = CreatePlotModel();
+        GenerateDataPoints();
+
+        ToggleRangeCommand = new RelayCommand((obj) => ToggleRange());
+        IncrementRangeCommand = new RelayCommand((obj) => IncrementRange());
+        DecrementRangeCommand = new RelayCommand((obj) => DecrementRange());
+    }
+
+    public PlotModel PlotModel
+    {
+        get => _plotModel;
+        set
+        {
+            _plotModel = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public int XAxisRange
+    {
+        get => _xAxisRange;
+        set
+        {
+            _xAxisRange = value;
+            OnPropertyChanged();
+            GenerateDataPoints(); // Recalculate points on range change
+        }
+    }
+
+    public bool ShowAll
+    {
+        get => _showAll;
+        set
+        {
+            _showAll = value;
+            OnPropertyChanged();
+            GenerateDataPoints(); // Recalculate points when toggling range
+        }
+    }
+
+    public ICommand ToggleRangeCommand { get; }
+    public ICommand IncrementRangeCommand { get; }
+    public ICommand DecrementRangeCommand { get; }
+
+    private void ToggleRange()
+    {
+        ShowAll = !ShowAll;
+    }
+
+    private void IncrementRange()
+    {
+        XAxisRange++;
+        if (_model?.ErrorRates != null && XAxisRange > _model.ErrorRates.Count)
+        {
+            XAxisRange = _model.ErrorRates.Count;
+        }
+    }
+
+    private void DecrementRange()
+    {
+        if (XAxisRange > 1)
+        {
+            XAxisRange--;
+        }
+    }
+
+    private PlotModel CreatePlotModel()
+    {
+        var model = new PlotModel { Title = "Procentuální míra neúspěšnosti posledních x pokusů" };
+
+        // Create X-axis (hidden)
+        var xAxis = new LinearAxis
+        {
+            Position = AxisPosition.Bottom,
+            IsAxisVisible = false // Hide the X-axis
+        };
+        model.Axes.Add(xAxis);
+
+        // Create Y-axis
+        var yAxis = new LinearAxis
+        {
+            Position = AxisPosition.Left,
+            Title = "Míra neúspěchu",
+            Minimum = 0,
+            Maximum = 1
+        };
+        model.Axes.Add(yAxis);
+
+        // Create ScatterSeries
+        var scatterSeries = new ScatterSeries
+        {
+            MarkerType = MarkerType.Circle,
+            MarkerSize = 4,
+            MarkerFill = OxyColors.Red
+        };
+        model.Series.Add(scatterSeries);
+
+        return model;
+    }
+
+    private void GenerateDataPoints()
+    {
+        if (_model?.ErrorRates == null || _model.ErrorRates.Count == 0) return;
+
+        // Clear previous points
+        var scatterSeries = (ScatterSeries)_plotModel.Series[0];
+        scatterSeries.Points.Clear();
+
+        int totalPoints = _model.ErrorRates.Count;
+
+        // Determine the range of points to display
+        int pointsToDisplay = ShowAll ? totalPoints : Math.Min(XAxisRange, totalPoints);
+        int startIndex = totalPoints - pointsToDisplay;
+
+        // Recalculate points with adjusted X-coordinates
+        for (int i = 0; i < pointsToDisplay; i++)
+        {
+            int xValue = i; // X-values start from 0 and increment
+            double yValue = _model.ErrorRates[startIndex + i];
+
+            scatterSeries.Points.Add(new ScatterPoint(xValue, yValue));
+        }
+
+        UpdatePlotRange(pointsToDisplay);
+    }
+
+    private void UpdatePlotRange(int pointsToDisplay)
+    {
+        var xAxis = _plotModel.Axes[0] as LinearAxis;
+        if (xAxis != null)
+        {
+            xAxis.Minimum = 0; // Start from 0
+            xAxis.Maximum = pointsToDisplay; // End at the last point's X-coordinate
+        }
+
+        _plotModel.InvalidatePlot(true); // Refresh the graph
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+}

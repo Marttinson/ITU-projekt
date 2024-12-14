@@ -25,57 +25,48 @@ namespace ITU_projekt.Views
         public MainWindowView()
         {
             SetTheme("LightTheme.xaml");
-            InitializeComponent();
-            BackToUnitSelection.Visibility = Visibility.Hidden;
             DataContext = new MainWindowViewModel();
-        }
-
-        private void back_to_unit_selection(object sender, RoutedEventArgs e)
-        {
-            MainContent.Content = null; // Vymaže aktuální obsah
-            BackToUnitSelection.Visibility = Visibility.Hidden; // Schová back to menu tlačítko
-            // TODO inform VM -> stop lection, return UnitSelection UC
+            InitializeComponent();
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("ZMACKNUTE TLACITKO!!");
-            var viewModel = (MainWindowViewModel)DataContext;
 
             if (RightSideMenu_expanded)
             {
-                // Kompresni animace
+                // Kompresni animace pro šířku
                 var menuAnimation = new DoubleAnimation
                 {
-                    From = 1,
+                    From = RightSideMenu.ActualWidth,
                     To = 0,
                     Duration = new Duration(TimeSpan.FromSeconds(0.3))
                 };
 
-                // Aplikovani animace
-                RightSideMenu.BeginAnimation(UIElement.OpacityProperty, menuAnimation);
+                // Aplikování animace na šířku
+                RightSideMenu.BeginAnimation(Grid.WidthProperty, menuAnimation);
 
-                // Zapamatovani stavu
+                // Zapamatování stavu
                 RightSideMenu_expanded = false;
             }
             else
             {
-                // Expanzni animace
+                // Expanzní animace pro šířku
                 var menuAnimation = new DoubleAnimation
                 {
-                    From = 0,
-                    To = 1,
+                    From = RightSideMenu.ActualWidth,
+                    To = 150,  // Předpokládaná maximální šířka panelu
                     Duration = new Duration(TimeSpan.FromSeconds(0.3))
                 };
 
-                // Aplikovani animace
-                RightSideMenu.BeginAnimation(UIElement.OpacityProperty, menuAnimation);
+                // Aplikování animace na šířku
+                RightSideMenu.BeginAnimation(Grid.WidthProperty, menuAnimation);
 
-                // Zapamatovani stavu
+                // Zapamatování stavu
                 RightSideMenu_expanded = true;
             }
-
         }
+
 
         private void DarkModeCheckBox_Checked(object sender, RoutedEventArgs e)
         {

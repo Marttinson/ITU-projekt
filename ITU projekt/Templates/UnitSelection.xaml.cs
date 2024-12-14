@@ -8,11 +8,12 @@ namespace ITU_projekt.Templates;
 public partial class UnitSelection : UserControl
 {
 
-
+    private UnitSelectionViewModel viewModel;
     public UnitSelection(MainWindowViewModel VM)
     {
         InitializeComponent();
-        DataContext = new UnitSelectionViewModel(VM);
+        viewModel = new UnitSelectionViewModel(VM);
+        DataContext = viewModel;
     }
 
     private void OpenSettingsButton_Click(object sender, RoutedEventArgs e)
@@ -29,4 +30,20 @@ public partial class UnitSelection : UserControl
             settingsPanel.Visibility = settingsPanel.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
     }
+
+
+    private void Start_Click(object sender, RoutedEventArgs e)
+    {
+        MessageBox.Show("start click");
+        var button = sender as Button;
+        viewModel.ExecuteStartUnitCommand(int.Parse(button.Tag.ToString().Trim()));
+    }
+
+    private void StartEndless_Click(object sender, RoutedEventArgs e)
+    {
+        MessageBox.Show("endless click");
+        var button = sender as Button;
+        viewModel.ExecuteStartUnitCommand(int.Parse(button.Tag.ToString().Trim()));
+    }
+
 }

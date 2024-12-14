@@ -5,10 +5,16 @@
     <Compile Update="Templates\MemoryGame.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Templates\Graph.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Templates\Choice.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Templates\WordMatching.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Templates\CustomUserWordList.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -16,7 +22,13 @@
     <Page Update="Templates\MemoryGame.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Templates\Graph.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Templates\Choice.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Templates\CustomUserWordList.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Templates\WordMatching.xaml">
