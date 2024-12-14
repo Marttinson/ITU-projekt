@@ -178,7 +178,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
             }
         }
 
-        CurrentUserControl = new UnitSelection();
+        CurrentUserControl = new UnitSelection(this);
         BackToMenuVisibility = Visibility.Hidden;
     }
 
