@@ -2,7 +2,7 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <Compile Update="Templates\Translation.xaml.cs">
+    <Compile Update="Templates\MemoryGame.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Templates\Graph.xaml.cs">
@@ -11,12 +11,15 @@
     <Compile Update="Templates\Choice.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Templates\WordMatching.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Templates\CustomUserWordList.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Templates\Translation.xaml">
+    <Page Update="Templates\MemoryGame.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Templates\Graph.xaml">
@@ -26,6 +29,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Templates\CustomUserWordList.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Templates\WordMatching.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

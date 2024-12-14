@@ -15,59 +15,15 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using ITU_projekt.API;
+using ITU_projekt.ViewModels;
 
 namespace ITU_projekt.Templates;
 
-public partial class TranslateWord : UserControl, INotifyPropertyChanged
+public partial class TranslateWord : UserControl
 {
-    private string _wordToTranslate;
-    private TranslateWordQuestion question;
-    public string WordToTranslate
-    {
-        get => _wordToTranslate;
-        set
-        {
-            _wordToTranslate = value;
-            OnPropertyChanged(nameof(WordToTranslate));
-        }
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected virtual void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
-    public TranslateWord()
+    public TranslateWord(MainWindowViewModel VM, string unit)
     {
         InitializeComponent();
-        DataContext = this; // Nastavení datového kontextu
-
-        // TODO (vezmeme z appdata) Musí se upravit cesta (teď nejde testovat, takže až se UC někde použije)
-        string filePath = "Data/Anglictina/TranslateWord.json";
-
-        JsonHandler jsonHandler = new JsonHandler();
-
-        List<TranslateWordQuestion> questions = jsonHandler.LoadTranslateWordQuestions(filePath);
-
-        QuestionUtils qutils = new QuestionUtils();
-
-        question = qutils.GetRandomTranslateWordQuestions(questions, 1)[0];
-        WordToTranslate = question.QuestionText;
-    }
-
-    private void EvaluateAnswer(object sender, RoutedEventArgs e)
-    {
-        string userAnswer = AnswerTextBox.Text; // Načtení odpovědi uživatele
-        userAnswer = userAnswer.ToLower();
-
-        if (string.Equals(userAnswer, question.Answer, StringComparison.OrdinalIgnoreCase))
-        {
-            MessageBox.Show("Správně!");
-        }
-        else
-        {
-            MessageBox.Show("Špatná odpověď. Zkuste znovu.");
-        }
+        DataContext = new TranslateWordViewModel(VM, unit);
     }
 }

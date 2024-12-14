@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Packaging;
 using System.Linq;
 
 
 namespace ITU_projekt.API;
 public class QuestionUtils
 {
-    // Konstruktor pro předání seznamu otázek
     public QuestionUtils()
     {
 
@@ -19,6 +19,26 @@ public class QuestionUtils
         foreach (var question in questions)
         {
             if (question.ID == id)
+                return question;
+        }
+        return null;
+    }
+
+    public TranslateWordQuestion FindTranslateWordQuestionByText(List<TranslateWordQuestion> questions, string text)
+    {
+        foreach(var question in questions)
+        {
+            if (question.QuestionText == text)
+                return question;
+        }
+        return null;
+    }
+
+    public TranslateWordQuestion FindTranslateWordQuestionByAnswer(List<TranslateWordQuestion> questions, string answer)
+    {
+        foreach (var question in questions)
+        {
+            if (question.Answer == answer)
                 return question;
         }
         return null;

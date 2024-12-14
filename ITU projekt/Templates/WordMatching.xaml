@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="ITU_projekt.Templates.WordMatching"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ITU_projekt.Templates"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Nadpis -->
+        <TextBlock Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Text="Vyber dvojice" FontSize="32"  VerticalAlignment="Center" HorizontalAlignment="Center" />
+        
+        <!-- Tlačítka rozdělená do dvojic podle řádků -->
+        <Button Grid.Column="1" Grid.Row="2" MaxHeight="50" MaxWidth="200" FontSize="22" Content="{Binding Word1}" 
+                CommandParameter="0" Command="{Binding SelectWordButtonCommand}" Background="{Binding Word1Background}" />
+        <Button Grid.Column="2" Grid.Row="2" MaxHeight="50" MaxWidth="200" FontSize="22" Content="{Binding Slovo1}" 
+                CommandParameter="0" Command="{Binding SelectSlovoButtonCommand}" Background="{Binding Slovo1Background}" />
+
+        <Button Grid.Column="1" Grid.Row="3" MaxHeight="50" MaxWidth="200" FontSize="22" Content="{Binding Word2}" 
+                CommandParameter="1" Command="{Binding SelectWordButtonCommand}" Background="{Binding Word2Background}" />
+        <Button Grid.Column="2" Grid.Row="3" MaxHeight="50" MaxWidth="200" FontSize="22" Content="{Binding Slovo2}" 
+                CommandParameter="1" Command="{Binding SelectSlovoButtonCommand}" Background="{Binding Slovo2Background}" />
+
+        <Button Grid.Column="1" Grid.Row="4" MaxHeight="50" MaxWidth="200" FontSize="22" Content="{Binding Word3}" 
+                CommandParameter="2" Command="{Binding SelectWordButtonCommand}" Background="{Binding Word3Background}" />
+        <Button Grid.Column="2" Grid.Row="4" MaxHeight="50" MaxWidth="200" FontSize="22" Content="{Binding Slovo3}" 
+                CommandParameter="2" Command="{Binding SelectSlovoButtonCommand}" Background="{Binding Slovo3Background}" />
+
+        <Button Grid.Column="1" Grid.Row="5" MaxHeight="50" MaxWidth="200" FontSize="22" Content="{Binding Word4}" 
+                CommandParameter="3" Command="{Binding SelectWordButtonCommand}" Background="{Binding Word4Background}" />
+        <Button Grid.Column="2" Grid.Row="5" MaxHeight="50" MaxWidth="200" FontSize="22" Content="{Binding Slovo4}" 
+                CommandParameter="3" Command="{Binding SelectSlovoButtonCommand}" Background="{Binding Slovo4Background}" />
+
+        <Button Grid.Column="1" Grid.Row="6" MaxHeight="50" MaxWidth="200" FontSize="22" Content="{Binding Word5}" 
+                CommandParameter="4" Command="{Binding SelectWordButtonCommand}" Background="{Binding Word5Background}" />
+        <Button Grid.Column="2" Grid.Row="6" MaxHeight="50" MaxWidth="200" FontSize="22" Content="{Binding Slovo5}" 
+                CommandParameter="4" Command="{Binding SelectSlovoButtonCommand}" Background="{Binding Slovo5Background}" />
+
+        <!-- Tlačítko, které se objeví až po dokončení otázky a slouží pro přesun na další otázku -->
+        <Button Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="2" MaxHeight="40" MaxWidth="250" FontSize="25" 
+                Content="Další" Visibility="{Binding CompletionButtonVisibility}" Command="{Binding NextQuestion}" />
+
+    </Grid>
+</UserControl>

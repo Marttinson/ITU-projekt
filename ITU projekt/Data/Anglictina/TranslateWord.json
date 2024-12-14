@@ -1,154 +1,130 @@
 {
-  "questions": [
-    {
-      "ID": 1,
-      "QuestionText": "dům",
-      "Answer": "house"
-    },
-    {
-      "ID": 2,
-      "QuestionText": "kočka",
-      "Answer": "cat"
-    },
-    {
-      "ID": 3,
-      "QuestionText": "strom",
-      "Answer": "tree"
-    },
-    {
-      "ID": 4,
-      "QuestionText": "škola",
-      "Answer": "school"
-    },
-    {
-      "ID": 5,
-      "QuestionText": "město",
-      "Answer": "city"
-    },
-    {
-      "ID": 6,
-      "QuestionText": "kniha",
-      "Answer": "book"
-    },
-    {
-      "ID": 7,
-      "QuestionText": "stůl",
-      "Answer": "table"
-    },
-    {
-      "ID": 8,
-      "QuestionText": "auto",
-      "Answer": "car"
-    },
-    {
-      "ID": 9,
-      "QuestionText": "pes",
-      "Answer": "dog"
-    },
-    {
-      "ID": 10,
-      "QuestionText": "řeka",
-      "Answer": "river"
-    },
-    {
-      "ID": 11,
-      "QuestionText": "hora",
-      "Answer": "mountain"
-    },
-    {
-      "ID": 12,
-      "QuestionText": "hrad",
-      "Answer": "castle"
-    },
-    {
-      "ID": 13,
-      "QuestionText": "obloha",
-      "Answer": "sky"
-    },
-    {
-      "ID": 14,
-      "QuestionText": "hvězda",
-      "Answer": "star"
-    },
-    {
-      "ID": 15,
-      "QuestionText": "měsíc",
-      "Answer": "moon"
-    },
-    {
-      "ID": 16,
-      "QuestionText": "I am going to the __ to buy some food.",
-      "Answer": "store"
-    },
-    {
-      "ID": 17,
-      "QuestionText": "She is reading a __ in the park.",
-      "Answer": "book"
-    },
-    {
-      "ID": 18,
-      "QuestionText": "They are going to the __ to catch a train.",
-      "Answer": "station"
-    },
-    {
-      "ID": 19,
-      "QuestionText": "Please bring me a __ of water.",
-      "Answer": "glass"
-    },
-    {
-      "ID": 20,
-      "QuestionText": "She has a __ on her face.",
-      "Answer": "smile"
-    },
-    {
-      "ID": 21,
-      "QuestionText": "I need a __ to unlock the door.",
-      "Answer": "key"
-    },
-    {
-      "ID": 22,
-      "QuestionText": "We are traveling by __ to another city.",
-      "Answer": "train"
-    },
-    {
-      "ID": 23,
-      "QuestionText": "He is wearing a __ on his wrist.",
-      "Answer": "watch"
-    },
-    {
-      "ID": 24,
-      "QuestionText": "She baked a __ for her birthday.",
-      "Answer": "cake"
-    },
-    {
-      "ID": 25,
-      "QuestionText": "I need a __ to call my friend.",
-      "Answer": "phone"
-    },
-    {
-      "ID": 26,
-      "QuestionText": "They are building a __ in the backyard.",
-      "Answer": "fence"
-    },
-    {
-      "ID": 27,
-      "QuestionText": "The sun is __ in the sky.",
-      "Answer": "shining"
-    },
-    {
-      "ID": 28,
-      "QuestionText": "The child is playing with a __ in the park.",
-      "Answer": "ball"
-    },
-    {
-      "ID": 29,
-      "QuestionText": "He found a __ on the beach.",
-      "Answer": "shell"
-    },
-    {
-      "ID": 30,
-      "QuestionText": "She is looking at the __ in the mirror.",
-      "Answer": "reflection"
-    }
-  ]
+  "units": {
+    "Unit 1": [
+      {
+        "ID": 1,
+        "QuestionText": "dům",
+        "Answer": "house"
+      },
+      {
+        "ID": 2,
+        "QuestionText": "kočka",
+        "Answer": "cat"
+      },
+      {
+        "ID": 3,
+        "QuestionText": "strom",
+        "Answer": "tree"
+      },
+      {
+        "ID": 4,
+        "QuestionText": "škola",
+        "Answer": "school"
+      },
+      {
+        "ID": 5,
+        "QuestionText": "město",
+        "Answer": "city"
+      },
+      {
+        "ID": 6,
+        "QuestionText": "kniha",
+        "Answer": "book"
+      },
+      {
+        "ID": 7,
+        "QuestionText": "stůl",
+        "Answer": "table"
+      },
+      {
+        "ID": 8,
+        "QuestionText": "auto",
+        "Answer": "car"
+      }
+    ],
+    "Unit 2": [
+      {
+        "ID": 9,
+        "QuestionText": "pes",
+        "Answer": "dog"
+      },
+      {
+        "ID": 10,
+        "QuestionText": "řeka",
+        "Answer": "river"
+      },
+      {
+        "ID": 11,
+        "QuestionText": "hora",
+        "Answer": "mountain"
+      },
+      {
+        "ID": 12,
+        "QuestionText": "hrad",
+        "Answer": "castle"
+      },
+      {
+        "ID": 13,
+        "QuestionText": "obloha",
+        "Answer": "sky"
+      },
+      {
+        "ID": 14,
+        "QuestionText": "hvězda",
+        "Answer": "star"
+      },
+      {
+        "ID": 15,
+        "QuestionText": "měsíc",
+        "Answer": "moon"
+      },
+      {
+        "ID": 16,
+        "QuestionText": "slunce",
+        "Answer": "sun"
+      }
+    ],
+    "Unit 3": [
+      {
+        "ID": 17,
+        "QuestionText": "ryba",
+        "Answer": "fish"
+      },
+      {
+        "ID": 18,
+        "QuestionText": "pták",
+        "Answer": "bird"
+      },
+      {
+        "ID": 19,
+        "QuestionText": "motýl",
+        "Answer": "butterfly"
+      },
+      {
+        "ID": 20,
+        "QuestionText": "medvěd",
+        "Answer": "bear"
+      },
+      {
+        "ID": 21,
+        "QuestionText": "les",
+        "Answer": "forest"
+      },
+      {
+        "ID": 22,
+        "QuestionText": "pole",
+        "Answer": "field"
+      },
+      {
+        "ID": 23,
+        "QuestionText": "louka",
+        "Answer": "meadow"
+      },
+      {
+        "ID": 24,
+        "QuestionText": "zahrada",
+        "Answer": "garden"
+      }
+    ]
+  }
 }

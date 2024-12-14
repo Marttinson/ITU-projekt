@@ -42,10 +42,76 @@ class UnitSelectionViewModel : INotifyPropertyChanged
     public ICommand StartUnitCommand { get; set; }
     public ICommand StartUnitCommand_endless { get; set; }
 
-
-    public UnitSelectionViewModel()
+    private MainWindowViewModel VM;
+    public UnitSelectionViewModel(MainWindowViewModel _VM)
     {
         // Load Units
         Units = JsonHandler.LoadUnits();
+
+        // Connect Commands
+        AddCustomQuestions = new RelayCommand(ExecuteAddCustomQuestions);
+        StartUnitCommand = new RelayCommand(ExecuteStartUnitCommand);
+        StartUnitCommand_endless = new RelayCommand(ExecuteStartUnitCommand_ENDLESS);
+        ViewStatistics = new RelayCommand(ExecuteViewStatistics);
+
+        VM = _VM;
+    }
+
+    // TODO CUSTOM Qs
+    private void ExecuteAddCustomQuestions(object parameter)
+    {
+        var id = parameter as int?;
+        if (id.HasValue)
+        {
+            // TODO LOGIC
+            MessageBox.Show("Unit " + parameter + " custom");
+        }
+        else { MessageBox.Show("ID error"); }
+    }
+
+    // TODO START LECTION -> send to MainWindowViewModel
+    private void ExecuteStartUnitCommand(object parameter)
+    {
+        var id = parameter as int?;
+        if (id.HasValue)
+        {
+            // TODO LOGIC
+            string unit = "Unit " + parameter;
+            //MessageBox.Show(unit + " limited");
+
+            //VM.CurrentUserControl = new MemoryGame(VM);
+    
+            // Vygenerování náhodného čísla v intervalu <1; 3> a podle toho zvolení počáteční otázky,
+            // všechny mají stejnou pravděpodobnost
+            Random random = new Random();
+            int randomNumber = random.Next(1, 4);
+
+            if(randomNumber == 1)
+                VM.CurrentUserControl = new TranslateWord(VM, unit);
+            else if (randomNumber == 2)
+                VM.CurrentUserControl = new WordMatching(VM, unit);
+            else if (randomNumber == 3)
+                VM.CurrentUserControl = new Choice(VM, unit);
+        }
+    }
+    private void ExecuteStartUnitCommand_ENDLESS(object parameter)
+    {
+        var id = parameter as int?;
+        if (id.HasValue)
+        {
+            // TODO LOGIC
+            MessageBox.Show("Unit " + parameter + " endless");
+        }
+    }
+
+    // TODO VIEW STATISTICS ->send to MainWindowViewModel
+    private void ExecuteViewStatistics(object parameter)
+    {
+        var id = parameter as int?;
+        if (id.HasValue)
+        {
+            // TODO LOGIC
+            MessageBox.Show("Unit " + parameter + " statistics");
+        }
     }
 }

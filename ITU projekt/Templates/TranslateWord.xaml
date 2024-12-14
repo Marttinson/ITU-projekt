@@ -29,10 +29,22 @@
                 <RowDefinition Height="6*" />
                 <RowDefinition Height="4*" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28" Text="{Binding WordToTranslate}" />
-            <TextBox x:Name="AnswerTextBox" Grid.Column="1" Grid.Row="1" MaxHeight="35" TextAlignment="Center" FontSize="20" VerticalContentAlignment="Center" />
+            
+            <!-- Slovo, které se má přeložit -->
+            <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28"
+                       Text="{Binding WordToTranslate}" />
+            
+            <!-- Textové pole, do kterého se píše odpověď -->
+            <TextBox x:Name="AnswerTextBox" Grid.Column="1" Grid.Row="1" MaxHeight="35" TextAlignment="Center" FontSize="20"
+                     VerticalContentAlignment="Center" Text="{Binding UserAnswer, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>
-        <Button Grid.Column="1" Grid.Row="2" MaxHeight="40" MaxWidth="250" FontSize="25" Click="EvaluateAnswer">Odpovědět</Button>
+        <!-- Tlačítko pro kontrolu odpovědi -->
+        <Button Grid.Column="1" Grid.Row="2" MaxHeight="40" MaxWidth="250" FontSize="25" Content="Odpovědět" 
+                Visibility="{Binding ButtonOdpovedetVisibility}" Command="{Binding EvaluateAnswerCommand}" />
+        <!-- Tlačítko, které se objeví v případě správné odpovědi a slouží pro přesunutí na další otázku -->
+        <Button Grid.Column="1" Grid.Row="2" MaxHeight="40" MaxWidth="250" FontSize="25" Content="Další"
+                Visibility="{Binding ButtonDalsiVisibility}" Command="{Binding NextQuestion}" />
     </Grid>
+    
 
 </UserControl>

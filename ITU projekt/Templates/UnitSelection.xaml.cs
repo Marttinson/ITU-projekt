@@ -7,10 +7,12 @@ namespace ITU_projekt.Templates;
 
 public partial class UnitSelection : UserControl
 {
-    public UnitSelection()
+
+
+    public UnitSelection(MainWindowViewModel VM)
     {
         InitializeComponent();
-        DataContext = new UnitSelectionViewModel();
+        DataContext = new UnitSelectionViewModel(VM);
     }
 
     private void OpenSettingsButton_Click(object sender, RoutedEventArgs e)
