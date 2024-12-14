@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.IO;
 
 namespace ITU_projekt.ViewModels;
 public class MemoryGameViewModel : INotifyPropertyChanged
@@ -57,9 +58,10 @@ public class MemoryGameViewModel : INotifyPropertyChanged
         // Načítání otázek pomocí funkcí dostupných z námi vytvořeného API
         JsonHandler jsonHandler = new JsonHandler();
 
-        // Musí se upravit cesta (teď nejde testovat, takže až se UC někde použije)
-        string filePath = "Data/Anglictina/TranslateWord.json";
-        List<TranslateWordQuestion> questions = jsonHandler.LoadAllQuestions(filePath);
+        string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        string jsonPath = Path.Combine(appDataPath, "ITU", "TranslateWord.json");
+
+        List<TranslateWordQuestion> questions = jsonHandler.LoadAllQuestions(jsonPath);
 
         QuestionUtils qutils = new QuestionUtils();
 

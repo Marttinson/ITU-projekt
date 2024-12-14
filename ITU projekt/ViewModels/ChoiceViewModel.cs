@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.IO;
+
 
 namespace ITU_projekt.ViewModels;
 public class ChoiceViewModel : INotifyPropertyChanged
@@ -108,11 +110,11 @@ public class ChoiceViewModel : INotifyPropertyChanged
         // Načítání otázek ze souborů
         JsonHandler jsonHandler = new JsonHandler();
 
-        // Musí se upravit cesta (teď nejde testovat, takže až se UC někde použije)
-        string filePath = "Data/Anglictina/Choice.json";
+        string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        string jsonPath = Path.Combine(appDataPath, "ITU", "Choice.json");
 
         unit = _unit;
-        List<PickFromThreeQuestion> questions = jsonHandler.LoadOptionsQuestions(filePath, unit);
+        List<PickFromThreeQuestion> questions = jsonHandler.LoadOptionsQuestions(jsonPath, unit);
 
         QuestionUtils qutils = new QuestionUtils();
 

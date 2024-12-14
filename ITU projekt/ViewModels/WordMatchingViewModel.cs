@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.IO;
 
 namespace ITU_projekt.ViewModels;
 
@@ -210,12 +211,12 @@ public class WordMatchingViewModel : INotifyPropertyChanged
         // Načítání otázek ze souborů
         JsonHandler jsonHandler = new JsonHandler();
 
-        // Musí se upravit cesta (teď nejde testovat, takže až se UC někde použije)
-        string filePath = "Data/Anglictina";
+        string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        string jsonPath = Path.Combine(appDataPath, "ITU");
 
         unit = _unit;
-        List<TranslateWordQuestion> questions = jsonHandler.LoadTranslateWordQuestions(filePath + "/TranslateWord.json", unit);
-        List<TranslateWordQuestion> userQuestions = jsonHandler.LoadTranslateWordUserQuestions(filePath + "/units.json", unit);
+        List<TranslateWordQuestion> questions = jsonHandler.LoadTranslateWordQuestions(jsonPath + "/TranslateWord.json", unit);
+        List<TranslateWordQuestion> userQuestions = jsonHandler.LoadTranslateWordUserQuestions(jsonPath + "/lekce.json", unit);
         questions.AddRange(userQuestions);
 
         QuestionUtils qutils = new QuestionUtils();

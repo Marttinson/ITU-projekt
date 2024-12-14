@@ -100,9 +100,10 @@ public class JsonHandler
             {
                 JsonElement root = doc.RootElement;
 
-                if (root.TryGetProperty("units", out JsonElement unitsElement))
+                // Ověření, že root je pole
+                if (root.ValueKind == JsonValueKind.Array)
                 {
-                    foreach (JsonElement unitElement in unitsElement.EnumerateArray())
+                    foreach (JsonElement unitElement in root.EnumerateArray())
                     {
                         string name = unitElement.GetProperty("Name").GetString();
                         if (name == unit)
@@ -132,7 +133,7 @@ public class JsonHandler
                 }
                 else
                 {
-                    Console.WriteLine("JSON soubor neobsahuje jednotky.");
+                    Console.WriteLine("Root element in JSON is not an array.");
                     return new List<TranslateWordQuestion>();
                 }
             }
@@ -143,6 +144,7 @@ public class JsonHandler
             return new List<TranslateWordQuestion>();
         }
     }
+
 
     // Načtení otázek pro pexeso (Načtení všech otazek, bez ohledu na lekce, poskytnutých v základním json souboru)
     public List<TranslateWordQuestion> LoadAllQuestions(string filePath)
@@ -340,7 +342,7 @@ public class JsonHandler
                         ""Description"": ""Numbers"",
                         ""ErrorRates"": [],
                         ""UserQuestions"": []
-                    },
+                    }
                 ]";
 
                 string dirPath = Path.Combine(appDataPath, "ITU");
