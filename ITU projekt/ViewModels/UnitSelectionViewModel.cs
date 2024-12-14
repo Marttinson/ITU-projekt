@@ -76,23 +76,20 @@ class UnitSelectionViewModel : INotifyPropertyChanged
         var id = parameter as int?;
         if (id.HasValue)
         {
-            // TODO LOGIC
             string unit = "Unit " + parameter;
-            //MessageBox.Show(unit + " limited");
-
-            //VM.CurrentUserControl = new MemoryGame(VM);
     
             // Vygenerování náhodného čísla v intervalu <1; 3> a podle toho zvolení počáteční otázky,
             // všechny mají stejnou pravděpodobnost
             Random random = new Random();
             int randomNumber = random.Next(1, 4);
 
+            int turn = 1;
             if(randomNumber == 1)
-                VM.CurrentUserControl = new TranslateWord(VM, unit);
+                VM.CurrentUserControl = new TranslateWord(VM, unit, ref turn);
             else if (randomNumber == 2)
-                VM.CurrentUserControl = new WordMatching(VM, unit);
+                VM.CurrentUserControl = new WordMatching(VM, unit, ref turn);
             else if (randomNumber == 3)
-                VM.CurrentUserControl = new Choice(VM, unit);
+                VM.CurrentUserControl = new Choice(VM, unit, ref turn);
         }
     }
     private void ExecuteStartUnitCommand_ENDLESS(object parameter)
@@ -100,8 +97,20 @@ class UnitSelectionViewModel : INotifyPropertyChanged
         var id = parameter as int?;
         if (id.HasValue)
         {
-            // TODO LOGIC
-            MessageBox.Show("Unit " + parameter + " endless");
+            string unit = "Unit " + parameter;
+
+            // Vygenerování náhodného čísla v intervalu <1; 3> a podle toho zvolení počáteční otázky,
+            // všechny mají stejnou pravděpodobnost
+            Random random = new Random();
+            int randomNumber = random.Next(1, 4);
+
+            int turn = -1;
+            if (randomNumber == 1)
+                VM.CurrentUserControl = new TranslateWord(VM, unit, ref turn);
+            else if (randomNumber == 2)
+                VM.CurrentUserControl = new WordMatching(VM, unit, ref turn);
+            else if (randomNumber == 3)
+                VM.CurrentUserControl = new Choice(VM, unit, ref turn);
         }
     }
 

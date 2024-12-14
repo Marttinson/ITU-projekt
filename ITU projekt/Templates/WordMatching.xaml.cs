@@ -19,10 +19,10 @@ namespace ITU_projekt.Templates
 {
     public partial class WordMatching : UserControl
     {   
-        public WordMatching(MainWindowViewModel _VM, string _unit)
+        public WordMatching(MainWindowViewModel _VM, string _unit, ref int turn)
         {
             InitializeComponent();
-            DataContext = new WordMatchingViewModel(_VM, _unit);
+            DataContext = new WordMatchingViewModel(_VM, _unit, ref turn);
         }
     }
 }

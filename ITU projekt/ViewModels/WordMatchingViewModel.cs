@@ -203,7 +203,9 @@ public class WordMatchingViewModel : INotifyPropertyChanged
 
     private string unit;
     private MainWindowViewModel VM;
-    public WordMatchingViewModel(MainWindowViewModel _VM, string _unit)
+    private int turn;
+
+    public WordMatchingViewModel(MainWindowViewModel _VM, string _unit, ref int _turn)
     {
         SelectWordButtonCommand = new RelayCommand<string>(OnWordButtonSelected);
         SelectSlovoButtonCommand = new RelayCommand<string>(OnSlovoButtonSelected);
@@ -242,6 +244,7 @@ public class WordMatchingViewModel : INotifyPropertyChanged
         Slovo5 = randomQuestions[slovoNumbers[4]].QuestionText;
 
         VM = _VM;
+        turn = _turn;
         NextQuestion = new RelayCommand<object>(ExecuteNextQuestion);
     }
 
@@ -378,17 +381,29 @@ public class WordMatchingViewModel : INotifyPropertyChanged
     public ICommand NextQuestion { get; }
     private void ExecuteNextQuestion(object parameter)
     {
+        // Kontrola, zda již neproběhlo 10 otázek
+        if (turn > 0)
+        {
+            if (turn == 10)
+            {
+                VM.CurrentUserControl = new UnitSelection(VM);
+                return;
+            }
+            else
+                turn++;
+        }
+
         // Vygenerování náhodného čísla v intervalu <1; 3> a podle toho zvolení následující otázky,
         // všechny mají stejnou pravděpodobnost
         Random random = new Random();
         int randomNumber = random.Next(1, 4);
 
         if (randomNumber == 1)
-            VM.CurrentUserControl = new TranslateWord(VM, unit);
+            VM.CurrentUserControl = new TranslateWord(VM, unit, ref turn);
         else if (randomNumber == 2)
-            VM.CurrentUserControl = new WordMatching(VM, unit);
+            VM.CurrentUserControl = new WordMatching(VM, unit, ref turn);
         else if (randomNumber == 3)
-            VM.CurrentUserControl = new Choice(VM, unit);
+            VM.CurrentUserControl = new Choice(VM, unit, ref turn);
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
