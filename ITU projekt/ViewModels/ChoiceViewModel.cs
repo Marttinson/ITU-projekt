@@ -145,30 +145,36 @@ public class ChoiceViewModel : INotifyPropertyChanged
                 // Logika pro Možnost 1
                 if (string.Equals(Option1, question.Answer, StringComparison.OrdinalIgnoreCase))
                 {
+                    // DOBŘE STAT
                     ButtonGroupVisibility = Visibility.Collapsed;
                     ContinueButtonVisibility = Visibility.Visible;
                 }
                 else
+                    // CHYBA STAT
                     Button1Background = "Red";
                 break;
             case "Možnost 2":
                 // Logika pro Možnost 2
                 if (string.Equals(Option2, question.Answer, StringComparison.OrdinalIgnoreCase))
                 {
+                    // DOBŘE STAT
                     ButtonGroupVisibility = Visibility.Collapsed;
                     ContinueButtonVisibility = Visibility.Visible;
                 }
                 else
+                    // CHYBA STAT
                     Button2Background = "Red";
                 break;
             case "Možnost 3":
                 // Logika pro Možnost 3
                 if (string.Equals(Option3, question.Answer, StringComparison.OrdinalIgnoreCase))
                 {
+                    // DOBŘE STAT
                     ButtonGroupVisibility = Visibility.Collapsed;
                     ContinueButtonVisibility = Visibility.Visible;
                 }
                 else
+                    // CHYBA STAT
                     Button3Background = "Red";
                 break;
         }

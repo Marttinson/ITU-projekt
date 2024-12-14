@@ -253,6 +253,7 @@ public class WordMatchingViewModel : INotifyPropertyChanged
         {
             selectedWordButton = wordButtonValue;
             UpdateWordButtonColors();
+            UpdateSlovoButtonColors();
         }
 
         // Kontrola, zda není stisknuto tlačítko na obou stranách
@@ -270,6 +271,7 @@ public class WordMatchingViewModel : INotifyPropertyChanged
         {
             selectedSlovoButton = slovoButtonValue;
             UpdateSlovoButtonColors();
+            UpdateWordButtonColors();
         }
 
         // Kontrola, zda není stisknuto tlačítko na obou stranách
@@ -282,13 +284,22 @@ public class WordMatchingViewModel : INotifyPropertyChanged
     // Kontrola, zda jsou stisknutá tlačítka se stejném ID (souvisejí spolu) na obou stranách
     private void EvaluateButtonPair(string word, string slovo)
     {
+        UpdateWordButtonColors();
+        UpdateSlovoButtonColors();
+
         // Samotná kontrola a změna barvy
         if (randomQuestions[wordNumbers[int.Parse(word)]].ID == randomQuestions[slovoNumbers[int.Parse(slovo)]].ID)
         {
+            // DOBŘE STAT
             SetButtonColor(word, slovo, Colors.Green);
 
             usedWord.Add(word);
             usedSlovo.Add(slovo);
+        }
+        else
+        {
+            // CHYBA STAT
+            SetButtonColor(word, slovo, Colors.Red);
         }
 
         // Kontrola, zda nejsou již spojeny všechna slova
@@ -298,8 +309,6 @@ public class WordMatchingViewModel : INotifyPropertyChanged
         // Vynulování
         selectedWordButton = "";
         selectedSlovoButton = "";
-        UpdateWordButtonColors();
-        UpdateSlovoButtonColors();
     }
 
     // Funkce měnící barvy tlačítek na jedné straně zpět na výchozí
