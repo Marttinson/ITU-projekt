@@ -12,7 +12,7 @@ using System.Windows;
 public class CustomUserWordListViewModel : INotifyPropertyChanged
 {
     public ObservableCollection<Question> UserQuestions { get; set; }
-    public ObservableCollection<Question> ReversedQuestions { get; set; } // Changed to ObservableCollection
+    public ObservableCollection<Question> ReversedQuestions { get; set; }
 
     public ICommand AddNewQuestionCommand { get; }
     public ICommand DeleteQuestionCommand { get; }
@@ -23,8 +23,8 @@ public class CustomUserWordListViewModel : INotifyPropertyChanged
     public CustomUserWordListViewModel(UnitModel model)
     {
         unitMod = model;
-        UserQuestions = new ObservableCollection<Question>(model.UserQuestions);
-        ReversedQuestions = new ObservableCollection<Question>(UserQuestions.Reverse()); // Initialize reversed list
+        UserQuestions = new ObservableCollection<Question>(model.UserQuestions); // list of user questions
+        ReversedQuestions = new ObservableCollection<Question>(UserQuestions.Reverse()); // Initialize reversed list (new questions should be on top thus reverse)
 
         AddNewQuestionCommand = new RelayCommand((obj) => AddNewQuestion());
         SaveQuestionsCommand = new RelayCommand((obj) => SaveQuestions());
@@ -33,15 +33,17 @@ public class CustomUserWordListViewModel : INotifyPropertyChanged
 
     public void AddNewQuestion()
     {
+        // Create a new question, add to collection
         var newQuestion = new Question { ID = UserQuestions.Count + 10000 };
-    UserQuestions.Add(newQuestion);
+        UserQuestions.Add(newQuestion);
 
-    // Add the new question at the beginning of the reversed list
-    ReversedQuestions.Insert(0, newQuestion);
+        // Add the new question at the beginning of the reversed list
+        ReversedQuestions.Insert(0, newQuestion);
 
-    CheckForDuplicates();
+        CheckForDuplicates();
     }
 
+    // Check duplicate values (in question text)
     public void CheckForDuplicates()
     {
         foreach (var question in UserQuestions)
@@ -50,6 +52,7 @@ public class CustomUserWordListViewModel : INotifyPropertyChanged
         }
     }
 
+    // Save questions to JSON
     private void SaveQuestions()
     {
         if (!ValidateQuestions())
@@ -61,7 +64,7 @@ public class CustomUserWordListViewModel : INotifyPropertyChanged
         // Save logic
         if (JsonHandler.SaveUserQuestions(unitMod.ID, UserQuestions))
         {
-            
+
         }
     }
 

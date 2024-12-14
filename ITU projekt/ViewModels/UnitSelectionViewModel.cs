@@ -18,7 +18,7 @@ namespace ITU_projekt.ViewModels;
 class UnitSelectionViewModel : INotifyPropertyChanged
 {
 
-
+    /* Units to display */
     private ObservableCollection<UnitModel> _units;
     public ObservableCollection<UnitModel> Units
     {
@@ -31,47 +31,43 @@ class UnitSelectionViewModel : INotifyPropertyChanged
     }
 
 
+
     public event PropertyChangedEventHandler PropertyChanged;
     protected void OnPropertyChanged([CallerMemberName] string name = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 
-
-    public ICommand AddCustomQuestions { get; set; }
-    public ICommand StartUnitCommand { get; set; }
-    public ICommand StartUnitCommand_endless { get; set; }
-    public ICommand ViewStatistics { get; set; }
-
     private MainWindowViewModel VM;
     public UnitSelectionViewModel(MainWindowViewModel _VM)
     {
-        // Load Units
+        // Load Units that will be displayed
         Units = JsonHandler.LoadUnits();
 
         VM = _VM;
     }
 
-    // TODO START LECTION -> send to MainWindowViewModel
+
+    // Start lesson
     public void ExecuteStartUnitCommand(object parameter)
     {
-        MessageBox.Show("Start");
+        VM.SetBackToMenuVisible();
+
         var id = parameter as int?;
         if (id.HasValue)
         {
-            MessageBox.Show("Unit " + id + " limited          asdasdasd");
             // TODO LOGIC
             string unit = "Unit " + parameter;
             //MessageBox.Show(unit + " limited");
 
             //VM.CurrentUserControl = new MemoryGame(VM);
-    
+
             // Vygenerování náhodného čísla v intervalu <1; 3> a podle toho zvolení počáteční otázky,
             // všechny mají stejnou pravděpodobnost
             Random random = new Random();
             int randomNumber = random.Next(1, 4);
 
-            if(randomNumber == 1)
+            if (randomNumber == 1)
                 VM.CurrentUserControl = new TranslateWord(VM, unit);
             else if (randomNumber == 2)
                 VM.CurrentUserControl = new WordMatching(VM, unit);
@@ -79,14 +75,14 @@ class UnitSelectionViewModel : INotifyPropertyChanged
                 VM.CurrentUserControl = new Choice(VM, unit);
         }
     }
+
+    // Start endless lesson
     public void ExecuteStartUnitCommand_ENDLESS(object parameter)
     {
-        MessageBox.Show("Endless");
         var id = parameter as int?;
         if (id.HasValue)
         {
             // TODO LOGIC
-            MessageBox.Show("Unit " + id + " endless           asdsadasd");
         }
     }
 }

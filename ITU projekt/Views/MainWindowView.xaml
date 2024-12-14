@@ -28,7 +28,6 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
-            <!-- Levý sloupec pro výběr jazyka -->
             <ColumnDefinition Width="*" />
             <!-- Střední část pro výběr lekcí -->
             <ColumnDefinition Width="150" />

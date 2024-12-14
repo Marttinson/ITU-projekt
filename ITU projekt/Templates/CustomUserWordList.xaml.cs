@@ -29,7 +29,7 @@ public partial class CustomUserWordList : UserControl
     }
 
 
-
+    // When text is changed, check all boxes for empty values or duplicit values
     public void TextBox_TextChanged(object sender, TextChangedEventArgs e)
     {
         var textBox = sender as TextBox;
@@ -43,13 +43,12 @@ public partial class CustomUserWordList : UserControl
         _viewModel.CheckForDuplicates();
     }
 
+    // Neslo volat primo do VM
     private void DeleteQ(object sender, RoutedEventArgs e)
     {
-        Debug.WriteLine("asddasd");
         if (sender is Button button)
         {
             // Call DeleteQuestion in VM
-            Debug.WriteLine("cyxcyxc");
             _viewModel.DeleteQuestion(int.Parse(button.CommandParameter.ToString().Trim()));
         }
     }

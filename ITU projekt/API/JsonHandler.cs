@@ -12,6 +12,12 @@ using System.Runtime.CompilerServices;
 
 namespace ITU_projekt.API;
 
+/*
+ * 
+ * IF A FILE IS NOT FOUND, PREDEFINED JSON IS CREATED
+ * 
+ */
+
 public class Question : INotifyPropertyChanged
 {
     public int ID { get; set; }
@@ -26,7 +32,7 @@ public class Question : INotifyPropertyChanged
             {
                 _questionText = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(IsModified));  // Notify that IsModified may have changed
+                OnPropertyChanged(nameof(IsModified));  // Notify 
             }
         }
     }
@@ -41,7 +47,7 @@ public class Question : INotifyPropertyChanged
             {
                 _answer = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(IsModified));  // Notify that IsModified may have changed
+                OnPropertyChanged(nameof(IsModified));  // Notify
             }
         }
     }
@@ -129,7 +135,7 @@ public class JsonHandler
 
     public JsonHandler()
     {
-        
+
     }
 
     // Funkce pro načtení otázek pro překlad slova
@@ -343,15 +349,17 @@ public class JsonHandler
         }
     }
 
-    // Load units
+
+
+    // Load units as a collection
     public static ObservableCollection<UnitModel> LoadUnits()
     {
         try
         {
-            // Get the application data path
+            // Get the path
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
-            // Construct the full path to lekce.json
+            // Construct the full path
             string jsonPath = Path.Combine(appDataPath, "ITU", "lekce.json");
 
             // If file does not exist
@@ -366,58 +374,58 @@ public class JsonHandler
                         ""Description"": ""To Be"",
                         ""ErrorRates"": [ 0.1, 0.2, 0.15, 0.1, 0.8, 0.9, 0.5, 0.7, 0.6, 0.23, 0.64, 0.35 ],
                         ""UserQuestions"": [
-    {
-        ""ID"": 10000,
-        ""QuestionText"": ""Dog"",
-        ""Answer"": ""Pes""
-    },
-    {
-        ""ID"": 10001,
-        ""QuestionText"": ""Cat"",
-        ""Answer"": ""Kočka""
-    },
-    {
-        ""ID"": 10002,
-        ""QuestionText"": ""House"",
-        ""Answer"": ""Dům""
-    },
-    {
-        ""ID"": 10003,
-        ""QuestionText"": ""Book"",
-        ""Answer"": ""Kniha""
-    },
-    {
-        ""ID"": 10004,
-        ""QuestionText"": ""Car"",
-        ""Answer"": ""Auto""
-    },
-    {
-        ""ID"": 10005,
-        ""QuestionText"": ""Water"",
-        ""Answer"": ""Voda""
-    },
-    {
-        ""ID"": 10006,
-        ""QuestionText"": ""Chair"",
-        ""Answer"": ""Židle""
-    },
-    {
-        ""ID"": 10007,
-        ""QuestionText"": ""Apple"",
-        ""Answer"": ""Jablko""
-    },
-    {
+                    {
+                        ""ID"": 10000,
+                        ""QuestionText"": ""Dog"",
+                        ""Answer"": ""Pes""
+                    },
+                    {
+                        ""ID"": 10001,
+                        ""QuestionText"": ""Cat"",
+                        ""Answer"": ""Kočka""
+                    },
+                    {
+                        ""ID"": 10002,
+                        ""QuestionText"": ""House"",
+                        ""Answer"": ""Dům""
+                    },
+                    {
+                        ""ID"": 10003,
+                        ""QuestionText"": ""Book"",
+                        ""Answer"": ""Kniha""
+                    },
+                    {
+                        ""ID"": 10004,
+                        ""QuestionText"": ""Car"",
+                        ""Answer"": ""Auto""
+                    },
+                    {
+                        ""ID"": 10005,
+                        ""QuestionText"": ""Water"",
+                        ""Answer"": ""Voda""
+                    },
+                    {
+                        ""ID"": 10006,
+                        ""QuestionText"": ""Chair"",
+                        ""Answer"": ""Židle""
+                    },
+                    {
+                        ""ID"": 10007,
+                        ""QuestionText"": ""Apple"",
+                        ""Answer"": ""Jablko""
+                    },
+                    {
 
-        ""ID"": 10008,
-        ""QuestionText"": ""Table"",
-        ""Answer"": ""Stůl""
-    },
-    {
-        ""ID"": 10009,
-        ""QuestionText"": ""Tree"",
-        ""Answer"": ""Strom""
-    }
-]
+                        ""ID"": 10008,
+                        ""QuestionText"": ""Table"",
+                        ""Answer"": ""Stůl""
+                    },
+                    {
+                        ""ID"": 10009,
+                        ""QuestionText"": ""Tree"",
+                        ""Answer"": ""Strom""
+                    }
+                    ]
                     },
                     {
                         ""Name"": ""Unit 2"",
@@ -466,7 +474,7 @@ public class JsonHandler
     }
 
 
-
+    // load streak symbol
     public static string LoadStreakSymbol()
     {
         try
@@ -480,7 +488,7 @@ public class JsonHandler
                 // Read the file content
                 string json = File.ReadAllText(jsonPath);
 
-                // Deserialize the JSON content to a char
+                // Deserialize the JSON content to string
                 return JsonConvert.DeserializeObject<string>(json);
             }
             else
@@ -519,6 +527,7 @@ public class JsonHandler
     }
 
 
+    // saves user streak
     public static bool SaveStreak(int length, DateTime date)
     {
         try
@@ -551,6 +560,7 @@ public class JsonHandler
         }
     }
 
+    // Gets user streak
     public static Streak? ReadStreak()
     {
         try
@@ -586,7 +596,7 @@ public class JsonHandler
             Streak? streak = JsonConvert.DeserializeObject<Streak>(json);
             return streak;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             MessageBox.Show($"An error occurred while reading user streak: {ex.Message}");
             return null;
@@ -594,14 +604,17 @@ public class JsonHandler
     }
 
 
-    // Save the UserQuestions to JSON under the specific Unit ID
+    /* Save the UserQuestions to JSON under the specific Unit ID
+    *@param unitId - unit id
+    *@param updatedQuestions - user questions updated through UI
+    */
     public static bool SaveUserQuestions(int unitId, ObservableCollection<Question> updatedQuestions)
     {
         try
         {
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             string jsonPath = Path.Combine(appDataPath, "ITU", "lekce.json");
-            
+
 
             // Check if the JSON file exists
             if (!File.Exists(jsonPath))
@@ -641,4 +654,46 @@ public class JsonHandler
         }
         return true;
     }
+
+
+    /**
+     * Adds user's error rate to statistic
+     * @param iD - unit identification
+     * @param v  - error rate
+     */
+    public static void SaveStatistic(int iD, float v)
+    {
+        try
+        {
+            // Get path
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+            // Construct the full path 
+            string jsonPath = Path.Combine(appDataPath, "ITU", "lekce.json");
+
+            var units = LoadUnits();
+
+            // Find the unit with the specified ID
+            var unit = units.FirstOrDefault(u => u.ID == iD);
+
+            if (unit != null)
+            {
+                // Add the statistic to the unit's ErrorRates
+                unit.ErrorRates.Add(v);
+
+                // Serialize the updated units 
+                var updatedJson = JsonConvert.SerializeObject(units, Formatting.Indented);
+                File.WriteAllText(jsonPath, updatedJson);
+            }
+            else
+            {
+                MessageBox.Show($"Unit with ID {iD} not found.");
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"An error occurred while saving the statistic: {ex.Message}");
+        }
+    }
+
 }

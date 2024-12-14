@@ -37,31 +37,17 @@ public partial class UnitSelection : UserControl
         }
     }
 
-    // Helper method to find all child elements of type T
-    private static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
-    {
-        for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
-        {
-            DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-            if (child is T)
-                yield return (T)child;
 
-            foreach (var childOfChild in FindVisualChildren<T>(child))
-                yield return childOfChild;
-        }
-    }
-
-
+    // Send command to VM
     private void Start_Click(object sender, RoutedEventArgs e)
     {
-        MessageBox.Show("start click");
         var button = sender as Button;
         viewModel.ExecuteStartUnitCommand(int.Parse(button.Tag.ToString().Trim()));
     }
 
+    // Send command to VM
     private void StartEndless_Click(object sender, RoutedEventArgs e)
     {
-        MessageBox.Show("endless click");
         var button = sender as Button;
         viewModel.ExecuteStartUnitCommand(int.Parse(button.Tag.ToString().Trim()));
     }

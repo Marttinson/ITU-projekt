@@ -17,9 +17,6 @@ using ITU_projekt.ViewModels;
 
 namespace ITU_projekt.Templates;
 
-/// <summary>
-/// Interakční logika pro UserControl1.xaml
-/// </summary>
 public partial class Graph : UserControl
 {
     public Graph(UnitModel model)

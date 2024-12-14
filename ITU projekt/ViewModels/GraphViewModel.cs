@@ -13,20 +13,6 @@ public class GraphViewModel : INotifyPropertyChanged
     private PlotModel _plotModel;
     private UnitModel _model;
 
-    public GraphViewModel(UnitModel model)
-    {
-        _xAxisRange = model.ErrorRates.Count / 2; // Default
-        _showAll = false;
-        _model = model;
-
-        _plotModel = CreatePlotModel();
-        GenerateDataPoints();
-
-        ToggleRangeCommand = new RelayCommand((obj) => ToggleRange());
-        IncrementRangeCommand = new RelayCommand((obj) => IncrementRange());
-        DecrementRangeCommand = new RelayCommand((obj) => DecrementRange());
-    }
-
     public PlotModel PlotModel
     {
         get => _plotModel;
@@ -37,6 +23,7 @@ public class GraphViewModel : INotifyPropertyChanged
         }
     }
 
+    // How many datapoint will be shown (from the end)
     public int XAxisRange
     {
         get => _xAxisRange;
@@ -48,6 +35,7 @@ public class GraphViewModel : INotifyPropertyChanged
         }
     }
 
+    // Show all data points toggle
     public bool ShowAll
     {
         get => _showAll;
@@ -62,6 +50,22 @@ public class GraphViewModel : INotifyPropertyChanged
     public ICommand ToggleRangeCommand { get; }
     public ICommand IncrementRangeCommand { get; }
     public ICommand DecrementRangeCommand { get; }
+
+    public GraphViewModel(UnitModel model)
+    {
+        _xAxisRange = model.ErrorRates.Count / 2; // Default range
+        _showAll = false;
+        _model = model; // Unit to display
+
+        _plotModel = CreatePlotModel();
+        GenerateDataPoints();
+
+        ToggleRangeCommand = new RelayCommand((obj) => ToggleRange());
+        IncrementRangeCommand = new RelayCommand((obj) => IncrementRange());
+        DecrementRangeCommand = new RelayCommand((obj) => DecrementRange());
+    }
+
+
 
     private void ToggleRange()
     {
@@ -107,7 +111,7 @@ public class GraphViewModel : INotifyPropertyChanged
         };
         model.Axes.Add(yAxis);
 
-        // Create ScatterSeries
+        // ScatterSeries
         var scatterSeries = new ScatterSeries
         {
             MarkerType = MarkerType.Circle,
@@ -131,12 +135,14 @@ public class GraphViewModel : INotifyPropertyChanged
 
         // Determine the range of points to display
         int pointsToDisplay = ShowAll ? totalPoints : Math.Min(XAxisRange, totalPoints);
+
+        // Show last x elements
         int startIndex = totalPoints - pointsToDisplay;
 
         // Recalculate points with adjusted X-coordinates
         for (int i = 0; i < pointsToDisplay; i++)
         {
-            int xValue = i; // X-values start from 0 and increment
+            int xValue = i; // X-values must start at 0 and increment
             double yValue = _model.ErrorRates[startIndex + i];
 
             scatterSeries.Points.Add(new ScatterPoint(xValue, yValue));

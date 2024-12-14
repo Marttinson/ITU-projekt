@@ -13,49 +13,16 @@ using System.Windows.Input;
 using System.Data.Common;
 using ITU_projekt.API;
 
-/*
- * Postup generace
- * 
- * init generator with unit number
- * 
- * loop:
- *  generator.generate task
- *  vyvolat usercontrol podle typu generovane ulohy
- *  doplnit promenny do usercontrol (binding)
- *  poslat input do generatoru k vyhodnoceni
- *  podle odpovedi informovat uzivatele
- *  
- *  updatovat progress bar s kazdou vykonanou ulohou
- * 
- * pokud pocet uloh < max pocet v lekci
- * then back to loop
- * else
- * nejaky finalni vyhodnoceni treba
- * menu
- * 
- * 
- * 
- */
-
-
-
 
 namespace ITU_projekt.ViewModels;
 public class MainWindowViewModel : INotifyPropertyChanged
 {
 
-    /* Unit count */
-    private ObservableCollection<UnitModel> _units;
-    public ObservableCollection<UnitModel> Units
-    {
-        get => _units;
-        set
-        {
-            _units = value;
-            OnPropertyChanged(nameof(Units));
-        }
-    }
 
+    private int right_answers;
+    private int wrong_answers;
+
+    /* Streak */
     private bool _isLessonCompletedToday;
     public bool IsLessonCompletedToday
     {
@@ -66,13 +33,11 @@ public class MainWindowViewModel : INotifyPropertyChanged
             {
                 _isLessonCompletedToday = value;
                 Streak s = JsonHandler.ReadStreak();
-                JsonHandler.SaveStreak(s.length+1, DateTime.Now);
+                JsonHandler.SaveStreak(s.length + 1, DateTime.Now);
                 OnPropertyChanged();
             }
         }
     }
-
-
     private string _streakSymbol;
     public string StreakSymbol
     {
@@ -84,26 +49,11 @@ public class MainWindowViewModel : INotifyPropertyChanged
         }
     }
 
-    public RelayCommand<UnitModel> OpenSettingsCommand { get; private set; }
-    public RelayCommand OpenMenuCommand { get; private set; }
-    public RelayCommand ToggleDarkModeCommand { get; private set; }
+    /* Current unit pro statistiky */
+    private UnitModel currentUnit;
 
-    public event PropertyChangedEventHandler PropertyChanged;
-
-
+    /* UC, ktery je promitan do okna */
     private UserControl _CurrentUserControl;
-
-    public RelayCommand<string> ButtonClickCommand { get; private set; }
-
-    // ICommand for displaying statistics
-    public ICommand ShowStatisticsCommand { get; }
-    public ICommand AddCustomQuestionsCommand { get; }
-    public ICommand StartUnitCommand { get; }
-    public ICommand StartUnitCommand_endless { get; }
-    public ICommand BackToMenuCommand { get; }
-    public ICommand ChangeStreakIcon { get; }
-
-
     public UserControl CurrentUserControl
     {
         get => _CurrentUserControl;
@@ -117,6 +67,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         }
     }
 
+    /* Visibilita tlactika pro navrat do menu */
     private Visibility _BackToMenuVisibility;
     public Visibility BackToMenuVisibility
     {
@@ -128,18 +79,33 @@ public class MainWindowViewModel : INotifyPropertyChanged
         }
     }
 
+    public RelayCommand<string> ButtonClickCommand { get; private set; }
+    public RelayCommand<UnitModel> OpenSettingsCommand { get; private set; }
+    public RelayCommand OpenMenuCommand { get; private set; }
+    public RelayCommand ToggleDarkModeCommand { get; private set; }
+
+    // ICommand for displaying statistics
+    public ICommand ShowStatisticsCommand { get; }
+    public ICommand AddCustomQuestionsCommand { get; }
+    public ICommand BackToMenuCommand { get; }
+    public ICommand ChangeStreakIcon { get; }
+
+    public event PropertyChangedEventHandler PropertyChanged;
 
     public MainWindowViewModel()
     {
-        // Na zacatku se zobrazi vyber lekci
+        // Propojeni commandu
         ShowStatisticsCommand = new RelayCommand<UnitModel>(ExecuteShowStatistics);
-        // Connect Commands
         AddCustomQuestionsCommand = new RelayCommand<UnitModel>(ExecuteAddCustomQuestions);
-        StartUnitCommand = new RelayCommand<UnitModel>(unit => ExecuteStartUnitCommand(unit, false));
-        StartUnitCommand_endless = new RelayCommand<UnitModel>(ExecuteStartUnitCommand_ENDLESS);
         BackToMenuCommand = new RelayCommand(BackToMenuCommandExecute);
         ChangeStreakIcon = new RelayCommand(ChangeStreakIconExecute);
 
+        right_answers = 0;
+        wrong_answers = 0;
+
+        currentUnit = null;
+
+        // Zvoleny streak symbol -> pokud nenalezen, zvoli se default
         string symb = JsonHandler.LoadStreakSymbol();
         if (string.IsNullOrEmpty(symb))
         {
@@ -149,7 +115,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         {
             StreakSymbol = symb;
         }
-        
+
 
         Streak s = JsonHandler.ReadStreak();
 
@@ -174,7 +140,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
                 JsonHandler.SaveStreak(s.length, s.last_date);
                 // Notify UI 
                 OnPropertyChanged(nameof(IsLessonCompletedToday));
-                
+
             }
         }
 
@@ -184,8 +150,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
 
     public void ChangeStreakIconExecute(object parameter)
     {
-        MessageBox.Show("Streak symbol change button was clicked");
-        if(StreakSymbol == "✔")
+        if (StreakSymbol == "✔")
         {
             StreakSymbol = "🏆";
         }
@@ -201,10 +166,11 @@ public class MainWindowViewModel : INotifyPropertyChanged
         JsonHandler.SaveStreakSymbol(StreakSymbol);
     }
 
+    // TODO ukonceni lekce
+    // Vraceni zpet do hlavniho menu
     public void BackToMenuCommandExecute(object parameter)
     {
         // TODO Ukoncit lekci nebo whatever atd...
-        MessageBox.Show("BackToMenu");
         /*if (_CurrentUserControl.GetType() == typeof(specific UC))
         {
             // clean up
@@ -213,50 +179,74 @@ public class MainWindowViewModel : INotifyPropertyChanged
         CurrentUserControl = new UnitSelection(this);
     }
 
+    // Zobrazeni UC se statistikou
     private void ExecuteShowStatistics(UnitModel model)
     {
         CurrentUserControl = new Graph(model);
         BackToMenuVisibility = Visibility.Visible;
     }
 
+    // Zobrazeni UC s uzivatelskymi otazkami
     private void ExecuteAddCustomQuestions(UnitModel model)
     {
-        // TODO LOGIC
-        MessageBox.Show("Unit " + model.ID + " questions");
         CurrentUserControl = new CustomUserWordList(model);
         BackToMenuVisibility = Visibility.Visible;
     }
 
 
-    /* ODDELAT*/
-    private void ExecuteStartUnitCommand_ENDLESS(UnitModel model)
+
+    private void SaveStatistic()
     {
-        MessageBox.Show("Unit " + model.ID + " endless");
-        BackToMenuVisibility = Visibility.Visible;
-        ExecuteStartUnitCommand(model, true);
+        JsonHandler.SaveStatistic(currentUnit.ID, wrong_answers / (wrong_answers + right_answers));
     }
 
-    private void ExecuteStartUnitCommand(UnitModel model, bool endeless = false)
-    {
-        // Start unit
-        // TODO streak az po ukonceni lekce
 
-        // Pokud se jedna o prvni lekci dnes
+    // TODOs:
+    // Call this when lesson is finished
+    public void LessonFinished()
+    {
+        Streak s = JsonHandler.ReadStreak();
+
         if (!IsLessonCompletedToday)
         {
             IsLessonCompletedToday = true;
+
+            // Pokud dnes prvni lekce, inkrementovat streak
+            JsonHandler.SaveStreak(s.length + 1, DateTime.Now);
+        }
+        else
+        {
+            // Pokud uz dnes byla splnena lekce, zapise se nejnovejsi datum
+            JsonHandler.SaveStreak(s.length, DateTime.Now);
         }
 
-        Streak s = JsonHandler.ReadStreak();
+        SaveStatistic();
+    }
 
-        // Vzdycky zapsat posleni lekci
-        JsonHandler.SaveStreak(s.length, DateTime.Now);
-
-        MessageBox.Show("Unit " + model.ID + " limited VM");
+    // Call this when start of lesson
+    public void SetBackToMenuVisible()
+    {
         BackToMenuVisibility = Visibility.Visible;
     }
 
-    /* Oddelat */
+
+
+    // Call this when start of lesson
+    // Slouzi k zapsani statistik
+    public void setUnitModel(UnitModel model)
+    {
+        currentUnit = model;
+    }
+
+    // Slouzi k ovladani statistik
+    public void incrementRight()
+    {
+        right_answers++;
+    }
+    public void incrementWrong()
+    {
+        wrong_answers++;
+    }
 
     protected void OnPropertyChanged([CallerMemberName] string name = null)
     {

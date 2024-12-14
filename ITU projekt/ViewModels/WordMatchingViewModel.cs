@@ -291,6 +291,7 @@ public class WordMatchingViewModel : INotifyPropertyChanged
         if (randomQuestions[wordNumbers[int.Parse(word)]].ID == randomQuestions[slovoNumbers[int.Parse(slovo)]].ID)
         {
             // DOBŘE STAT
+            VM.incrementRight();
             SetButtonColor(word, slovo, Colors.Green);
 
             usedWord.Add(word);
@@ -299,6 +300,7 @@ public class WordMatchingViewModel : INotifyPropertyChanged
         else
         {
             // CHYBA STAT
+            VM.incrementWrong();
             SetButtonColor(word, slovo, Colors.Red);
         }
 

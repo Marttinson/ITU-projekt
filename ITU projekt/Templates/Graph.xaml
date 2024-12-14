@@ -8,7 +8,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <!-- First row takes remaining space -->
+            <!-- First row takes most of the space -->
             <RowDefinition Height="*" />
             <!-- Second row takes only enough space for the controls at the bottom -->
             <RowDefinition Height="Auto" />
@@ -23,7 +23,7 @@
             <Button Content="Show All" Command="{Binding ToggleRangeCommand}" Margin="5" HorizontalAlignment="Left" MinHeight="40" MinWidth="120" FontWeight="SemiBold" BorderThickness="1" BorderBrush="{DynamicResource ForegroundColor}">
                 <Button.Style>
                     <Style TargetType="Button">
-                        <!-- When button is toggled (active state) -->
+                        <!-- Highlighting if button is toggled -->
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding ShowAll}" Value="True">
                                 <Setter Property="Background" Value="{DynamicResource GraphToggledTrue}"/>
@@ -38,9 +38,8 @@
 
             <TextBlock Text="Posledních x hodnot:" VerticalAlignment="Center" Margin="5" HorizontalAlignment="Center" FontWeight="SemiBold"/>
 
+            <!-- Controls -->
             <Button Content="-" Command="{Binding DecrementRangeCommand}" Margin="5" HorizontalAlignment="Left" MinHeight="40" MinWidth="40" FontWeight="SemiBold"  BorderThickness="1" BorderBrush="{DynamicResource ForegroundColor}" />
-
-
             <TextBox Text="{Binding XAxisRange}" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" BorderThickness="1" BorderBrush="{DynamicResource ForegroundColor}"/>
             <Button Content="+" Command="{Binding IncrementRangeCommand}" Margin="5" HorizontalAlignment="Right" MinHeight="40" MinWidth="40" FontWeight="SemiBold" BorderThickness="1" BorderBrush="{DynamicResource ForegroundColor}"/>
 

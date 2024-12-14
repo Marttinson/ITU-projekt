@@ -14,30 +14,15 @@ using System.Windows.Input;
 
 namespace ITU_projekt.Views
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindowView : Window
     {
-
+        // Stav bocniho panelu
         private bool RightSideMenu_expanded = false;
-
-        private double _sideMenu;
-        public double sideMenuSize
-        {
-            get => _sideMenu;
-            set
-            {
-                _sideMenu = value;
-                OnPropertyChanged();
-            }
-        }
 
         public MainWindowView()
         {
             SetTheme("LightTheme.xaml");
             DataContext = new MainWindowViewModel();
-            //sideMenuSize = 150;
             InitializeComponent();
         }
 
@@ -51,7 +36,7 @@ namespace ITU_projekt.Views
                 var menuAnimation = new DoubleAnimation
                 {
                     From = RightSideMenu.ActualWidth,
-                    To = 0,
+                    To = 0, // Minimalni sirka
                     Duration = new Duration(TimeSpan.FromSeconds(0.3))
                 };
 
@@ -67,7 +52,7 @@ namespace ITU_projekt.Views
                 var menuAnimation = new DoubleAnimation
                 {
                     From = RightSideMenu.ActualWidth,
-                    To = 150,  // Předpokládaná maximální šířka panelu
+                    To = 150,  // Maximalni sirka
                     Duration = new Duration(TimeSpan.FromSeconds(0.3))
                 };
 
@@ -90,6 +75,7 @@ namespace ITU_projekt.Views
             SetTheme("LightTheme.xaml");
         }
 
+        // Funkce pro prepnuti light/dark modu
         private void SetTheme(string themeFileName)
         {
             try
@@ -101,14 +87,14 @@ namespace ITU_projekt.Views
                 var themeDict = new ResourceDictionary { Source = new Uri(themePath, UriKind.Relative) };
 
                 // Odstran jenom dark/light mode theme
-                var existingTheme = app.Resources.MergedDictionaries
-                                            .FirstOrDefault(d => d.Source.ToString().Contains("Theme"));
+                var existingTheme = app.Resources.MergedDictionaries.FirstOrDefault(d => d.Source.ToString().Contains("Theme"));
+
                 if (existingTheme != null)
                 {
                     app.Resources.MergedDictionaries.Remove(existingTheme);
                 }
 
-                // Aplikace 
+                // Pridat novy theme
                 app.Resources.MergedDictionaries.Add(themeDict);
             }
 
@@ -123,35 +109,6 @@ namespace ITU_projekt.Views
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-    }
-
-    public class HeightConverter : IValueConverter
-    {
-        // Konvertor pro výpočet 10% výšky okna
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            double height = (double)value;
-            return height * 0.1; // Vráti 10% výšky
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class WidthConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            double width = (double)value;
-            return width * 0.5; // 50% šířky
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
         }
     }
 }
