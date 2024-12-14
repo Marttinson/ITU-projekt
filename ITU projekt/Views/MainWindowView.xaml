@@ -44,7 +44,7 @@
 
         <!-- Menu -->
         <Button  Grid.Row="0" Grid.Column="0"   x:Name="BackToMenuButton"
-                    BorderThickness="2"
+                    BorderThickness="0"
                     Command="{Binding BackToMenuCommand, FallbackValue=null}" 
                     HorizontalAlignment="Stretch" 
                     VerticalAlignment="Stretch" 
@@ -71,7 +71,7 @@
 
         <!-- Tlacitko pro vysunuti menu -->
         <Button    Grid.Row="0" Grid.Column="2"   
-                        BorderThickness="2"
+                        BorderThickness="0"
                         Click="MenuButton_Click" 
                         HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch" 
