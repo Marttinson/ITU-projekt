@@ -3,13 +3,17 @@
     <!-- Colors -->
     <SolidColorBrush x:Key="BackgroundColor" Color="White"/>
     <SolidColorBrush x:Key="ForegroundColor" Color="Black"/>
-    <SolidColorBrush x:Key="PrimaryButtonBackground" Color="LightBlue"/>
+    <SolidColorBrush x:Key="PrimaryButtonBackground" Color="CornflowerBlue"/>
     <SolidColorBrush x:Key="PrimaryButtonForeground" Color="Black"/>
     <SolidColorBrush x:Key="TextBlockBackground" Color="Transparent"/>
     <SolidColorBrush x:Key="TextboxBackground" Color="WhiteSmoke"/>
     <SolidColorBrush x:Key="HighlightCorrect" Color="Green"/>
     <SolidColorBrush x:Key="HighlightWrong" Color="Red"/>
     <SolidColorBrush x:Key="SideMenuButtonColor" Color="SlateGray"/>
+    
+    <!-- Graph button toggle -->
+    <SolidColorBrush x:Key="GraphToggledTrue" Color="BlueViolet"/>
+    <SolidColorBrush x:Key="GraphToggledFalse" Color="CornflowerBlue"/>
 
     <!-- Backgrounds -->
     <SolidColorBrush x:Key="UnitSelectionBackground" Color="LightGray"/>

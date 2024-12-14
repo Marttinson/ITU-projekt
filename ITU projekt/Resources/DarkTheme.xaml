@@ -11,6 +11,10 @@
     <SolidColorBrush x:Key="HighlightWrong" Color="Tomato"/>
     <SolidColorBrush x:Key="SideMenuButtonColor" Color="SlateGray"/>
 
+    <!-- Graph button toggle -->
+    <SolidColorBrush x:Key="GraphToggledTrue" Color="DarkSlateBlue"/>
+    <SolidColorBrush x:Key="GraphToggledFalse" Color="#333"/>
+
     <!-- Backgrounds -->
     <SolidColorBrush x:Key="UnitSelectionBackground" Color="#2A2A2A"/>
     <SolidColorBrush x:Key="SettingsPanelBackground" Color="#2A2A2A"/>

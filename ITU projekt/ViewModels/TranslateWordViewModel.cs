@@ -101,12 +101,14 @@ public class TranslateWordViewModel : INotifyPropertyChanged
         if (string.Equals(UserAnswer, question.Answer, StringComparison.OrdinalIgnoreCase)) // Nahraďte skutečnou logikou
         {
             // DOBŘE STAT
+            VM.incrementRight();
             ButtonOdpovedetVisibility = Visibility.Collapsed;
             ButtonDalsiVisibility = Visibility.Visible;
         }
         else
         {
             // CHYBA STAT
+            VM.incrementWrong();
             MessageBox.Show("Špatná odpověď, zkuste to znovu.");
         }
     }
@@ -121,6 +123,7 @@ public class TranslateWordViewModel : INotifyPropertyChanged
             if (turn == 10)
             {
                 // Vrací se zpět do menu
+                VM.LessonFinished();
                 VM.CurrentUserControl = new UnitSelection(VM);
                 return;
             }

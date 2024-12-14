@@ -2,17 +2,24 @@
 using System.Windows;
 using System.Windows.Controls;
 using ITU_projekt.ViewModels;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System;
+using System.Diagnostics;
+using System.Windows.Media;
 
 namespace ITU_projekt.Templates;
 
 public partial class UnitSelection : UserControl
 {
 
+    private UnitSelectionViewModel viewModel;
 
     public UnitSelection(MainWindowViewModel VM)
     {
         InitializeComponent();
-        DataContext = new UnitSelectionViewModel(VM);
+        viewModel = new UnitSelectionViewModel(VM);
+        DataContext = viewModel;
     }
 
     private void OpenSettingsButton_Click(object sender, RoutedEventArgs e)
@@ -29,4 +36,20 @@ public partial class UnitSelection : UserControl
             settingsPanel.Visibility = settingsPanel.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
     }
+
+
+    // Send command to VM
+    private void Start_Click(object sender, RoutedEventArgs e)
+    {
+        var button = sender as Button;
+        viewModel.ExecuteStartUnitCommand(int.Parse(button.Tag.ToString().Trim()));
+    }
+
+    // Send command to VM
+    private void StartEndless_Click(object sender, RoutedEventArgs e)
+    {
+        var button = sender as Button;
+        viewModel.ExecuteStartUnitCommand(int.Parse(button.Tag.ToString().Trim()));
+    }
+
 }

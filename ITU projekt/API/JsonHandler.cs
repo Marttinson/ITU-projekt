@@ -7,10 +7,114 @@ using Newtonsoft.Json;
 using ITU_projekt.Models;
 using System.Windows;
 using System.Linq;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 namespace ITU_projekt.API;
 
-// Třída reprezentující strukturu otázky pro překlad
+/*
+ * 
+ * IF A FILE IS NOT FOUND, PREDEFINED JSON IS CREATED
+ * 
+ */
+
+public class Question : INotifyPropertyChanged
+{
+    public int ID { get; set; }
+
+    private string _questionText;
+    public string QuestionText
+    {
+        get => _questionText;
+        set
+        {
+            if (_questionText != value)
+            {
+                _questionText = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsModified));  // Notify 
+            }
+        }
+    }
+
+    private string _answer;
+    public string Answer
+    {
+        get => _answer;
+        set
+        {
+            if (_answer != value)
+            {
+                _answer = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsModified));  // Notify
+            }
+        }
+    }
+
+    private bool _hasDuplicate;
+    public bool HasDuplicate
+    {
+        get => _hasDuplicate;
+        set
+        {
+            if (_hasDuplicate != value)
+            {
+                _hasDuplicate = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    private bool _isModified;
+    public bool IsModified
+    {
+        get => _isModified;
+        set
+        {
+            if (_isModified != value)
+            {
+                _isModified = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    // Add INotifyPropertyChanged for proper binding
+    public event PropertyChangedEventHandler PropertyChanged;
+    public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+}
+
+public class Streak
+{
+    public DateTime last_date;
+    private int _length;
+
+    public int length
+    {
+        get => _length;
+        set
+        {
+            if (_length != value)
+            {
+                _length = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    // Add INotifyPropertyChanged for proper binding
+    public event PropertyChangedEventHandler PropertyChanged;
+    public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+}
+
 public class TranslateWordQuestion
 {
     public int ID { get; set; }
@@ -32,7 +136,7 @@ public class JsonHandler
 
     public JsonHandler()
     {
-        
+
     }
 
     // Funkce pro načtení otázek pro překlad slova
@@ -553,15 +657,15 @@ public class JsonHandler
         }
     }
 
-        // Load units
-        public static ObservableCollection<UnitModel> LoadUnits()
+    // Load units as a collection
+    public static ObservableCollection<UnitModel> LoadUnits()
     {
         try
         {
-            // Get the application data path
+            // Get the path
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
-            // Construct the full path to lekce.json
+            // Construct the full path
             string jsonPath = Path.Combine(appDataPath, "ITU", "lekce.json");
 
             // If file does not exist
@@ -576,58 +680,58 @@ public class JsonHandler
                         ""Description"": ""To Be"",
                         ""ErrorRates"": [ 0.1, 0.2, 0.15, 0.1, 0.8, 0.9, 0.5, 0.7, 0.6, 0.23, 0.64, 0.35 ],
                         ""UserQuestions"": [
-    {
-        ""ID"": 10000,
-        ""QuestionText"": ""Dog"",
-        ""Answer"": ""Pes""
-    },
-    {
-        ""ID"": 10001,
-        ""QuestionText"": ""Cat"",
-        ""Answer"": ""Kočka""
-    },
-    {
-        ""ID"": 10002,
-        ""QuestionText"": ""House"",
-        ""Answer"": ""Dům""
-    },
-    {
-        ""ID"": 10003,
-        ""QuestionText"": ""Book"",
-        ""Answer"": ""Kniha""
-    },
-    {
-        ""ID"": 10004,
-        ""QuestionText"": ""Car"",
-        ""Answer"": ""Auto""
-    },
-    {
-        ""ID"": 10005,
-        ""QuestionText"": ""Water"",
-        ""Answer"": ""Voda""
-    },
-    {
-        ""ID"": 10006,
-        ""QuestionText"": ""Chair"",
-        ""Answer"": ""Židle""
-    },
-    {
-        ""ID"": 10007,
-        ""QuestionText"": ""Apple"",
-        ""Answer"": ""Jablko""
-    },
-    {
+                    {
+                        ""ID"": 10000,
+                        ""QuestionText"": ""Dog"",
+                        ""Answer"": ""Pes""
+                    },
+                    {
+                        ""ID"": 10001,
+                        ""QuestionText"": ""Cat"",
+                        ""Answer"": ""Kočka""
+                    },
+                    {
+                        ""ID"": 10002,
+                        ""QuestionText"": ""House"",
+                        ""Answer"": ""Dům""
+                    },
+                    {
+                        ""ID"": 10003,
+                        ""QuestionText"": ""Book"",
+                        ""Answer"": ""Kniha""
+                    },
+                    {
+                        ""ID"": 10004,
+                        ""QuestionText"": ""Car"",
+                        ""Answer"": ""Auto""
+                    },
+                    {
+                        ""ID"": 10005,
+                        ""QuestionText"": ""Water"",
+                        ""Answer"": ""Voda""
+                    },
+                    {
+                        ""ID"": 10006,
+                        ""QuestionText"": ""Chair"",
+                        ""Answer"": ""Židle""
+                    },
+                    {
+                        ""ID"": 10007,
+                        ""QuestionText"": ""Apple"",
+                        ""Answer"": ""Jablko""
+                    },
+                    {
 
-        ""ID"": 10008,
-        ""QuestionText"": ""Table"",
-        ""Answer"": ""Stůl""
-    },
-    {
-        ""ID"": 10009,
-        ""QuestionText"": ""Tree"",
-        ""Answer"": ""Strom""
-    }
-]
+                        ""ID"": 10008,
+                        ""QuestionText"": ""Table"",
+                        ""Answer"": ""Stůl""
+                    },
+                    {
+                        ""ID"": 10009,
+                        ""QuestionText"": ""Tree"",
+                        ""Answer"": ""Strom""
+                    }
+                    ]
                     },
                     {
                         ""Name"": ""Unit 2"",
@@ -674,4 +778,231 @@ public class JsonHandler
         }
 
     }
+
+
+    // load streak symbol
+    public static string LoadStreakSymbol()
+    {
+        try
+        {
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string jsonPath = Path.Combine(appDataPath, "ITU", "streakSymb.json");
+
+            // Check if the file exists
+            if (File.Exists(jsonPath))
+            {
+                // Read the file content
+                string json = File.ReadAllText(jsonPath);
+
+                // Deserialize the JSON content to string
+                return JsonConvert.DeserializeObject<string>(json);
+            }
+            else
+            {
+                // default
+                return "✔";
+            }
+        }
+        catch (Exception ex)
+        {
+            // Handle errors
+            Console.WriteLine($"Error loading streak symbol: {ex.Message}");
+            return "✔"; // Return default if there's an error
+        }
+    }
+
+    // Save the streak symbol
+    public static void SaveStreakSymbol(string streakSymbol)
+    {
+        try
+        {
+            // Serialize the char to JSON
+            string json = JsonConvert.SerializeObject(streakSymbol);
+
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string jsonPath = Path.Combine(appDataPath, "ITU", "streakSymb.json");
+
+            // Write the serialized character to the file
+            File.WriteAllText(jsonPath, json);
+        }
+        catch (Exception ex)
+        {
+            // Handle errors
+            Console.WriteLine($"Error saving streak symbol: {ex.Message}");
+        }
+    }
+
+
+    // saves user streak
+    public static bool SaveStreak(int length, DateTime date)
+    {
+        try
+        {
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string jsonPath = Path.Combine(appDataPath, "ITU", "streak.json");
+
+            // Check if the JSON file exists
+            if (!File.Exists(jsonPath))
+            {
+                string dirPath = Path.Combine(appDataPath, "ITU");
+                // Ensure the directory exists
+                if (!Directory.Exists(dirPath))
+                {
+                    Directory.CreateDirectory(dirPath);
+                }
+
+            }
+
+            var streak = new Streak { length = length, last_date = date };
+            string new_streak = JsonConvert.SerializeObject(streak);
+
+            File.WriteAllText(jsonPath, new_streak);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"An error occurred while saving user streak: {ex.Message}");
+            return false;
+        }
+    }
+
+    // Gets user streak
+    public static Streak? ReadStreak()
+    {
+        try
+        {
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string jsonPath = Path.Combine(appDataPath, "ITU", "streak.json");
+
+
+            // Check if the JSON file exists
+            if (!File.Exists(jsonPath))
+            {
+                MessageBox.Show("Streak file not found. Will be created.");
+                var defaultStreak = new Streak
+                {
+                    length = 0,
+                    last_date = DateTime.Now
+                };
+
+                // Ensure the directory exists
+                string dirPath = Path.Combine(appDataPath, "ITU");
+                if (!Directory.Exists(dirPath))
+                {
+                    Directory.CreateDirectory(dirPath);
+                }
+
+                // Write default streak to file
+                string defaultStreakJson = JsonConvert.SerializeObject(defaultStreak);
+                File.WriteAllText(jsonPath, defaultStreakJson);
+            }
+
+            // Read and deserialize the existing JSON data
+            var json = File.ReadAllText(jsonPath);
+            Streak? streak = JsonConvert.DeserializeObject<Streak>(json);
+            return streak;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"An error occurred while reading user streak: {ex.Message}");
+            return null;
+        }
+    }
+
+
+    /* Save the UserQuestions to JSON under the specific Unit ID
+    *@param unitId - unit id
+    *@param updatedQuestions - user questions updated through UI
+    */
+    public static bool SaveUserQuestions(int unitId, ObservableCollection<Question> updatedQuestions)
+    {
+        try
+        {
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string jsonPath = Path.Combine(appDataPath, "ITU", "lekce.json");
+
+
+            // Check if the JSON file exists
+            if (!File.Exists(jsonPath))
+            {
+                MessageBox.Show("JSON file not found. Please load the units first.");
+                return false;
+            }
+
+            // Read and deserialize the existing JSON data
+            var json = File.ReadAllText(jsonPath);
+            var units = JsonConvert.DeserializeObject<ObservableCollection<UnitModel>>(json);
+
+            // Find the unit by ID
+            var unit = units.FirstOrDefault(u => u.ID == unitId);
+            if (unit == null)
+            {
+                MessageBox.Show($"Unit with ID {unitId} not found.");
+                return false;
+            }
+
+            // Update the UserQuestions with the new data
+            unit.UserQuestions = updatedQuestions.ToList();
+
+            // Serialize the updated units back to JSON
+            var updatedJson = JsonConvert.SerializeObject(units, Formatting.Indented);
+
+            // Write the updated JSON back to the file
+            File.WriteAllText(jsonPath, updatedJson);
+
+            MessageBox.Show("User questions saved successfully.");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"An error occurred while saving user questions: {ex.Message}");
+            return false;
+        }
+        return true;
+    }
+
+
+    /**
+     * Adds user's error rate to statistic
+     * @param iD - unit identification
+     * @param v  - error rate
+     */
+    public static void SaveStatistic(int iD, float v)
+    {
+        try
+        {
+            // Get path
+            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            Debug.WriteLine($"AppData Path: {appDataPath}");
+
+            // Construct the full path 
+            string jsonPath = Path.Combine(appDataPath, "ITU", "lekce.json");
+
+            var units = LoadUnits();
+
+            // Find the unit with the specified ID
+            var unit = units.FirstOrDefault(u => u.ID == iD);
+
+
+            if (unit != null)
+            {
+                // Add the statistic to the unit's ErrorRates
+                unit.ErrorRates.Add(v);
+
+                // Serialize the updated units 
+                var updatedJson = JsonConvert.SerializeObject(units, Formatting.Indented);
+                File.WriteAllText(jsonPath, updatedJson);
+            }
+            else
+            {
+                MessageBox.Show($"Unit with ID {iD} not found.");
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"An error occurred while saving the statistic: {ex.Message}");
+        }
+    }
+
+
 }

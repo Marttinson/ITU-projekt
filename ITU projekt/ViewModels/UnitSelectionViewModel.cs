@@ -11,6 +11,7 @@ using ITU_projekt.API;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows;
+using System.Diagnostics;
 
 namespace ITU_projekt.ViewModels;
 
@@ -18,7 +19,7 @@ namespace ITU_projekt.ViewModels;
 class UnitSelectionViewModel : INotifyPropertyChanged
 {
 
-
+    /* Units to display */
     private ObservableCollection<UnitModel> _units;
     public ObservableCollection<UnitModel> Units
     {
@@ -31,67 +32,60 @@ class UnitSelectionViewModel : INotifyPropertyChanged
     }
 
 
+
     public event PropertyChangedEventHandler PropertyChanged;
     protected void OnPropertyChanged([CallerMemberName] string name = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 
-
-    public ICommand AddCustomQuestions { get; set; }
-    public ICommand StartUnitCommand { get; set; }
-    public ICommand StartUnitCommand_endless { get; set; }
-    public ICommand ViewStatistics { get; set; }
-
     private MainWindowViewModel VM;
     public UnitSelectionViewModel(MainWindowViewModel _VM)
     {
-        // Load Units
+        // Load Units that will be displayed
         Units = JsonHandler.LoadUnits();
-
-        // Connect Commands
-        AddCustomQuestions = new RelayCommand(ExecuteAddCustomQuestions);
-        StartUnitCommand = new RelayCommand(ExecuteStartUnitCommand);
-        StartUnitCommand_endless = new RelayCommand(ExecuteStartUnitCommand_ENDLESS);
-        ViewStatistics = new RelayCommand(ExecuteViewStatistics);
 
         VM = _VM;
     }
 
-    // TODO CUSTOM Qs
-    private void ExecuteAddCustomQuestions(object parameter)
-    {
-        var id = parameter as int?;
-        if (id.HasValue)
-        {
-            // TODO LOGIC
-            MessageBox.Show("Unit " + parameter + " custom");
-        }
-        else { MessageBox.Show("ID error"); }
-    }
 
-    // TODO START LECTION -> send to MainWindowViewModel
-    private void ExecuteStartUnitCommand(object parameter)
+    // Start lesson
+    public void ExecuteStartUnitCommand(object parameter)
     {
+        VM.SetBackToMenuVisible();
+
         var id = parameter as int?;
         if (id.HasValue)
         {
             string unit = "Unit " + parameter;
-    
+
             // Vygenerování náhodného čísla v intervalu <1; 3> a podle toho zvolení počáteční otázky,
             // všechny mají stejnou pravděpodobnost
             Random random = new Random();
             int randomNumber = random.Next(1, 4);
 
+            // Set UnitModel for saving statistics
+            if (parameter is int uid)
+            {
+                VM.setUnitModel(Units[uid-1]);
+            }
+            else
+            {
+                MessageBox.Show("Unit ID parsing failed");
+                return;
+            }
+            
+
             int turn = 1;
             if(randomNumber == 1)
                 VM.CurrentUserControl = new TranslateWord(VM, unit, ref turn);
             else if (randomNumber == 2)
-                VM.CurrentUserControl = new WordMatching(VM, unit, ref turn);
+                VM.CurrentUserControl = new Choice(VM, unit, ref turn);
             else if (randomNumber == 3)
                 VM.CurrentUserControl = new Choice(VM, unit, ref turn);
         }
     }
+
     private void ExecuteStartUnitCommand_ENDLESS(object parameter)
     {
         var id = parameter as int?;
@@ -111,17 +105,6 @@ class UnitSelectionViewModel : INotifyPropertyChanged
                 VM.CurrentUserControl = new WordMatching(VM, unit, ref turn);
             else if (randomNumber == 3)
                 VM.CurrentUserControl = new Choice(VM, unit, ref turn);
-        }
-    }
-
-    // TODO VIEW STATISTICS ->send to MainWindowViewModel
-    private void ExecuteViewStatistics(object parameter)
-    {
-        var id = parameter as int?;
-        if (id.HasValue)
-        {
-            // TODO LOGIC
-            MessageBox.Show("Unit " + parameter + " statistics");
         }
     }
 }

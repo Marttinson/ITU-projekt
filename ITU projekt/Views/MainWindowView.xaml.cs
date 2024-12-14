@@ -14,68 +14,56 @@ using System.Windows.Input;
 
 namespace ITU_projekt.Views
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindowView : Window
     {
-
+        // Stav bocniho panelu
         private bool RightSideMenu_expanded = false;
 
         public MainWindowView()
         {
             SetTheme("LightTheme.xaml");
-            InitializeComponent();
-            BackToUnitSelection.Visibility = Visibility.Hidden;
             DataContext = new MainWindowViewModel();
-        }
-
-        private void back_to_unit_selection(object sender, RoutedEventArgs e)
-        {
-            MainContent.Content = null; // Vymaže aktuální obsah
-            BackToUnitSelection.Visibility = Visibility.Hidden; // Schová back to menu tlačítko
-            // TODO inform VM -> stop lection, return UnitSelection UC
+            InitializeComponent();
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("ZMACKNUTE TLACITKO!!");
-            var viewModel = (MainWindowViewModel)DataContext;
 
             if (RightSideMenu_expanded)
             {
-                // Kompresni animace
+                // Kompresni animace pro šířku
                 var menuAnimation = new DoubleAnimation
                 {
-                    From = 1,
-                    To = 0,
+                    From = RightSideMenu.ActualWidth,
+                    To = 0, // Minimalni sirka
                     Duration = new Duration(TimeSpan.FromSeconds(0.3))
                 };
 
-                // Aplikovani animace
-                RightSideMenu.BeginAnimation(UIElement.OpacityProperty, menuAnimation);
+                // Aplikování animace na šířku
+                RightSideMenu.BeginAnimation(Grid.WidthProperty, menuAnimation);
 
-                // Zapamatovani stavu
+                // Zapamatování stavu
                 RightSideMenu_expanded = false;
             }
             else
             {
-                // Expanzni animace
+                // Expanzní animace pro šířku
                 var menuAnimation = new DoubleAnimation
                 {
-                    From = 0,
-                    To = 1,
+                    From = RightSideMenu.ActualWidth,
+                    To = 150,  // Maximalni sirka
                     Duration = new Duration(TimeSpan.FromSeconds(0.3))
                 };
 
-                // Aplikovani animace
-                RightSideMenu.BeginAnimation(UIElement.OpacityProperty, menuAnimation);
+                // Aplikování animace na šířku
+                RightSideMenu.BeginAnimation(Grid.WidthProperty, menuAnimation);
 
-                // Zapamatovani stavu
+                // Zapamatování stavu
                 RightSideMenu_expanded = true;
             }
-
         }
+
 
         private void DarkModeCheckBox_Checked(object sender, RoutedEventArgs e)
         {
@@ -87,6 +75,7 @@ namespace ITU_projekt.Views
             SetTheme("LightTheme.xaml");
         }
 
+        // Funkce pro prepnuti light/dark modu
         private void SetTheme(string themeFileName)
         {
             try
@@ -98,14 +87,14 @@ namespace ITU_projekt.Views
                 var themeDict = new ResourceDictionary { Source = new Uri(themePath, UriKind.Relative) };
 
                 // Odstran jenom dark/light mode theme
-                var existingTheme = app.Resources.MergedDictionaries
-                                            .FirstOrDefault(d => d.Source.ToString().Contains("Theme"));
+                var existingTheme = app.Resources.MergedDictionaries.FirstOrDefault(d => d.Source.ToString().Contains("Theme"));
+
                 if (existingTheme != null)
                 {
                     app.Resources.MergedDictionaries.Remove(existingTheme);
                 }
 
-                // Aplikace 
+                // Pridat novy theme
                 app.Resources.MergedDictionaries.Add(themeDict);
             }
 
@@ -120,35 +109,6 @@ namespace ITU_projekt.Views
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-    }
-
-    public class HeightConverter : IValueConverter
-    {
-        // Konvertor pro výpočet 10% výšky okna
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            double height = (double)value;
-            return height * 0.1; // Vráti 10% výšky
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class WidthConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            double width = (double)value;
-            return width * 0.5; // 50% šířky
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
         }
     }
 }
