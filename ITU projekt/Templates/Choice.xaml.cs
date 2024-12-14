@@ -68,7 +68,7 @@ namespace ITU_projekt.Templates
 
             Option1 = question.Options[0];
             Option2 = question.Options[1];
-            Option3= question.Options[2];
+            Option3 = question.Options[2];
         }
 
         private void ExecuteEvaluateAnswer(object parameter)

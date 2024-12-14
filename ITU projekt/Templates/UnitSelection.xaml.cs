@@ -7,8 +7,6 @@ namespace ITU_projekt.Templates;
 
 public partial class UnitSelection : UserControl
 {
-
-
     public UnitSelection()
     {
         InitializeComponent();

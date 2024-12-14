@@ -11,79 +11,93 @@
                     <DataTemplate>
                         <Grid>
                             <Border Margin="5" BorderThickness="1" BorderBrush="Gray">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="5*" />
-                                            <!-- Left side, bigger button -->
-                                            <ColumnDefinition Width="1*" />
-                                            <!-- Right side, smaller button -->
-                                        </Grid.ColumnDefinitions>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="5*" />
+                                        <!-- Left side, bigger button -->
+                                        <ColumnDefinition Width="1*" />
+                                        <!-- Right side, smaller button -->
+                                    </Grid.ColumnDefinitions>
 
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="5*" />
-                                        </Grid.RowDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="5*" />
+                                    </Grid.RowDefinitions>
 
-                                        <!-- Left Side - Start Exercise -->
-                                    
-                                        <Button Content="{Binding Name}" 
-                                            Command="{Binding DataContext.StartUnitCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                            CommandParameter="{Binding}"
-                                            HorizontalAlignment="Stretch"
+                                    <!-- Left Side - Start Exercise -->
+                                    <Button HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
-                                            FontSize="16" 
-                                            Height="50" 
+                                            FontSize="16"
+                                            Height="50"
                                             Grid.Column="0"
                                             Grid.Row="0"
-                                            BorderBrush="Transparent" 
-                                            Background="{DynamicResource PrimaryButtonBackground}" 
-                                            Margin="5" />
-                                    
+                                            BorderBrush="Transparent"
+                                            Background="{DynamicResource PrimaryButtonBackground}"
+                                            Margin="5"
+                                            Command="{Binding DataContext.StartUnitCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                            CommandParameter="{Binding}">
+                                        <Viewbox>
+                                            <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Viewbox>
+                                    </Button>
 
-                                        <!-- Right Side - Open Menu with Settings Icon -->
-                                    
-                                        <Button Content="⚙" 
-                                                Click="OpenSettingsButton_Click" 
-                                                HorizontalAlignment="Stretch"
-                                                VerticalAlignment="Stretch" 
-                                                FontSize="16" 
-                                                Height="50" 
-                                                Grid.Column="1"
-                                                Grid.Row="0"
-                                                BorderBrush="Transparent" 
-                                                Background="{DynamicResource UnitSelectionBackground}"
-                                                Margin="5"/>
+                                    <!-- Right Side - Open Menu with Settings Icon -->
+                                    <Button HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            FontSize="16"
+                                            Height="50"
+                                            Grid.Column="1"
+                                            Grid.Row="0"
+                                            BorderBrush="Transparent"
+                                            Background="{DynamicResource UnitSelectionBackground}"
+                                            Margin="5"
+                                            Click="OpenSettingsButton_Click">
+                                        <Viewbox>
+                                            <TextBlock Text="⚙" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Viewbox>
+                                    </Button>
 
-
-                                    <StackPanel x:Name="SettingsPanel" 
-                                                Visibility="Collapsed"
-                                                Grid.Row="1"
-                                                Grid.ColumnSpan="2"
-                                                Background="{DynamicResource SettingsPanelBackground}">
-
-                                        <TextBlock Text="{Binding Description}" />
+                                    <!-- Settings Panel -->
+                                    <StackPanel x:Name="SettingsPanel" Visibility="Collapsed" Grid.Row="1" Grid.ColumnSpan="2" Background="{DynamicResource SettingsPanelBackground}">
+                                        <TextBlock Text="{Binding Description}" 
+                                                   TextWrapping="Wrap" 
+                                                   MaxWidth="300" 
+                                                   VerticalAlignment="Top" 
+                                                   HorizontalAlignment="Center"/>
 
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
-                                            <Button Content="Add custom questions" 
+                                            <Button 
                                                     Command="{Binding DataContext.AddCustomQuestionsCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                                    CommandParameter="{Binding}" 
-                                                    Grid.Column="0" />
-                                            <Button Content="View Statistics" 
+                                                    CommandParameter="{Binding}"
+                                                    Grid.Column="0">
+                                                <Viewbox>
+                                                    <TextBlock Text="Add custom questions" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Viewbox>
+                                            </Button>
+                                            <Button 
                                                     Command="{Binding DataContext.ShowStatisticsCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                                     CommandParameter="{Binding}"
-                                                    Grid.Column="1" />
+                                                    Grid.Column="1">
+                                                <Viewbox>
+                                                    <TextBlock Text="View Statistics" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Viewbox>
+                                            </Button>
                                         </Grid>
-                                        <Button Content="Endless Mode" 
-                                                    Command="{Binding DataContext.StartUnitCommand_endless, RelativeSource={RelativeSource AncestorType=Window}}"
-                                                    CommandParameter="{Binding}" />
 
+                                        <Button 
+                                                Command="{Binding DataContext.StartUnitCommand_endless, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                CommandParameter="{Binding}">
+                                            <Viewbox>
+                                                <TextBlock Text="Endless Mode" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Viewbox>
+                                        </Button>
                                     </StackPanel>
                                 </Grid>
-                                </Border>
+                            </Border>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
