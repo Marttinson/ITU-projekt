@@ -1,15 +1,20 @@
 TODO
 -- komenty
--- viewboxy	(UnitSelection, CustomUserWordList, Graph)
--- spravit side menu
--- graf toggle button highlight
--- rounded corners
+-- viewboxy	(UnitSelection -- kinda done, CustomUserWordList -- kinda)
+
 
 
 -- message boxy oddelat
--- statistiky
--- propojeni lekci a menu
--- celkove to poskládat dohromady
+-- statistiky  		-- ulozit ve mainwindoew viewmodel 
+-- propojit streak  	-- pres MWVM
+-- back to menu button	-- pres MWVM
+
+
+-- rounded corners == slozity nechce se mi
+
+
+-- Další hra
+
 
 
 -- spousta erroru s bindingem	---- idk

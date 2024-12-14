@@ -22,10 +22,22 @@ namespace ITU_projekt.Views
 
         private bool RightSideMenu_expanded = false;
 
+        private double _sideMenu;
+        public double sideMenuSize
+        {
+            get => _sideMenu;
+            set
+            {
+                _sideMenu = value;
+                OnPropertyChanged();
+            }
+        }
+
         public MainWindowView()
         {
             SetTheme("LightTheme.xaml");
             DataContext = new MainWindowViewModel();
+            //sideMenuSize = 150;
             InitializeComponent();
         }
 

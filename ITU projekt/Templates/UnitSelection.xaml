@@ -25,17 +25,18 @@
                                     </Grid.RowDefinitions>
 
                                     <!-- Left Side - Start Exercise -->
+                                    <!-- Left Side - Start Exercise -->
                                     <Button HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Stretch"
-                                            FontSize="16"
-                                            Height="50"
-                                            Grid.Column="0"
-                                            Grid.Row="0"
-                                            BorderBrush="Transparent"
-                                            Background="{DynamicResource PrimaryButtonBackground}"
-                                            Margin="5"
-                                            Click="Start_Click"
-                                            Tag="{Binding ID}">
+        VerticalAlignment="Stretch"
+        FontSize="16"
+        Height="50"
+        Grid.Column="0"
+        Grid.Row="0"
+        BorderBrush="Transparent"
+        Background="{DynamicResource PrimaryButtonBackground}"
+        Margin="5"
+        Click="Start_Click"
+        Tag="{Binding ID}">
                                         <Viewbox>
                                             <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Viewbox>
@@ -43,27 +44,27 @@
 
                                     <!-- Right Side - Open Menu with Settings Icon -->
                                     <Button HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Stretch"
-                                            FontSize="16"
-                                            Height="50"
-                                            Grid.Column="1"
-                                            Grid.Row="0"
-                                            BorderBrush="Transparent"
-                                            Background="{DynamicResource UnitSelectionBackground}"
-                                            Margin="5"
-                                            Click="OpenSettingsButton_Click">
+        VerticalAlignment="Stretch"
+        FontSize="16"
+        Height="50"
+        Grid.Column="1"
+        Grid.Row="0"
+        BorderBrush="Transparent"
+        Background="{DynamicResource UnitSelectionBackground}"
+        Margin="5"
+        Click="OpenSettingsButton_Click">
                                         <Viewbox>
                                             <TextBlock Text="⚙" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Viewbox>
                                     </Button>
-
                                     <!-- Settings Panel -->
                                     <StackPanel x:Name="SettingsPanel" Visibility="Collapsed" Grid.Row="1" Grid.ColumnSpan="2" Background="{DynamicResource SettingsPanelBackground}">
                                         <TextBlock Text="{Binding Description}" 
                                                    TextWrapping="Wrap" 
                                                    MaxWidth="300" 
                                                    VerticalAlignment="Top" 
-                                                   HorizontalAlignment="Center"/>
+                                                   HorizontalAlignment="Center" 
+                                                   FontSize="20"/>
 
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -74,26 +75,20 @@
                                                     Command="{Binding DataContext.AddCustomQuestionsCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                                     CommandParameter="{Binding}"
                                                     Grid.Column="0">
-                                                <Viewbox>
-                                                    <TextBlock Text="Add custom questions" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                </Viewbox>
+                                                <TextBlock Text="Add custom questions" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
                                             </Button>
                                             <Button 
                                                     Command="{Binding DataContext.ShowStatisticsCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                                     CommandParameter="{Binding}"
                                                     Grid.Column="1">
-                                                <Viewbox>
-                                                    <TextBlock Text="View Statistics" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                </Viewbox>
+                                                <TextBlock Text="View Statistics" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
                                             </Button>
                                         </Grid>
 
                                         <Button 
                                                 Click="StartEndless_Click"
                                                 Tag="{Binding ID}">
-                                            <Viewbox>
-                                                <TextBlock Text="Endless Mode" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Viewbox>
+                                            <TextBlock Text="Endless Mode" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
                                         </Button>
                                     </StackPanel>
                                 </Grid>

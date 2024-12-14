@@ -2,6 +2,11 @@
 using System.Windows;
 using System.Windows.Controls;
 using ITU_projekt.ViewModels;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System;
+using System.Diagnostics;
+using System.Windows.Media;
 
 namespace ITU_projekt.Templates;
 
@@ -9,6 +14,7 @@ public partial class UnitSelection : UserControl
 {
 
     private UnitSelectionViewModel viewModel;
+
     public UnitSelection(MainWindowViewModel VM)
     {
         InitializeComponent();
@@ -28,6 +34,20 @@ public partial class UnitSelection : UserControl
         {
             // If the panel is visible, collapse it, otherwise, make it visible
             settingsPanel.Visibility = settingsPanel.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+        }
+    }
+
+    // Helper method to find all child elements of type T
+    private static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+    {
+        for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+        {
+            DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+            if (child is T)
+                yield return (T)child;
+
+            foreach (var childOfChild in FindVisualChildren<T>(child))
+                yield return childOfChild;
         }
     }
 

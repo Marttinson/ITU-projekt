@@ -7,22 +7,25 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace ITU_projekt.Converters;
-
-public class BoolToColorConverter : IValueConverter
+namespace ITU_projekt.Converters
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+
+    public class BoolToColorConverter : IValueConverter
     {
-        if (value is bool isCompleted)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return isCompleted ? Brushes.Green : Brushes.Gray;
+            if (value is bool isCompleted)
+            {
+                return isCompleted ? Brushes.Green : Brushes.Gray;
+            }
+            return Brushes.Gray;
         }
-        return Brushes.Gray;
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return false; // Not needed for this scenario
+        }
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return false; // Not needed for this scenario
-    }
+
 }
-

@@ -4,28 +4,47 @@
              xmlns:local="clr-namespace:ITU_projekt.Templates"
              xmlns:oxy="http://oxyplot.org/wpf"
              xmlns:viewModels="clr-namespace:ITU_projekt.ViewModels" 
-             Height="350" Width="600">
+             Height="Auto" Width="Auto">
 
     <Grid>
         <Grid.RowDefinitions>
+            <!-- First row takes remaining space -->
             <RowDefinition Height="*" />
-            <!-- Take remaining space for PlotView -->
+            <!-- Second row takes only enough space for the controls at the bottom -->
             <RowDefinition Height="Auto" />
-            <!-- StackPanel at the bottom -->
         </Grid.RowDefinitions>
 
-        <!-- Plot View -->
-        <oxy:PlotView Model="{Binding PlotModel}" Grid.Row="0" />
+        <!-- Plot View that stretches to fill available space -->
+        <oxy:PlotView Model="{Binding PlotModel}" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
-        <!-- X-Axis Range Controls -->
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10" Grid.Row="1">
+        <!-- StackPanel for range controls -->
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="10" Grid.Row="1">
             <!-- Toggle to switch between all or latest N values -->
-            <Button Content="Show All" Command="{Binding ToggleRangeCommand}" Margin="5" />
+            <Button Content="Show All" Command="{Binding ToggleRangeCommand}" Margin="5" HorizontalAlignment="Left" MinHeight="40" MinWidth="120" FontWeight="SemiBold" BorderThickness="1" BorderBrush="{DynamicResource ForegroundColor}">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <!-- When button is toggled (active state) -->
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ShowAll}" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource GraphToggledTrue}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ShowAll}" Value="False">
+                                <Setter Property="Background" Value="{DynamicResource GraphToggledFalse}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
 
-            <TextBlock Text="Latest X values:" VerticalAlignment="Center" Margin="5" />
-            <Button Content="-" Command="{Binding DecrementRangeCommand}" Margin="5" />
-            <TextBox Width="50" Text="{Binding XAxisRange}" Margin="5" />
-            <Button Content="+" Command="{Binding IncrementRangeCommand}" Margin="5" />
+            <TextBlock Text="Posledních x hodnot:" VerticalAlignment="Center" Margin="5" HorizontalAlignment="Center" FontWeight="SemiBold"/>
+
+            <Button Content="-" Command="{Binding DecrementRangeCommand}" Margin="5" HorizontalAlignment="Left" MinHeight="40" MinWidth="40" FontWeight="SemiBold"  BorderThickness="1" BorderBrush="{DynamicResource ForegroundColor}" />
+
+
+            <TextBox Text="{Binding XAxisRange}" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" BorderThickness="1" BorderBrush="{DynamicResource ForegroundColor}"/>
+            <Button Content="+" Command="{Binding IncrementRangeCommand}" Margin="5" HorizontalAlignment="Right" MinHeight="40" MinWidth="40" FontWeight="SemiBold" BorderThickness="1" BorderBrush="{DynamicResource ForegroundColor}"/>
+
+
         </StackPanel>
     </Grid>
 </UserControl>

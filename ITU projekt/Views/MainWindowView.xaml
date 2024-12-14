@@ -13,10 +13,6 @@
     >
 
     <Window.Resources>
-        <!-- Konvertor pro výšku tlačítek (10% výšky okna) -->
-        <local:HeightConverter x:Key="HeightConverter"/>
-        <!-- Konvertor pro šířku tlačítek (50% šířky okna) -->
-        <local:WidthConverter x:Key="WidthConverter"/>
         <!-- Konvertor pro vizualizaci kompletace streaku -->
         <converters:BoolToColorConverter x:Key="BoolToColorConverter"/>
     </Window.Resources>
@@ -31,11 +27,11 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MinWidth="150"/>
+            <ColumnDefinition Width="150"/>
             <!-- Levý sloupec pro výběr jazyka -->
-            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="*" />
             <!-- Střední část pro výběr lekcí -->
-            <ColumnDefinition Width="*" MinWidth="150"/>
+            <ColumnDefinition Width="150" />
             <!-- Pravý sloupec pro menu -->
         </Grid.ColumnDefinitions>
 
@@ -76,7 +72,7 @@
                         HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch" 
                         HorizontalContentAlignment="Stretch" 
-                        VerticalContentAlignment="Stretch" 
+                        VerticalContentAlignment="Stretch"
                         >
             <Viewbox>
                 <TextBlock Text="Nastavení" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -101,7 +97,7 @@
                   VerticalAlignment="Top" HorizontalAlignment="Center"
                   Margin="10" Checked="DarkModeCheckBox_Checked" 
                   Unchecked="DarkModeCheckBox_Unchecked"/>
-                <Button HorizontalAlignment="Center" Content="Change Streak Icon" Command="{Binding ChangeStreakIcon}" />
+                <Button Content="Change Streak Icon" Margin="3" Command="{Binding ChangeStreakIcon}" HorizontalAlignment="Stretch" BorderBrush="{DynamicResource PrimaryButtonForeground}" BorderThickness="1"/>
             </StackPanel>
         </Grid>
     </Grid>

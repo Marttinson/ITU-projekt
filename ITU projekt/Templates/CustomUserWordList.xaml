@@ -5,14 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converters="clr-namespace:ITU_projekt.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             Height="Auto"  Width="Auto">
 
     <UserControl.Resources>
         <converters:EmptyTextConverter x:Key="EmptyTextConverter" />
         <converters:BoolToFontWeightConverter x:Key="BoolToFontWeightConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -20,10 +20,11 @@
         </Grid.RowDefinitions>
 
         <!-- Save Button -->
-        <Button Content="Save Changes" Command="{Binding SaveQuestionsCommand}" Margin="5" HorizontalAlignment="Left" Grid.Row="0" Visibility="Visible"/>
+        <Button Content="Save Changes" Command="{Binding SaveQuestionsCommand}" Margin="3,4,0,0" MinHeight="40" MinWidth="120" HorizontalAlignment="Left" Grid.Row="0" Visibility="Visible" BorderThickness="2" FontWeight="SemiBold"/>
 
         <!-- Add New Word Button -->
-        <Button Content="Add New Word" Command="{Binding AddNewQuestionCommand}" Margin="5" HorizontalAlignment="Right" Grid.Row="0" />
+        <Button Content="Add New Word" Command="{Binding AddNewQuestionCommand}" Margin="0,4,3,0" MinHeight="40" MinWidth="120" HorizontalAlignment="Right" Grid.Row="0" BorderThickness="2" FontWeight="SemiBold"/>
+        
 
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
             <ItemsControl Name="IC" ItemsSource="{Binding ReversedQuestions}">
@@ -34,19 +35,21 @@
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="4*" />
-                                        <ColumnDefinition Width="4*" />
-                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="3*" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
                                     <!-- Question TextBox -->
                                     <TextBox Text="{Binding QuestionText, UpdateSourceTrigger=PropertyChanged}" 
-                                         Grid.Column="0"
-                                         FontWeight="{Binding IsModified, Converter={StaticResource BoolToFontWeightConverter}}"
-                                         BorderThickness="2"
-                                         TextChanged="TextBox_TextChanged">
-                                        
+                                             Grid.Column="0"
+                                             FontWeight="{Binding IsModified, Converter={StaticResource BoolToFontWeightConverter}}"
+                                             FontSize="20"
+                                             BorderThickness="2"
+                                             HorizontalAlignment="Stretch"
+                                             VerticalAlignment="Stretch"
+                                             TextChanged="TextBox_TextChanged">
                                         <TextBox.Style>
-                                            <Style TargetType="TextBox">
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding QuestionText, Converter={StaticResource EmptyTextConverter}}" Value="True">
                                                         <Setter Property="BorderBrush" Value="Red"/>
@@ -61,12 +64,14 @@
 
                                     <!-- Answer TextBox -->
                                     <TextBox Text="{Binding Answer, UpdateSourceTrigger=PropertyChanged}" 
-                                         Grid.Column="1"
+                                             Grid.Column="1"
                                              BorderThickness="2"
-                                         FontWeight="{Binding IsModified, Converter={StaticResource BoolToFontWeightConverter}}"
-                                             >
+                                             FontWeight="{Binding IsModified, Converter={StaticResource BoolToFontWeightConverter}}"
+                                             FontSize="20"
+                                             HorizontalAlignment="Stretch"
+                                             VerticalAlignment="Stretch">
                                         <TextBox.Style>
-                                            <Style TargetType="TextBox">
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding Answer, Converter={StaticResource EmptyTextConverter}}" Value="True">
                                                         <Setter Property="BorderBrush" Value="Red"/>
@@ -75,10 +80,10 @@
                                             </Style>
                                         </TextBox.Style>
                                     </TextBox>
-                                    
+
                                     <!-- Delete button -->
-                                    <Button Content="{Binding ID}" Click="DeleteQ" CommandParameter="{Binding ID}" Grid.Column="2"
-                                            Background="Red"/>
+                                    <Button Content="Remove" Click="DeleteQ" CommandParameter="{Binding ID}" Grid.Column="2"
+                                            Background="Red" HorizontalAlignment="Stretch" BorderThickness="0" VerticalAlignment="Stretch"/>
                                 </Grid>
                             </Border>
                         </Grid>
