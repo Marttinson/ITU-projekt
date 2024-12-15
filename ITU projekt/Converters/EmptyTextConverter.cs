@@ -1,4 +1,10 @@
-﻿using System;
+﻿/**EmptyTextConverter
+ * V
+ * Vojtěch Hrabovský (xhrabo18)
+ * Konverter pro zbarvení prázdných polí při editaci uživatelských otázek
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;

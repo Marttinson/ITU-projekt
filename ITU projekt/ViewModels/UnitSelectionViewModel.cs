@@ -1,17 +1,19 @@
-﻿using ITU_projekt.Templates;
+﻿/* UnitSelectionViewModel
+ * VM
+ * Vojtěch Hrabovský (xhrabo18)
+ * 
+ * VM - displaying units and starting lesson
+ */
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ITU_projekt.Models;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using ITU_projekt.API;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 using System.Windows;
-using System.Diagnostics;
+
+using ITU_projekt.API;
+using ITU_projekt.Templates;
+using ITU_projekt.Models;
 
 namespace ITU_projekt.ViewModels;
 
@@ -31,15 +33,23 @@ class UnitSelectionViewModel : INotifyPropertyChanged
         }
     }
 
-
-
+    // INotifyPropertyChanged
     public event PropertyChangedEventHandler PropertyChanged;
     protected void OnPropertyChanged([CallerMemberName] string name = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 
+    // Main Window VM
     private MainWindowViewModel VM;
+
+
+
+    /// <summary>
+    /// Initializes instance of unitslection VM
+    /// </summary>
+    /// <param name="_VM"> MainWindoViewModel </param>
+    /// Vojtěch Hrabovský
     public UnitSelectionViewModel(MainWindowViewModel _VM)
     {
         // Load Units that will be displayed
@@ -74,18 +84,15 @@ class UnitSelectionViewModel : INotifyPropertyChanged
                 MessageBox.Show("Unit ID parsing failed");
                 return;
             }
-            
 
             int turn = 1;
-            if(randomNumber == 1)
-                VM.CurrentUserControl = new TranslateWord(VM, unit, ref turn);
-            else if (randomNumber == 2)
-                VM.CurrentUserControl = new Choice(VM, unit, ref turn);
-            else if (randomNumber == 3)
-                VM.CurrentUserControl = new Choice(VM, unit, ref turn);
+            // First task is listening
+            VM.CurrentUserControl = new ListeningExercise(VM, unit, ref turn);
+            return;
         }
     }
 
+    // Start endless mode
     private void ExecuteStartUnitCommand_ENDLESS(object parameter)
     {
         var id = parameter as int?;

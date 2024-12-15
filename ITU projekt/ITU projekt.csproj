@@ -14,11 +14,35 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\u1.mp3" />
+    <None Remove="Resources\u2.mp3" />
+    <None Remove="Resources\u3.mp3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Questions\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OxyPlot.Wpf" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Audio\u1.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Audio\u2.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Audio\u3.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Templates\ReadingExercise.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

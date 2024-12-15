@@ -1,16 +1,28 @@
-﻿using ITU_projekt.Models;
-using OxyPlot.Axes;
-using OxyPlot.Series;
-using OxyPlot;
+﻿/* GraphViewModel
+ * VM
+ * Vojtěch Hrabovský (xhrabo18)
+ * 
+ * VM - Fills graph with data, handles controls
+ */
+
 using System.ComponentModel;
 using System.Windows.Input;
 using System;
 
+using OxyPlot.Axes;
+using OxyPlot.Series;
+using OxyPlot;
+
+using ITU_projekt.Models;
 public class GraphViewModel : INotifyPropertyChanged
 {
+    // x axis range (how many latest samples will be shown)
     private int _xAxisRange;
+    // toggle to show all samples
     private bool _showAll;
+    // Plot model that will be shown
     private PlotModel _plotModel;
+    // Unit model with statistics
     private UnitModel _model;
 
     public PlotModel PlotModel
@@ -47,10 +59,15 @@ public class GraphViewModel : INotifyPropertyChanged
         }
     }
 
+    // Commands for controls
     public ICommand ToggleRangeCommand { get; }
     public ICommand IncrementRangeCommand { get; }
     public ICommand DecrementRangeCommand { get; }
 
+    /// <summary>
+    /// Initializes instance
+    /// </summary>
+    /// <param name="model">UnitModel with datapoints to show</param>
     public GraphViewModel(UnitModel model)
     {
         _xAxisRange = model.ErrorRates.Count / 2; // Default range
@@ -66,12 +83,13 @@ public class GraphViewModel : INotifyPropertyChanged
     }
 
 
-
+    // Toggle show all
     private void ToggleRange()
     {
         ShowAll = !ShowAll;
     }
 
+    // Increment range
     private void IncrementRange()
     {
         XAxisRange++;
@@ -81,6 +99,7 @@ public class GraphViewModel : INotifyPropertyChanged
         }
     }
 
+    // Decrement range
     private void DecrementRange()
     {
         if (XAxisRange > 1)
@@ -89,11 +108,13 @@ public class GraphViewModel : INotifyPropertyChanged
         }
     }
 
+    // Create plot model for graph
     private PlotModel CreatePlotModel()
     {
+        // title
         var model = new PlotModel { Title = "Procentuální míra neúspěšnosti posledních x pokusů" };
 
-        // Create X-axis (hidden)
+        // Create X-axis
         var xAxis = new LinearAxis
         {
             Position = AxisPosition.Bottom,
@@ -123,6 +144,7 @@ public class GraphViewModel : INotifyPropertyChanged
         return model;
     }
 
+    // Generate data points from unit model statistic
     private void GenerateDataPoints()
     {
         if (_model?.ErrorRates == null || _model.ErrorRates.Count == 0) return;
@@ -151,6 +173,7 @@ public class GraphViewModel : INotifyPropertyChanged
         UpdatePlotRange(pointsToDisplay);
     }
 
+    // Update plot x axis range
     private void UpdatePlotRange(int pointsToDisplay)
     {
         var xAxis = _plotModel.Axes[0] as LinearAxis;

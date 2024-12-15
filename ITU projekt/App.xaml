@@ -5,7 +5,7 @@
              StartupUri="Views/MainWindowView.xaml">
 
     <Application.Resources>
-
+        
         <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
         <ResourceDictionary x:Key="ThemeResource">
