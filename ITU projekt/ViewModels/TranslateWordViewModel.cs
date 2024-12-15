@@ -131,10 +131,10 @@ public class TranslateWordViewModel : INotifyPropertyChanged
                 turn++;
         }
 
-        // Vygenerování náhodného čísla v intervalu <1; 3> a podle toho zvolení následující otázky,
+        // Vygenerování náhodného čísla v intervalu <1; 4> a podle toho zvolení následující otázky,
         // všechny mají stejnou pravděpodobnost
         Random random = new Random();
-        int randomNumber = random.Next(1, 4);
+        int randomNumber = random.Next(1, 5);
 
         if (randomNumber == 1)
             VM.CurrentUserControl = new TranslateWord(VM, unit, ref turn);
@@ -142,6 +142,8 @@ public class TranslateWordViewModel : INotifyPropertyChanged
             VM.CurrentUserControl = new WordMatching(VM, unit, ref turn);
         else if (randomNumber == 3)
             VM.CurrentUserControl = new Choice(VM, unit, ref turn);
+        else if (randomNumber == 4)
+            VM.CurrentUserControl = new SentenceMaking(VM, unit, ref turn);
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

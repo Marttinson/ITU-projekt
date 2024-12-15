@@ -408,6 +408,8 @@ public class WordMatchingViewModel : INotifyPropertyChanged
             VM.CurrentUserControl = new WordMatching(VM, unit, ref turn);
         else if (randomNumber == 3)
             VM.CurrentUserControl = new Choice(VM, unit, ref turn);
+        else if (randomNumber == 4)
+            VM.CurrentUserControl = new SentenceMaking(VM, unit, ref turn);
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
