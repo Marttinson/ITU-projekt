@@ -262,6 +262,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
     // TODO PEXESO
     private void StartPexeso()
     {
+        SetBackToMenuVisible();
         CurrentUserControl = new MemoryGame(this);
     }
 }
