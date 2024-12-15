@@ -22,7 +22,8 @@
         <Rectangle Grid.Column="1" Grid.Row="1" Fill="Gray" />
         
         <!-- Text znění otázky -->
-        <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28" Text="{Binding TextToTranslate}" />
+        <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28" 
+                   Text="{Binding TextToTranslate}" TextWrapping="Wrap" />
         
         <!-- Grid pro definici tlačítek -->
         <Grid Grid.Column="1" Grid.Row="2">

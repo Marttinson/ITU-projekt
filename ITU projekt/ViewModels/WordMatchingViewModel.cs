@@ -19,17 +19,17 @@ namespace ITU_projekt.ViewModels;
 public class WordMatchingViewModel : INotifyPropertyChanged
 {
     //  Nastavení, aby bylo možné měnit barvu tlačítek, podle toho zda jsou stisknuty nebo spojeny
-    private Brush _word1Background = new SolidColorBrush(Colors.Transparent);
-    private Brush _word2Background = new SolidColorBrush(Colors.Transparent);
-    private Brush _word3Background = new SolidColorBrush(Colors.Transparent);
-    private Brush _word4Background = new SolidColorBrush(Colors.Transparent);
-    private Brush _word5Background = new SolidColorBrush(Colors.Transparent);
+    private Brush _word1Background = (SolidColorBrush)Application.Current.Resources["PrimaryButtonBackground"];
+    private Brush _word2Background = (SolidColorBrush)Application.Current.Resources["PrimaryButtonBackground"];
+    private Brush _word3Background = (SolidColorBrush)Application.Current.Resources["PrimaryButtonBackground"];
+    private Brush _word4Background = (SolidColorBrush)Application.Current.Resources["PrimaryButtonBackground"];
+    private Brush _word5Background = (SolidColorBrush)Application.Current.Resources["PrimaryButtonBackground"];
 
-    private Brush _slovo1Background = new SolidColorBrush(Colors.Transparent);
-    private Brush _slovo2Background = new SolidColorBrush(Colors.Transparent);
-    private Brush _slovo3Background = new SolidColorBrush(Colors.Transparent);
-    private Brush _slovo4Background = new SolidColorBrush(Colors.Transparent);
-    private Brush _slovo5Background = new SolidColorBrush(Colors.Transparent);
+    private Brush _slovo1Background = (SolidColorBrush)Application.Current.Resources["PrimaryButtonBackground"];
+    private Brush _slovo2Background = (SolidColorBrush)Application.Current.Resources["PrimaryButtonBackground"];
+    private Brush _slovo3Background = (SolidColorBrush)Application.Current.Resources["PrimaryButtonBackground"];
+    private Brush _slovo4Background = (SolidColorBrush)Application.Current.Resources["PrimaryButtonBackground"];
+    private Brush _slovo5Background = (SolidColorBrush)Application.Current.Resources["PrimaryButtonBackground"];
 
     public Brush Word1Background
     {
@@ -321,15 +321,15 @@ public class WordMatchingViewModel : INotifyPropertyChanged
     {
         // Resetovat barvy všech tlačítek na výchozí (transparentní)
         if(!usedWord.Contains("0"))
-            Word1Background = new SolidColorBrush(Colors.Transparent);
+            Word1Background = (SolidColorBrush)Application.Current.Resources["PrimaryButtonBackground"];
         if (!usedWord.Contains("1"))
-            Word2Background = new SolidColorBrush(Colors.Transparent);
+            Word2Background = (SolidColorBrush)Application.Current.Resources["PrimaryButtonBackground"];
         if (!usedWord.Contains("2"))
-            Word3Background = new SolidColorBrush(Colors.Transparent);
+            Word3Background = (SolidColorBrush)Application.Current.Resources["PrimaryButtonBackground"];
         if (!usedWord.Contains("3"))
-            Word4Background = new SolidColorBrush(Colors.Transparent);
+            Word4Background = (SolidColorBrush)Application.Current.Resources["PrimaryButtonBackground"];
         if (!usedWord.Contains("4"))
-            Word5Background = new SolidColorBrush(Colors.Transparent);
+            Word5Background = (SolidColorBrush)Application.Current.Resources["PrimaryButtonBackground"];
 
         // Nastavit barvu pro aktuálně vybraná tlačítka
         if (selectedWordButton == "0") Word1Background = new SolidColorBrush(Colors.Gray);
@@ -344,15 +344,15 @@ public class WordMatchingViewModel : INotifyPropertyChanged
     {
         // Resetovat barvy všech tlačítek na výchozí (transparentní)
         if (!usedSlovo.Contains("0"))
-            Slovo1Background = new SolidColorBrush(Colors.Transparent);
+            Slovo1Background = (SolidColorBrush)Application.Current.Resources["PrimaryButtonBackground"];
         if (!usedSlovo.Contains("1"))
-            Slovo2Background = new SolidColorBrush(Colors.Transparent);
+            Slovo2Background = (SolidColorBrush)Application.Current.Resources["PrimaryButtonBackground"];
         if (!usedSlovo.Contains("2"))
-            Slovo3Background = new SolidColorBrush(Colors.Transparent);
+            Slovo3Background = (SolidColorBrush)Application.Current.Resources["PrimaryButtonBackground"];
         if (!usedSlovo.Contains("3"))
-            Slovo4Background = new SolidColorBrush(Colors.Transparent);
+            Slovo4Background = (SolidColorBrush)Application.Current.Resources["PrimaryButtonBackground"];
         if (!usedSlovo.Contains("4"))
-            Slovo5Background = new SolidColorBrush(Colors.Transparent);
+            Slovo5Background = (SolidColorBrush)Application.Current.Resources["PrimaryButtonBackground"];
 
         // Nastavit barvu pro aktuálně vybraná tlačítka
         if (selectedSlovoButton == "0") Slovo1Background = new SolidColorBrush(Colors.Gray);
@@ -388,6 +388,7 @@ public class WordMatchingViewModel : INotifyPropertyChanged
         {
             if (turn == 10)
             {
+                // Vrací se zpět do menu
                 VM.LessonFinished();
                 VM.CurrentUserControl = new UnitSelection(VM);
                 return;

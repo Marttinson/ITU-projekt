@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.IO;
+using System.Windows.Controls;
 
 namespace ITU_projekt.ViewModels;
 public class TranslateWordViewModel : INotifyPropertyChanged
@@ -88,6 +89,7 @@ public class TranslateWordViewModel : INotifyPropertyChanged
 
         EvaluateAnswerCommand = new RelayCommand(_ => EvaluateAnswer());
         NextQuestion = new RelayCommand<object>(ExecuteNextQuestion);
+
         VM = _VM;
         turn = _turn;
     }
@@ -120,6 +122,7 @@ public class TranslateWordViewModel : INotifyPropertyChanged
         {
             if (turn == 10)
             {
+                // Vrací se zpět do menu
                 VM.LessonFinished();
                 VM.CurrentUserControl = new UnitSelection(VM);
                 return;

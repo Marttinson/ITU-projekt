@@ -18,7 +18,6 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Rectangle Grid.Column="1" Grid.Row="1" Fill="Gray" />
         <Grid Grid.Column="1" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.5*" />
@@ -29,23 +28,23 @@
                 <RowDefinition Height="6*" />
                 <RowDefinition Height="4*" />
             </Grid.RowDefinitions>
-            
+
             <!-- Slovo, které se má přeložit -->
             <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="28"
                        Text="{Binding WordToTranslate}" />
-            
+
             <!-- Textové pole, do kterého se píše odpověď -->
             <TextBox x:Name="AnswerTextBox" Grid.Column="1" Grid.Row="1" MaxHeight="35" TextAlignment="Center" FontSize="20"
                      VerticalContentAlignment="Center" Text="{Binding UserAnswer, UpdateSourceTrigger=PropertyChanged}"
-                     KeyDown="TextBox_KeyDown" />
+                     KeyDown="TextBox_KeyDown" Focusable="True" />
         </Grid>
         <!-- Tlačítko pro kontrolu odpovědi -->
         <Button Grid.Column="1" Grid.Row="2" MaxHeight="40" MaxWidth="250" FontSize="25" Content="Odpovědět" 
                 Visibility="{Binding ButtonOdpovedetVisibility}" Command="{Binding EvaluateAnswerCommand}" />
         <!-- Tlačítko, které se objeví v případě správné odpovědi a slouží pro přesunutí na další otázku -->
         <Button Grid.Column="1" Grid.Row="2" MaxHeight="40" MaxWidth="250" FontSize="25" Content="Další"
-                Visibility="{Binding ButtonDalsiVisibility}" Command="{Binding NextQuestion}" />
+                Visibility="{Binding ButtonDalsiVisibility}" Command="{Binding NextQuestion}" 
+                Background="Green" />
     </Grid>
-    
 
 </UserControl>

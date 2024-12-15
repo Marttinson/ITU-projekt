@@ -25,6 +25,12 @@ public partial class TranslateWord : UserControl
     {
         InitializeComponent();
         DataContext = new TranslateWordViewModel(VM, unit, ref turn);
+
+        // Zajistí, že fokus bude nastaven až po vykreslení
+        Dispatcher.BeginInvoke(new Action(() =>
+        {
+            AnswerTextBox.Focus();
+        }), System.Windows.Threading.DispatcherPriority.Render);
     }
 
     private void TextBox_KeyDown(object sender, KeyEventArgs e)
