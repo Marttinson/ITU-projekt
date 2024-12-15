@@ -1,25 +1,27 @@
-﻿using ITU_projekt.Models;
+﻿/* MainWindowViewModel
+ * VM
+ * Vojtěch Hrabovský (xhrabo18)
+ * 
+ * VM - Handles MainWindow control, some user control changes
+ */
+
 using System.ComponentModel;
 using System;
-using System.Reflection.Metadata;
 using System.Windows.Controls;
 using System.Runtime.CompilerServices;
-using ITU_projekt.Templates;
 using System.Windows;
-using ITU_projekt.Views;
-using System.Collections.ObjectModel;
-using System.Printing;
 using System.Windows.Input;
-using System.Data.Common;
+
 using ITU_projekt.API;
-using System.Diagnostics;
+using ITU_projekt.Models;
+using ITU_projekt.Templates;
 
 
 namespace ITU_projekt.ViewModels;
 public class MainWindowViewModel : INotifyPropertyChanged
 {
 
-
+    // Answer count for statistics
     private int right_answers;
     private int wrong_answers;
 
@@ -85,14 +87,18 @@ public class MainWindowViewModel : INotifyPropertyChanged
     public RelayCommand OpenMenuCommand { get; private set; }
     public RelayCommand ToggleDarkModeCommand { get; private set; }
 
-    // ICommand for displaying statistics
+    // ICommands 
     public ICommand ShowStatisticsCommand { get; }
     public ICommand AddCustomQuestionsCommand { get; }
     public ICommand BackToMenuCommand { get; }
     public ICommand ChangeStreakIcon { get; }
+    public ICommand StartPexesoCommand { get; }
 
     public event PropertyChangedEventHandler PropertyChanged;
 
+    /// <summary>
+    /// Initializes instance
+    /// </summary>
     public MainWindowViewModel()
     {
         // Propojeni commandu
@@ -100,6 +106,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         AddCustomQuestionsCommand = new RelayCommand<UnitModel>(ExecuteAddCustomQuestions);
         BackToMenuCommand = new RelayCommand(BackToMenuCommandExecute);
         ChangeStreakIcon = new RelayCommand(ChangeStreakIconExecute);
+        StartPexesoCommand = new RelayCommand((obj) => StartPexeso());
 
         right_answers = 0;
         wrong_answers = 0;
@@ -118,8 +125,8 @@ public class MainWindowViewModel : INotifyPropertyChanged
         }
 
 
+        // Kontrola streaku, pripadne zresetovani
         Streak s = JsonHandler.ReadStreak();
-
         if (s != null)
         {
             // Nenastavuji pres public abych nezmenil streak v zaznamu
@@ -145,10 +152,13 @@ public class MainWindowViewModel : INotifyPropertyChanged
             }
         }
 
+        // Defaultni UC
         CurrentUserControl = new UnitSelection(this);
+        // Neni treba navratu do menu
         BackToMenuVisibility = Visibility.Hidden;
     }
 
+    // Zmena ikony vyvolana tlacitkem
     public void ChangeStreakIconExecute(object parameter)
     {
         if (StreakSymbol == "✔")
@@ -227,8 +237,6 @@ public class MainWindowViewModel : INotifyPropertyChanged
         BackToMenuVisibility = Visibility.Visible;
     }
 
-
-
     // Call this when start of lesson
     // Slouzi k zapsani statistik
     public void setUnitModel(UnitModel model)
@@ -249,5 +257,11 @@ public class MainWindowViewModel : INotifyPropertyChanged
     protected void OnPropertyChanged([CallerMemberName] string name = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    }
+
+    // TODO PEXESO
+    private void StartPexeso()
+    {
+        MessageBox.Show("Start Pexeso.");
     }
 }

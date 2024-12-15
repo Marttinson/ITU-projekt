@@ -1,4 +1,10 @@
-﻿using System;
+﻿/** BoolToColorConverter
+ * V
+ * Vojtěch Hrabovský (xhrabo18)
+ * Konverter pro zbarvení ikony streaku
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

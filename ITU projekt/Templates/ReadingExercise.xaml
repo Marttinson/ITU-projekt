@@ -1,4 +1,6 @@
-﻿<UserControl x:Class="ITU_projekt.Templates.ReadingExercise"
+﻿<!-- User Control pro čtecí cvičení
+    Vojtěch Hrabovský (xhrabo18) -->
+    <UserControl x:Class="ITU_projekt.Templates.ReadingExercise"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -15,23 +17,19 @@
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <!-- Sound Button -->
             <RowDefinition Height="*" />
-            <!-- Answer Checkboxes -->
             <RowDefinition Height="Auto" />
-            <!-- Check Answers Button -->
             <RowDefinition Height="Auto" />
-            <!-- Check Answers Button -->
         </Grid.RowDefinitions>
 
         <!-- Adjusted TextBlock with wrapping -->
         <TextBlock Text="{Binding Text}" Visibility="Visible" TextWrapping="Wrap" HorizontalAlignment="Left" TextAlignment="Justify" FontSize="18" />
 
         <!-- Horizontal Line -->
-        <Border Grid.Row="1" BorderBrush="{DynamicResource SideMenuButtonColor}" BorderThickness="0,5,0,0" Margin="0" HorizontalAlignment="Stretch" />
+        <Border Grid.Row="1" BorderBrush="{DynamicResource TextboxBackground}" BorderThickness="1" Margin="0" HorizontalAlignment="Stretch" />
 
         <ScrollViewer Grid.Row="1">
-            <!-- ItemsControl for Statements -->
+            <!-- ItemsControl pro dynamicke nacitani -->
             <ItemsControl ItemsSource="{Binding Statements}" Margin="0,0,0,0">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

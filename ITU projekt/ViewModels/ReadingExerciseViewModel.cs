@@ -1,17 +1,15 @@
-﻿using ITU_projekt.API;
+﻿/* ReadingExerciseViewModel
+ * VM
+ * Vojtěch Hrabovský (xhrabo18)
+ * 
+ * VM - Sets text, checks answers, starts next task
+ */
+
+using ITU_projekt.API;
 using ITU_projekt.Models;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Windows;
-using ITU_projekt.Models;
-using System.Windows.Controls;
-using System.Diagnostics;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
 using ITU_projekt.Templates;
@@ -22,7 +20,7 @@ namespace ITU_projekt.ViewModels;
 public class ReadingExerciseViewModel : INotifyPropertyChanged
 {
 
-    /* Proměnné pro zobrazení výstupu - informování uživatele */
+    // Proměnné pro zobrazení výstupu - informování uživatele 
     private Brush _answerBarBackground = Brushes.Transparent;
     public Brush AnswerBarBackground
     {
@@ -65,7 +63,7 @@ public class ReadingExerciseViewModel : INotifyPropertyChanged
         }
     }
 
-    // Task text
+    // Task text (zadání)
     private string _Text = "";
     public string Text
     {
@@ -84,18 +82,25 @@ public class ReadingExerciseViewModel : INotifyPropertyChanged
     private MainWindowViewModel VM;
     private int turn;
 
+    // Kolekce otázek a uživatelských odpovědí
     public ObservableCollection<ExerciseStatement> Statements { get; set; }
 
+    /// <summary>
+    /// Initializes instance
+    /// </summary>
+    /// <param name="_VM"> MainWindowViewModel </param>
+    /// <param name="_unit"> Unit ID as a string "Unit {id}"</param>
+    /// <param name="_turn"> Task count </param>
     public ReadingExerciseViewModel(MainWindowViewModel _VM, string _unit, ref int _turn)
     {
-        // Načtení otázek ze souborů, pro konkrétní lekci
+        // Pro načtení otázek ze souborů, pro konkrétní lekci
         JsonHandler jsonHandler = new JsonHandler();
 
         unit = _unit;
         VM = _VM;
         turn = _turn;
 
-        // Set sound file, questions, correct answers from json
+        // Set text, questions, correct answers from json
         string uid = unit.Substring(5);
         switch (unit)
         {
@@ -132,6 +137,7 @@ public class ReadingExerciseViewModel : INotifyPropertyChanged
 
        if(correctAnswers == Statements.Count)
         {
+            // All correct
             AnswerBarBackground = Brushes.Green;
             AnswerText = "Correct answer!";
             AnswerVisibility = Visibility.Visible;
@@ -140,6 +146,7 @@ public class ReadingExerciseViewModel : INotifyPropertyChanged
         }
         else
         {
+            // Wrong answers
             AnswerBarBackground = Brushes.Red;
             AnswerText = "Wrong answer!";
             AnswerVisibility = Visibility.Visible;
@@ -147,18 +154,12 @@ public class ReadingExerciseViewModel : INotifyPropertyChanged
 
     }
 
+    // When user changes their input
     public void resetAnswer()
     {
         AnswerBarBackground = Brushes.Transparent;
         AnswerText = "";
         AnswerVisibility = Visibility.Hidden;
-    }
-
-
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected virtual void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     // Next Task
@@ -190,11 +191,10 @@ public class ReadingExerciseViewModel : INotifyPropertyChanged
             VM.CurrentUserControl = new Choice(VM, unit, ref turn);
     }
 
-
-
-    // Gets correct audio tape
-    public string getAudio()
+    // INotifyPropertyChanged
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected virtual void OnPropertyChanged(string propertyName)
     {
-        return JsonHandler.getAudio(unit);
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

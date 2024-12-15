@@ -1,16 +1,18 @@
-﻿using ITU_projekt.ViewModels;
-using ITU_projekt.Templates;
+﻿/** MainWindow
+ * V
+ * Vojtěch Hrabovksý (xhrabo18)
+ * 
+ * Codde behind hlavního okna
+ */
+
+using ITU_projekt.ViewModels;
 using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Globalization;
-using System.Windows.Data;
-using System.Windows.Input;
 
 namespace ITU_projekt.Views
 {
@@ -21,14 +23,15 @@ namespace ITU_projekt.Views
 
         public MainWindowView()
         {
+            // defaultni rezim
             SetTheme("LightTheme.xaml");
             DataContext = new MainWindowViewModel();
             InitializeComponent();
         }
 
+        // Handler kliknuti na tlacitko nastaveni
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("ZMACKNUTE TLACITKO!!");
 
             if (RightSideMenu_expanded)
             {
@@ -65,6 +68,7 @@ namespace ITU_projekt.Views
         }
 
 
+        // Zmena modu pri prepnuti checkboxu
         private void DarkModeCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             SetTheme("DarkTheme.xaml");

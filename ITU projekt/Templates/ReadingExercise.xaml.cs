@@ -1,36 +1,21 @@
-﻿using ITU_projekt.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/** Reading Exercise 
+ * V
+ * Vojtěch Hrabovský (xhrabo18)
+ * 
+ * Code behind pro čtecí cvičení
+ */
+
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System;
-using System.Windows;
-using System.Windows.Threading;
 
-using ITU_projekt.ViewModels;
 using ITU_projekt.Models;
-using System.Windows.Threading;
-using System.Diagnostics;
+using ITU_projekt.ViewModels;
+
 
 namespace ITU_projekt.Templates
 {
     public partial class ReadingExercise : UserControl
     {
-
-        // Audio Controls
-        private bool isPlaying = false;
-        private DispatcherTimer timer;
-
         private ReadingExerciseViewModel _viewModel;
 
         public ReadingExercise(MainWindowViewModel VM, string unit, ref int turn)
@@ -40,15 +25,11 @@ namespace ITU_projekt.Templates
             DataContext = _viewModel;
         }
 
-        
-
-
         /**
          * USER INPUT ELEMENTS
          * 
          * 
          */
-
         private void TrueRadioButton_Click(object sender, RoutedEventArgs e)
         {
             var radioButton = sender as RadioButton;
@@ -75,7 +56,7 @@ namespace ITU_projekt.Templates
             }
         }
 
-        // This only checks if answer was given
+        // This only checks if answer was given for each statement
         private void CheckAnswersButton_Click(object sender, RoutedEventArgs e)
         {
             bool allAnswered = true;

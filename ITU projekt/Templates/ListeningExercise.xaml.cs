@@ -1,26 +1,17 @@
-﻿using ITU_projekt.ViewModels;
+﻿/** ListeningExercise
+ * V
+ *  Vojtěch Hrabovský (xhrabo18)
+ * 
+ * Code-behind k poslechovému cvičení
+ */
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System;
-using System.Windows;
 using System.Windows.Threading;
 
-using ITU_projekt.ViewModels;
 using ITU_projekt.Models;
-using System.Windows.Threading;
-using System.Diagnostics;
+using ITU_projekt.ViewModels;
 
 namespace ITU_projekt.Templates
 {
@@ -47,6 +38,7 @@ namespace ITU_projekt.Templates
          * 
          */
 
+        // Initialize audio player
         private void InitializeAudioPlayer()
         {
             // Set up the timer
@@ -58,11 +50,19 @@ namespace ITU_projekt.Templates
             string audioFilePath = _viewModel.getAudio();
 
             AudioPlayer.Source = new Uri(audioFilePath, UriKind.Relative);
+
+            AudioPlayer.MediaFailed += (sender, e) =>
+            {
+                MessageBox.Show("Failed to load the audio file. Skipping to next question.");
+                _viewModel.ExecuteNextQuestion();
+            };
+
             AudioPlayer.MediaOpened += (sender, e) =>
             {
-                // Update the progress bar once the media is opened
+                // Update the progress when audio is opened
                 AudioProgressBar.Maximum = AudioPlayer.NaturalDuration.TimeSpan.TotalSeconds;
             };
+
         }
 
         private void PlayPauseButton_Click(object sender, RoutedEventArgs e)
@@ -100,7 +100,7 @@ namespace ITU_projekt.Templates
         {
             if (AudioPlayer != null && AudioPlayer.NaturalDuration.HasTimeSpan)
             {
-                // Seek to the new position when the slider is moved
+                // Move to the new position when the slider is moved
                 AudioPlayer.Position = TimeSpan.FromSeconds(AudioProgressBar.Value);
             }
         }
@@ -138,7 +138,7 @@ namespace ITU_projekt.Templates
             }
         }
 
-        // This only checks if answer was given
+        // This only checks if answer was given for each statement
         private void CheckAnswersButton_Click(object sender, RoutedEventArgs e)
         {
             bool allAnswered = true;

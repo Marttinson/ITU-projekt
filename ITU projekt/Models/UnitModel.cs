@@ -1,14 +1,19 @@
-﻿using ITU_projekt.API;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿/** UnitModel
+ * M
+ * Vojtěch Hrabovský (xhrabo18)
+ * 
+ * Uchovává všechno nutné info o lekcích.
+ */
 
+
+using System.Collections.Generic;
 
 
 namespace ITU_projekt.Models
 {
+    /// <summary>
+    /// Class for handling Units
+    /// </summary>
     public class UnitModel
     {
         // Basic properties

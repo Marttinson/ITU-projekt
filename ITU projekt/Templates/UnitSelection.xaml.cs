@@ -1,18 +1,20 @@
-﻿using ITU_projekt.Models;
+﻿/**UnitSelection
+ * V
+ * Vojtěch Hrabovský (xhrabo18)
+ * 
+ * Code behind pro výběr lekcí
+ */
 using System.Windows;
 using System.Windows.Controls;
+
 using ITU_projekt.ViewModels;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System;
-using System.Diagnostics;
-using System.Windows.Media;
+
 
 namespace ITU_projekt.Templates;
 
 public partial class UnitSelection : UserControl
 {
-
+    // seznam lekcí
     private UnitSelectionViewModel viewModel;
 
     public UnitSelection(MainWindowViewModel VM)
@@ -22,6 +24,7 @@ public partial class UnitSelection : UserControl
         DataContext = viewModel;
     }
 
+    // Rozevření panelu s dodatečnými možnostmi
     private void OpenSettingsButton_Click(object sender, RoutedEventArgs e)
     {
         // Find the parent grid that contains the SettingsPanel

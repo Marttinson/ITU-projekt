@@ -1,15 +1,17 @@
-﻿using ITU_projekt.Models;
+﻿/** CustomUserWordList
+ * V
+ *  Vojtěch Hrabovský (xhrabo18)
+ * 
+ * Code-behind pro prezentaci uživatelem vytvořených otázek
+ */
+
+
 using System.Windows;
 using System.Windows.Controls;
-using ITU_projekt.ViewModels;
-using ITU_projekt.API;
-using System.Collections.Generic;
-using System.Windows.Media;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Diagnostics;
+
+using ITU_projekt.Models;
 
 namespace ITU_projekt.Templates;
 
@@ -18,8 +20,6 @@ public partial class CustomUserWordList : UserControl
     private CustomUserWordListViewModel _viewModel;
 
     public event PropertyChangedEventHandler PropertyChanged;
-
-    private bool SBVis;
 
     public CustomUserWordList(UnitModel model)
     {
@@ -44,6 +44,7 @@ public partial class CustomUserWordList : UserControl
     }
 
     // Neslo volat primo do VM
+    // Kdyz je zmacknuto tlacitko pro smazani otazky
     private void DeleteQ(object sender, RoutedEventArgs e)
     {
         if (sender is Button button)

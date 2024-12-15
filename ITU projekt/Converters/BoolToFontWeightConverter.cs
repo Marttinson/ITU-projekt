@@ -1,4 +1,10 @@
-﻿using System;
+﻿/** BoolToFontWeightConverter
+ * V
+ * Vojtěch Hrabovský (xhrabo18)
+ * Konverter pro zvýrazněný upravených boxů při editaci otázek
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;

@@ -11,7 +11,7 @@ namespace ITU_projekt.Models
         // Constructor that takes Action<object> for methods that require parameters
         public RelayCommand(Action<object> execute) : this(execute, null) { }
 
-        // Constructor that takes both Action<object> and Predicate<object> for canExecute logic
+        // Constructor that takes both Action<object> and Predicate<object>
         public RelayCommand(Action<object> execute, Predicate<object> canExecute)
         {
             _execute = execute ?? throw new ArgumentNullException(nameof(execute));

@@ -1,25 +1,40 @@
-﻿using ITU_projekt.API;
-using ITU_projekt.Models;
+﻿/* CustomUserWordListViewModel
+ * VM
+ * Vojtěch Hrabovský (xhrabo18)
+ * 
+ * VM - Handles user question edit, add, remove, display
+ */
+
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using System.Diagnostics;
 using System;
 using System.Windows;
 
+using ITU_projekt.API;
+using ITU_projekt.Models;
+
 public class CustomUserWordListViewModel : INotifyPropertyChanged
 {
+    // Questions that will be shown, edited
     public ObservableCollection<Question> UserQuestions { get; set; }
+    // List with reversed IDs (newly added question has biggest id but must be shown first)
     public ObservableCollection<Question> ReversedQuestions { get; set; }
 
+    // Control commands
     public ICommand AddNewQuestionCommand { get; }
     public ICommand DeleteQuestionCommand { get; }
     public ICommand SaveQuestionsCommand { get; }
 
+    // Unit with questions
     private UnitModel unitMod;
 
+    /// <summary>
+    /// initialize instance
+    /// </summary>
+    /// <param name="model">UnitModel with questions</param>
     public CustomUserWordListViewModel(UnitModel model)
     {
         unitMod = model;
@@ -31,6 +46,7 @@ public class CustomUserWordListViewModel : INotifyPropertyChanged
         DeleteQuestionCommand = new RelayCommand<int>(DeleteQuestion);
     }
 
+    // Add question to unit model
     public void AddNewQuestion()
     {
         // Create a new question, add to collection
@@ -40,6 +56,7 @@ public class CustomUserWordListViewModel : INotifyPropertyChanged
         // Add the new question at the beginning of the reversed list
         ReversedQuestions.Insert(0, newQuestion);
 
+        // Check duplicates
         CheckForDuplicates();
     }
 
@@ -48,6 +65,8 @@ public class CustomUserWordListViewModel : INotifyPropertyChanged
     {
         foreach (var question in UserQuestions)
         {
+            // If duplicate values in QuestionText, set HasDuplicate to true
+            // This informs View and box is colored blue (BoolToColor converter)
             question.HasDuplicate = UserQuestions.Count(q => q.QuestionText == question.QuestionText) > 1;
         }
     }
@@ -55,29 +74,32 @@ public class CustomUserWordListViewModel : INotifyPropertyChanged
     // Save questions to JSON
     private void SaveQuestions()
     {
+        // Validate
         if (!ValidateQuestions())
         {
+            // No duplicate questions, no empty fields
             MessageBox.Show("Please fill all fields and make sure there are no duplicate questions.");
             return;
         }
 
         // Save logic
-        if (JsonHandler.SaveUserQuestions(unitMod.ID, UserQuestions))
-        {
-
-        }
+        JsonHandler.SaveUserQuestions(unitMod.ID, UserQuestions);
     }
 
+    // Validate
     public bool ValidateQuestions()
     {
         CheckForDuplicates();
+
         foreach (var question in UserQuestions)
         {
+            // Both values must be filled
             if (string.IsNullOrEmpty(question.QuestionText) || string.IsNullOrEmpty(question.Answer))
             {
                 return false;
             }
 
+            // No duplicit QuestionText values
             if (UserQuestions.Count(q => q.QuestionText == question.QuestionText) > 1)
             {
                 return false;
@@ -86,8 +108,10 @@ public class CustomUserWordListViewModel : INotifyPropertyChanged
         return true;
     }
 
+    // Delete question
     public void DeleteQuestion(int id)
     {
+        // Find question
         var questionToDelete = UserQuestions.FirstOrDefault(q => q.ID == id);
         if (questionToDelete != null)
         {
@@ -108,12 +132,17 @@ public class CustomUserWordListViewModel : INotifyPropertyChanged
         }
     }
 
+    // Update Reversed Questions List
     private void UpdateReversedQuestions()
     {
-        var reversedList = UserQuestions.Reverse().ToList();  // Reverse the UserQuestions list
-        ReversedQuestions.Clear();
+        // Reverse the UserQuestions list
+        var reversedList = UserQuestions.Reverse().ToList(); 
+        // Clear list
+        ReversedQuestions.Clear();  
+
         foreach (var question in reversedList)
         {
+            // Add each element from UserQuestions to reversed list
             ReversedQuestions.Add(question);
         }
         OnPropertyChanged(nameof(ReversedQuestions));  // Notify the UI of the update

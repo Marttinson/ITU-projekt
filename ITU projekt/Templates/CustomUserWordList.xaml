@@ -1,4 +1,7 @@
-﻿<UserControl x:Class="ITU_projekt.Templates.CustomUserWordList"
+﻿<!-- User Control pro editaci uživatelských otázek
+     Vojtěch Hrabovský (xhrabo18) -->
+    
+    <UserControl x:Class="ITU_projekt.Templates.CustomUserWordList"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -10,7 +13,6 @@
     <UserControl.Resources>
         <converters:EmptyTextConverter x:Key="EmptyTextConverter" />
         <converters:BoolToFontWeightConverter x:Key="BoolToFontWeightConverter" />
-        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
 
     <Grid>
@@ -27,6 +29,7 @@
         
 
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
+            <!-- ItemsControl pro dynamicke nacitani -->
             <ItemsControl Name="IC" ItemsSource="{Binding ReversedQuestions}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

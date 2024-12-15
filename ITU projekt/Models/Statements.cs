@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿/** Statements
+ * M
+ * Vojtěch Hrabovský (xhrabo18)
+ * 
+ * Model pro ukládání statementů k poslechu/čtění
+ */
+
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ITU_projekt.Models;
 

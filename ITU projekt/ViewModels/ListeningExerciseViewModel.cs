@@ -1,20 +1,20 @@
-﻿using ITU_projekt.API;
-using ITU_projekt.Models;
+﻿/* ListeningExerciseViewModel
+ * VM
+ * Vojtěch Hrabovský (xhrabo18)
+ * 
+ * VM - Loads audio tape, checks answers, starts next task
+ */
+
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Windows;
-using ITU_projekt.Models;
-using System.Windows.Controls;
 using System.Diagnostics;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
+
 using ITU_projekt.Templates;
+using ITU_projekt.API;
+using ITU_projekt.Models;
 
 namespace ITU_projekt.ViewModels;
 
@@ -65,24 +65,26 @@ public class ListeningExerciseViewModel : INotifyPropertyChanged
         }
     }
 
-
-
     private string unit;
     private MainWindowViewModel VM;
     private int turn;
 
+    // Kolekce otázek a uživatelských odpovědí
     public ObservableCollection<ExerciseStatement> Statements { get; set; }
 
+    /// <summary>
+    /// Initializes instance
+    /// </summary>
+    /// <param name="_VM"> MainWindowViewModel </param>
+    /// <param name="_unit"> Unit ID as a string "Unit {id}"</param>
+    /// <param name="_turn"> Task count </param>
     public ListeningExerciseViewModel(MainWindowViewModel _VM, string _unit, ref int _turn)
     {
-        // Načtení otázek ze souborů, pro konkrétní lekci
-        JsonHandler jsonHandler = new JsonHandler();
-
         unit = _unit;
         VM = _VM;
         turn = _turn;
 
-        // Set sound file, questions, correct answers from json
+        // Set questions, correct answers from json
         string uid = unit.Substring(5);
         switch (unit)
         {
@@ -116,6 +118,7 @@ public class ListeningExerciseViewModel : INotifyPropertyChanged
 
        if(correctAnswers == Statements.Count)
         {
+            // All correct
             AnswerBarBackground = Brushes.Green;
             AnswerText = "Correct answer!";
             AnswerVisibility = Visibility.Visible;
@@ -124,6 +127,7 @@ public class ListeningExerciseViewModel : INotifyPropertyChanged
         }
         else
         {
+            // Wrong answers
             AnswerBarBackground = Brushes.Red;
             AnswerText = "Wrong answer!";
             AnswerVisibility = Visibility.Visible;
@@ -131,6 +135,7 @@ public class ListeningExerciseViewModel : INotifyPropertyChanged
 
     }
 
+    // When user changes their input
     public void resetAnswer()
     {
         AnswerBarBackground = Brushes.Transparent;
@@ -138,15 +143,8 @@ public class ListeningExerciseViewModel : INotifyPropertyChanged
         AnswerVisibility = Visibility.Hidden;
     }
 
-
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected virtual void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
     // Next Task
-    private void ExecuteNextQuestion()
+    public void ExecuteNextQuestion()
     {
         // Kontrola, zda již neproběhlo 10 otázek
         if (turn > 0)
@@ -160,6 +158,8 @@ public class ListeningExerciseViewModel : INotifyPropertyChanged
             else
             {
                 turn++;
+                VM.SetBackToMenuVisible();
+                // Next task is reading 
                 VM.CurrentUserControl = new ReadingExercise(VM, unit, ref turn);
                 return;
             }
@@ -186,5 +186,12 @@ public class ListeningExerciseViewModel : INotifyPropertyChanged
     public string getAudio()
     {
         return JsonHandler.getAudio(unit);
+    }
+
+
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected virtual void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

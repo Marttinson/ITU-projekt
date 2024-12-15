@@ -6,7 +6,6 @@ namespace ITU_projekt.Converters;
 
 public class BoolToBoolConverter : IValueConverter
 {
-    // Converts the boolean value to a boolean nullable value (true/false/null)
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is bool boolValue)
@@ -25,12 +24,12 @@ public class BoolToBoolConverter : IValueConverter
         return false; // default if the value is not a boolean
     }
 
-    // Converts back, not needed in this case as we are only interested in binding the radio buttons
+    // Converts back, not needed
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is bool boolValue)
         {
-            // Return the boolean value based on the radio button state (true/false)
+            // Return value based on button state
             return boolValue;
         }
 

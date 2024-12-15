@@ -1,102 +1,129 @@
-﻿<UserControl x:Class="ITU_projekt.Templates.UnitSelection"
+﻿<!-- User Control pro výběr lekce k procvičení 
+    Vojtěch Hrabovský (xhrabo18) -->
+    
+    <UserControl x:Class="ITU_projekt.Templates.UnitSelection"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ITU_projekt.Templates"
              xmlns:viewModels="clr-namespace:ITU_projekt.ViewModels">
 
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <ItemsControl Name="IC" ItemsSource="{Binding Units}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Border Margin="5" BorderThickness="1" BorderBrush="Gray">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="5*" />
-                                        <!-- Left side, bigger button -->
-                                        <ColumnDefinition Width="1*" />
-                                        <!-- Right side, smaller button -->
-                                    </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <!-- Pexeso -->
+        <Border Margin="5" BorderThickness="1" BorderBrush="Gray" Grid.Row="0" />
 
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="5*" />
-                                    </Grid.RowDefinitions>
+        <!-- PEXESO tlacitko -->
+        <Button HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            FontSize="16"
+            Height="50"
+            BorderBrush="Transparent"
+            Background="{DynamicResource PrimaryButtonBackground}"
+            Margin="10"
+            Command="{Binding DataContext.StartPexesoCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+            Tag="Pexeso"
+                Grid.Row="0">
+            <Viewbox>
+                <TextBlock Text="Pexeso" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Viewbox>
+        </Button>
+        
+        <!-- Vyber lekci -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
+            <!-- ItemsControl pro dynamicke nacitani -->
+                <ItemsControl Name="IC" ItemsSource="{Binding Units}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Border Margin="5" BorderThickness="1" BorderBrush="Gray">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="5*" />
+                                            <!-- Left side, bigger button -->
+                                            <ColumnDefinition Width="1*" />
+                                            <!-- Right side, smaller button -->
+                                        </Grid.ColumnDefinitions>
 
-                                    <!-- Left Side - Start Exercise -->
-                                    <!-- Left Side - Start Exercise -->
-                                    <Button HorizontalAlignment="Stretch"
-        VerticalAlignment="Stretch"
-        FontSize="16"
-        Height="50"
-        Grid.Column="0"
-        Grid.Row="0"
-        BorderBrush="Transparent"
-        Background="{DynamicResource PrimaryButtonBackground}"
-        Margin="5"
-        Click="Start_Click"
-        Tag="{Binding ID}">
-                                        <Viewbox>
-                                            <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Viewbox>
-                                    </Button>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="5*" />
+                                        </Grid.RowDefinitions>
 
-                                    <!-- Right Side - Open Menu with Settings Icon -->
-                                    <Button HorizontalAlignment="Stretch"
-        VerticalAlignment="Stretch"
-        FontSize="16"
-        Height="50"
-        Grid.Column="1"
-        Grid.Row="0"
-        BorderBrush="Transparent"
-        Background="{DynamicResource UnitSelectionBackground}"
-        Margin="5"
-        Click="OpenSettingsButton_Click">
-                                        <Viewbox>
-                                            <TextBlock Text="⚙" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Viewbox>
-                                    </Button>
-                                    <!-- Settings Panel -->
-                                    <StackPanel x:Name="SettingsPanel" Visibility="Collapsed" Grid.Row="1" Grid.ColumnSpan="2" Background="{DynamicResource SettingsPanelBackground}">
-                                        <TextBlock Text="{Binding Description}" 
+                                        <!-- Left Side - Start Exercise -->
+                                        <Button HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            FontSize="16"
+                                            Height="50"
+                                            Grid.Column="0"
+                                            Grid.Row="0"
+                                            BorderBrush="Transparent"
+                                            Background="{DynamicResource PrimaryButtonBackground}"
+                                            Margin="5"
+                                            Click="Start_Click"
+                                            Tag="{Binding ID}">
+                                            <Viewbox>
+                                                <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Viewbox>
+                                        </Button>
+
+                                        <!-- Right Side - Open Menu with Settings -->
+                                        <Button HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            FontSize="16"
+                                            Height="50"
+                                            Grid.Column="1"
+                                            Grid.Row="0"
+                                            BorderBrush="Transparent"
+                                            Background="{DynamicResource UnitSelectionBackground}"
+                                            Margin="5"
+                                            Click="OpenSettingsButton_Click">
+                                            <Viewbox>
+                                                <TextBlock Text="⚙" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Viewbox>
+                                        </Button>
+                                        <!-- Settings Panel -->
+                                        <StackPanel x:Name="SettingsPanel" Visibility="Collapsed" Grid.Row="1" Grid.ColumnSpan="2" Background="{DynamicResource SettingsPanelBackground}">
+                                            <TextBlock Text="{Binding Description}" 
                                                    TextWrapping="Wrap" 
                                                    MaxWidth="300" 
                                                    VerticalAlignment="Top" 
                                                    HorizontalAlignment="Center" 
                                                    FontSize="20"/>
 
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Button 
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Button 
                                                     Command="{Binding DataContext.AddCustomQuestionsCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                                     CommandParameter="{Binding}"
                                                     Grid.Column="0">
-                                                <TextBlock Text="Add custom questions" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                                            </Button>
-                                            <Button 
+                                                    <TextBlock Text="Add custom questions" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                                </Button>
+                                                <Button 
                                                     Command="{Binding DataContext.ShowStatisticsCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                                     CommandParameter="{Binding}"
                                                     Grid.Column="1">
-                                                <TextBlock Text="View Statistics" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                                            </Button>
-                                        </Grid>
+                                                    <TextBlock Text="View Statistics" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                                </Button>
+                                            </Grid>
 
-                                        <Button 
+                                            <Button 
                                                 Click="StartEndless_Click"
                                                 Tag="{Binding ID}">
-                                            <TextBlock Text="Endless Mode" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
-                                        </Button>
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                                                <TextBlock Text="Endless Mode" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
         </ScrollViewer>
     </Grid>
 </UserControl>
