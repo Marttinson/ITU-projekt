@@ -144,12 +144,14 @@ namespace ITU_projekt.ViewModels
                     if (string.Equals(Output, question.Translate))
                     {
                         // SPLNĚNO STAT
+                        VM.incrementRight();
                         complete = true;
                         NextButtonVisibility = Visibility.Visible;
                     }
                     else
                     {
                         // CHYBA STAT
+                        VM.incrementWrong();
                         Output = "";
                         buttonsPressed = 0;
                     }
