@@ -10,7 +10,7 @@
         WindowStartupLocation="CenterScreen"
         Width="800"
         Height="450"
-        Title="ITU Aplikace"
+        Title="Verbo"
         ResizeMode="CanResizeWithGrip"
         xmlns:converters="clr-namespace:ITU_projekt.Converters"
     >
@@ -62,7 +62,7 @@
                     <!-- Streak Icon -->
                     <TextBlock Text="{Binding StreakSymbol}" Foreground="{Binding IsLessonCompletedToday, Converter={StaticResource BoolToColorConverter}}" FontWeight="Bold"/>
                     <!-- Title Text -->
-                    <TextBlock Text="ITU Aplikace" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Text="Verbo" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </StackPanel>
             </Grid>
         </Viewbox>
