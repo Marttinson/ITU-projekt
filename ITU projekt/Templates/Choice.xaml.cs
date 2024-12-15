@@ -1,4 +1,8 @@
-﻿using ITU_projekt.API;
+﻿/** User Control pro výběr ze tří možností
+ * 
+ * Martin Rybnikář (xrybni10)
+ */
+using ITU_projekt.API;
 using ITU_projekt.Models;
 using System;
 using System.Collections.Generic;

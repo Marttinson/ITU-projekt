@@ -1,4 +1,8 @@
-﻿using ITU_projekt.ViewModels;
+﻿/** User Control pro pexeso
+ * 
+ * Martin Rybnikář (xrybni10)
+ */
+using ITU_projekt.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,8 @@
-﻿using System;
+﻿/** User Control pro překlad slova
+ * 
+ * Martin Rybnikář (xrybni10)
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;

@@ -1,4 +1,9 @@
-﻿using System;
+﻿/**
+ * Funkce pro pozdější snažší zpracování otázek
+ * 
+ * Martin Rybnikář (xrybni10)
+ * */
+using System;
 using System.Collections.Generic;
 using System.IO.Packaging;
 using System.Linq;

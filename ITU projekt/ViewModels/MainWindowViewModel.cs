@@ -262,6 +262,6 @@ public class MainWindowViewModel : INotifyPropertyChanged
     // TODO PEXESO
     private void StartPexeso()
     {
-        MessageBox.Show("Start Pexeso.");
+        CurrentUserControl = new MemoryGame(this);
     }
 }

@@ -2,6 +2,7 @@
  * JSONHandler
  * M
  * Vojtěch Hrabovský (xhrabo18)
+ * Martin Rybnikář (xrybni10)
  * 
  * Slouží k práci s JSON soubory
  */

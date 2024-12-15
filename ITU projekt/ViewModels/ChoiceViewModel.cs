@@ -1,4 +1,7 @@
-﻿using ITU_projekt.API;
+﻿/** View Model pro výběr ze tří možností
+ * Martin Rybnikář (xrybni10)
+ */
+using ITU_projekt.API;
 using ITU_projekt.Models;
 using ITU_projekt.Templates;
 using System;

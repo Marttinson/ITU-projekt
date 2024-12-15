@@ -1,4 +1,8 @@
-﻿using ITU_projekt.API;
+﻿/** User Control pro spojování slov
+ * 
+ * Martin Rybnikář (xrybni10)
+ */
+using ITU_projekt.API;
 using ITU_projekt.ViewModels;
 using System;
 using System.Collections.Generic;
