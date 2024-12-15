@@ -11,6 +11,9 @@
     <Compile Update="Templates\Choice.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Templates\ListeningExercise.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Templates\WordMatching.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -19,6 +22,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Templates\ReadingExercise.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Templates\MemoryGame.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -29,6 +35,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Templates\CustomUserWordList.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Templates\ListeningExercise.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Templates\WordMatching.xaml">

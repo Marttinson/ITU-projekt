@@ -10,6 +10,8 @@ using System.Linq;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
+using JsonSerializer = System.Text.Json.JsonSerializer;
+using System.Windows.Controls;
 
 namespace ITU_projekt.API;
 
@@ -133,6 +135,288 @@ public class PickFromThreeQuestion
 
 public class JsonHandler
 {
+
+    static string reading_statements_example = @"{
+  ""1"": [
+    {
+      ""Text"": ""Sarah wakes up at 6:00 in the morning."",
+      ""id"": 1,
+      ""answer"": false,
+      ""UserAnswer"": null
+    },
+    {
+      ""Text"": ""Sarah has cereal and milk for breakfast."",
+      ""id"": 2,
+      ""answer"": false,
+      ""UserAnswer"": null
+    },
+    {
+      ""Text"": ""She finishes school at 3:00 PM."",
+      ""id"": 3,
+      ""answer"": true,
+      ""UserAnswer"": null
+    },
+    {
+      ""Text"": ""Sarah plays with her dog after school."",
+      ""id"": 4,
+      ""answer"": true,
+      ""UserAnswer"": null
+    },
+    {
+      ""Text"": ""Sarah goes to bed at 9:00 PM."",
+      ""id"": 5,
+      ""answer"": false,
+      ""UserAnswer"": null
+    }
+  ],
+  ""2"": [
+    {
+      ""Text"": ""Winter is a warm season."",
+      ""id"": 1,
+      ""answer"": false,
+      ""UserAnswer"": null
+    },
+    {
+      ""Text"": ""People wear coats and hats in winter."",
+      ""id"": 2,
+      ""answer"": true,
+      ""UserAnswer"": null
+    },
+    {
+      ""Text"": ""Flowers bloom in the summer."",
+      ""id"": 3,
+      ""answer"": false,
+      ""UserAnswer"": null
+    },
+    {
+      ""Text"": ""Autumn is a time for harvest."",
+      ""id"": 4,
+      ""answer"": true,
+      ""UserAnswer"": null
+    },
+    {
+      ""Text"": ""People go swimming in the winter."",
+      ""id"": 5,
+      ""answer"": false,
+      ""UserAnswer"": null
+    }
+  ],
+  ""3"": [
+    {
+      ""Text"": ""John likes to eat unhealthy food."",
+      ""id"": 1,
+      ""answer"": false,
+      ""UserAnswer"": null
+    },
+    {
+      ""Text"": ""His favorite food is chicken."",
+      ""id"": 2,
+      ""answer"": true,
+      ""UserAnswer"": null
+    },
+    {
+      ""Text"": ""John drinks milk with his meals."",
+      ""id"": 3,
+      ""answer"": false,
+      ""UserAnswer"": null
+    },
+    {
+      ""Text"": ""For breakfast, he usually eats eggs and toast."",
+      ""id"": 4,
+      ""answer"": true,
+      ""UserAnswer"": null
+    },
+    {
+      ""Text"": ""John never eats chocolate."",
+      ""id"": 5,
+      ""answer"": false,
+      ""UserAnswer"": null
+    }
+  ]
+}";
+
+    static string listening_statements_example = @"{
+              ""1"": [
+                {
+                  ""Text"": ""Susan is Mike's wife."",
+                  ""id"": 1,
+                  ""answer"": true,
+                  ""UserAnswer"": null
+                },
+                {
+                  ""Text"": ""Julie's been great."",
+                  ""id"": 2,
+                  ""answer"": true,
+                  ""UserAnswer"": null
+                },
+                {
+                  ""Text"": ""Traffic was bad."",
+                  ""id"": 3,
+                  ""answer"": true,
+                  ""UserAnswer"": null
+                },
+                {
+                  ""Text"": ""Laura is not running a small business"",
+                  ""id"": 4,
+                  ""answer"": false,
+                  ""UserAnswer"": null
+                },
+                {
+                  ""Text"": ""Party is rocking."",
+                  ""id"": 5,
+                  ""answer"": true,
+                  ""UserAnswer"": null
+                }
+              ],
+              ""2"": [
+                {
+                  ""Text"": ""Mark's new job is good."",
+                  ""id"": 1,
+                  ""answer"": true,
+                  ""UserAnswer"": null
+                },
+                {
+                  ""Text"": ""His boss is not hillarious."",
+                  ""id"": 2,
+                  ""answer"": false,
+                  ""UserAnswer"": null
+                },
+                {
+                  ""Text"": ""There is dress code."",
+                  ""id"": 3,
+                  ""answer"": false,
+                  ""UserAnswer"": null
+                },
+                {
+                  ""Text"": ""Mike prefers finishing early."",
+                  ""id"": 4,
+                  ""answer"": true,
+                  ""UserAnswer"": null
+                },
+                {
+                  ""Text"": ""Likes coffee."",
+                  ""id"": 5,
+                  ""answer"": true,
+                  ""UserAnswer"": null
+                }
+              ],
+              ""3"": [
+                {
+                  ""Text"": ""The weather is hot."",
+                  ""id"": 1,
+                  ""answer"": true,
+                  ""UserAnswer"": null
+                },
+                {
+                  ""Text"": ""John wants to buy sun-block."",
+                  ""id"": 2,
+                  ""answer"": true,
+                  ""UserAnswer"": null
+                },
+                {
+                  ""Text"": ""Yumi is from Hakaido, Japan."",
+                  ""id"": 3,
+                  ""answer"": true,
+                  ""UserAnswer"": null
+                },
+                {
+                  ""Text"": ""Yumi's dog loves the water."",
+                  ""id"": 4,
+                  ""answer"": true,
+                  ""UserAnswer"": null
+                },
+                {
+                  ""Text"": ""John hates parks."",
+                  ""id"": 5,
+                  ""answer"": false,
+                  ""UserAnswer"": null
+                }
+              ]
+            }";
+
+    static string defaultLections = @"
+                [
+                    {
+                        ""Name"": ""Unit 1"",
+                        ""ID"": 1,
+                        ""Description"": ""To Be"",
+                        ""ErrorRates"": [ 0.1, 0.2, 0.15, 0.1, 0.8, 0.9, 0.5, 0.7, 0.6, 0.23, 0.64, 0.35 ],
+                        ""UserQuestions"": [
+                    {
+                        ""ID"": 10000,
+                        ""QuestionText"": ""Dog"",
+                        ""Answer"": ""Pes""
+                    },
+                    {
+                        ""ID"": 10001,
+                        ""QuestionText"": ""Cat"",
+                        ""Answer"": ""Kočka""
+                    },
+                    {
+                        ""ID"": 10002,
+                        ""QuestionText"": ""House"",
+                        ""Answer"": ""Dům""
+                    },
+                    {
+                        ""ID"": 10003,
+                        ""QuestionText"": ""Book"",
+                        ""Answer"": ""Kniha""
+                    },
+                    {
+                        ""ID"": 10004,
+                        ""QuestionText"": ""Car"",
+                        ""Answer"": ""Auto""
+                    },
+                    {
+                        ""ID"": 10005,
+                        ""QuestionText"": ""Water"",
+                        ""Answer"": ""Voda""
+                    },
+                    {
+                        ""ID"": 10006,
+                        ""QuestionText"": ""Chair"",
+                        ""Answer"": ""Židle""
+                    },
+                    {
+                        ""ID"": 10007,
+                        ""QuestionText"": ""Apple"",
+                        ""Answer"": ""Jablko""
+                    },
+                    {
+
+                        ""ID"": 10008,
+                        ""QuestionText"": ""Table"",
+                        ""Answer"": ""Stůl""
+                    },
+                    {
+                        ""ID"": 10009,
+                        ""QuestionText"": ""Tree"",
+                        ""Answer"": ""Strom""
+                    }
+                    ]
+                    },
+                    {
+                        ""Name"": ""Unit 2"",
+                        ""ID"": 2,
+                        ""Description"": ""Basic vocabulary"",
+                        ""ErrorRates"": [ 0.05, 0.07, 0.9, 0.5, 0.7, 0.6, 0.28 ],
+                        ""UserQuestions"": []
+                    },
+                    {
+                        ""Name"": ""Unit 3"",
+                        ""ID"": 3,
+                        ""Description"": ""Plural"",
+                        ""ErrorRates"": [ 0.1, 0.2, 0.15 ],
+                        ""UserQuestions"": []
+                    },
+                    {   
+                        ""Name"": ""Unit 4"",
+                        ""ID"": 4,
+                        ""Description"": ""Numbers"",
+                        ""ErrorRates"": [],
+                        ""UserQuestions"": []
+                    }
+                ]";
 
     public JsonHandler()
     {
@@ -352,6 +636,83 @@ public class JsonHandler
 
 
 
+
+
+    public static List<ExerciseStatement> LoadExerciseStatements(string unit, string fileName)
+    {
+        string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        string filePath = Path.Combine(appDataPath, "ITU", fileName);
+
+        Dictionary<string, List<ExerciseStatement>> allUnitsData;
+
+        // Check if the file exists
+        if (!File.Exists(filePath))
+        {
+            // If the file doesn't exist, create one with example data
+            allUnitsData = new Dictionary<string, List<ExerciseStatement>>();
+            allUnitsData[unit] = GenerateExampleData(unit, fileName)[unit];
+
+            File.WriteAllText(filePath, JsonSerializer.Serialize(allUnitsData, new JsonSerializerOptions { WriteIndented = true }));
+            return allUnitsData[unit];
+        }
+
+        // If the file exists, read and deserialize the data
+        string json = File.ReadAllText(filePath);
+        allUnitsData = JsonSerializer.Deserialize<Dictionary<string, List<ExerciseStatement>>>(json);
+
+        if (allUnitsData == null || !allUnitsData.ContainsKey(unit))
+        {
+            // Handle missing unit data by generating example data
+            if (allUnitsData == null)
+            {
+                allUnitsData = new Dictionary<string, List<ExerciseStatement>>();
+            }
+
+            MessageBox.Show($"Unit '{unit}' not found. Generating example data.");
+            allUnitsData[unit] = GenerateExampleData(unit, fileName)[unit];
+
+            File.WriteAllText(filePath, JsonSerializer.Serialize(allUnitsData, new JsonSerializerOptions { WriteIndented = true }));
+            return allUnitsData[unit];
+        }
+
+        return allUnitsData[unit];
+    }
+
+
+
+
+    private static Dictionary<string, List<ExerciseStatement>> GenerateExampleData(string unit, string file)
+    {
+        var allUnitsData = new Dictionary<string, List<ExerciseStatement>>();
+        string example = "";
+        if (file == "Listening_statements.json")
+        {
+            example = listening_statements_example;
+
+        }
+
+
+        if (file == "Reading_statements.json")
+        {
+            example = reading_statements_example;
+        }
+
+            // Parse JSON into a dictionary by unit
+            var parsedData = JsonSerializer.Deserialize<Dictionary<string, List<ExerciseStatement>>>(example);
+
+        if (parsedData != null)
+        {
+            // Add the parsed data to allUnitsData
+            foreach (var keyValuePair in parsedData)
+            {
+                allUnitsData[keyValuePair.Key] = keyValuePair.Value;
+            }
+        }
+
+        return allUnitsData;
+    }
+
+
     // Load units as a collection
     public static ObservableCollection<UnitModel> LoadUnits()
     {
@@ -367,89 +728,6 @@ public class JsonHandler
             if (!File.Exists(jsonPath))
             {
                 // NO LECTIONS FOUND, GENERATE PREDEFINED
-                string defaultLections = @"
-                [
-                    {
-                        ""Name"": ""Unit 1"",
-                        ""ID"": 1,
-                        ""Description"": ""To Be"",
-                        ""ErrorRates"": [ 0.1, 0.2, 0.15, 0.1, 0.8, 0.9, 0.5, 0.7, 0.6, 0.23, 0.64, 0.35 ],
-                        ""UserQuestions"": [
-                    {
-                        ""ID"": 10000,
-                        ""QuestionText"": ""Dog"",
-                        ""Answer"": ""Pes""
-                    },
-                    {
-                        ""ID"": 10001,
-                        ""QuestionText"": ""Cat"",
-                        ""Answer"": ""Kočka""
-                    },
-                    {
-                        ""ID"": 10002,
-                        ""QuestionText"": ""House"",
-                        ""Answer"": ""Dům""
-                    },
-                    {
-                        ""ID"": 10003,
-                        ""QuestionText"": ""Book"",
-                        ""Answer"": ""Kniha""
-                    },
-                    {
-                        ""ID"": 10004,
-                        ""QuestionText"": ""Car"",
-                        ""Answer"": ""Auto""
-                    },
-                    {
-                        ""ID"": 10005,
-                        ""QuestionText"": ""Water"",
-                        ""Answer"": ""Voda""
-                    },
-                    {
-                        ""ID"": 10006,
-                        ""QuestionText"": ""Chair"",
-                        ""Answer"": ""Židle""
-                    },
-                    {
-                        ""ID"": 10007,
-                        ""QuestionText"": ""Apple"",
-                        ""Answer"": ""Jablko""
-                    },
-                    {
-
-                        ""ID"": 10008,
-                        ""QuestionText"": ""Table"",
-                        ""Answer"": ""Stůl""
-                    },
-                    {
-                        ""ID"": 10009,
-                        ""QuestionText"": ""Tree"",
-                        ""Answer"": ""Strom""
-                    }
-                    ]
-                    },
-                    {
-                        ""Name"": ""Unit 2"",
-                        ""ID"": 2,
-                        ""Description"": ""Basic vocabulary"",
-                        ""ErrorRates"": [ 0.05, 0.07, 0.9, 0.5, 0.7, 0.6, 0.28 ],
-                        ""UserQuestions"": []
-                    },
-                    {
-                        ""Name"": ""Unit 3"",
-                        ""ID"": 3,
-                        ""Description"": ""Plural"",
-                        ""ErrorRates"": [ 0.1, 0.2, 0.15 ],
-                        ""UserQuestions"": []
-                    },
-                    {   
-                        ""Name"": ""Unit 4"",
-                        ""ID"": 4,
-                        ""Description"": ""Numbers"",
-                        ""ErrorRates"": [],
-                        ""UserQuestions"": []
-                    }
-                ]";
 
                 string dirPath = Path.Combine(appDataPath, "ITU");
                 // Ensure the directory exists
@@ -699,5 +977,82 @@ public class JsonHandler
         }
     }
 
+    public static string getAudio(string unit)
+    {
+        string audioFilePath = "Resources/Audio/empty.mp3"; // Default path
 
+        switch (unit)
+        {
+            case "Unit 1":
+                audioFilePath = "Resources/Audio/u1.mp3";
+                break;
+            case "Unit 2":
+                audioFilePath = "Resources/Audio/u2.mp3";
+                break;
+            case "Unit 3":
+                audioFilePath = "Resources/Audio/u3.mp3";
+                break;
+            default:
+                MessageBox.Show("Error retrieving audio file.");
+                break;
+        }
+
+        return audioFilePath; // Return the relative file path
+    }
+
+    public string LoadReadingExercise(string id)
+    {
+        string filePath = "reading_exercise_texts.json";
+
+        // Try to load the file
+        Dictionary<string, string> data = LoadJsonFile(filePath);
+
+        // If ID is not found in the loaded data, add the new ID with predefined value
+        if (!data.ContainsKey(id))
+        {
+            string predefinedValue = "";
+
+            switch (id)
+            {
+                case "1":
+                    predefinedValue = "Sarah is a student. She wakes up at 7:00 every morning. After she gets up, she takes a shower and then has breakfast. She usually eats cereal and drinks orange juice. Sarah goes to school at 8:00 and finishes at 3:00 in the afternoon. After school, she does her homework and then plays with her dog in the park. She goes to bed at 10:00.";
+                    break;
+                case "2":
+                    predefinedValue = "In winter, the weather is cold. It snows in many places. People wear coats, hats, and gloves to stay warm. Spring is a season with mild weather. Flowers bloom and trees get green again. In summer, it is hot. People go swimming and enjoy the sun. Autumn is a time when the weather gets cooler, and leaves change color. It is also a time for harvest.";
+                    break;
+                case "3":
+                    predefinedValue = "John likes to eat healthy food. He eats vegetables, fruits, and meat. His favorite food is chicken. He also enjoys eating salads with tomatoes, cucumbers, and lettuce. For breakfast, John usually eats eggs and toast. He drinks water with his meals. Sometimes, he eats chocolate for dessert.";
+                    break;
+            }
+
+            data.Add(id, predefinedValue);
+
+            // Save the data
+            SaveJsonFile(filePath, data);
+        }
+
+        // Return the value for the ID
+        return data[id];
+    }
+
+    // Method to load JSON data from the file
+    private static Dictionary<string, string> LoadJsonFile(string filePath)
+    {
+        if (!File.Exists(filePath))
+        {
+            // If the file doesn't exist, return a new dictionary
+            return new Dictionary<string, string>();
+        }
+
+        // else return data as a dictionary
+        string jsonContent = File.ReadAllText(filePath);
+        return JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonContent) ?? new Dictionary<string, string>();
+    }
+
+    // Method to save data to the JSON file
+    private static void SaveJsonFile(string filePath, Dictionary<string, string> data)
+    {
+        string jsonContent = JsonConvert.SerializeObject(data, Formatting.Indented);
+        File.WriteAllText(filePath, jsonContent);
+    }
 }

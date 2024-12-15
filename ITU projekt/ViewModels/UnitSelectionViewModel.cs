@@ -74,15 +74,10 @@ class UnitSelectionViewModel : INotifyPropertyChanged
                 MessageBox.Show("Unit ID parsing failed");
                 return;
             }
-            
 
             int turn = 1;
-            if(randomNumber == 1)
-                VM.CurrentUserControl = new TranslateWord(VM, unit, ref turn);
-            else if (randomNumber == 2)
-                VM.CurrentUserControl = new Choice(VM, unit, ref turn);
-            else if (randomNumber == 3)
-                VM.CurrentUserControl = new Choice(VM, unit, ref turn);
+            VM.CurrentUserControl = new ListeningExercise(VM, unit, ref turn);
+            return;
         }
     }
 
