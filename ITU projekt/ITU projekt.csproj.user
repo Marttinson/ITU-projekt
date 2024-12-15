@@ -11,6 +11,9 @@
     <Compile Update="Templates\Choice.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Templates\SentenceMaking.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Templates\WordMatching.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -29,6 +32,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Templates\CustomUserWordList.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Templates\SentenceMaking.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Templates\WordMatching.xaml">

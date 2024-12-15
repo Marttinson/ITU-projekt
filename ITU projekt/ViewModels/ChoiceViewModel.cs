@@ -116,7 +116,6 @@ public class ChoiceViewModel : INotifyPropertyChanged
 
         unit = _unit;
         List<PickFromThreeQuestion> questions = jsonHandler.LoadOptionsQuestions(jsonPath, unit);
-        Console.WriteLine(questions);
 
         QuestionUtils qutils = new QuestionUtils();
 

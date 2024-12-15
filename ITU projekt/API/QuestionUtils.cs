@@ -105,4 +105,41 @@ public class QuestionUtils
         }
         return false;
     }
+
+    // ------------------ Skládání vět ------------------
+    // Metoda pro vyhledání otázky podle ID
+    public SentenceQuestion FindSentenceQuestionById(List<SentenceQuestion> questions, int id)
+    {
+        foreach (var question in questions)
+        {
+            if (question.ID == id)
+                return question;
+        }
+        return null;
+    }
+
+    // Metoda pro výběr X náhodných otázek
+    public List<SentenceQuestion> GetRandomSentenceQuestions(List<SentenceQuestion> questions, int count)
+    {
+        Random random = new Random();
+        return questions.OrderBy(x => random.Next()).Take(count).ToList();
+    }
+
+    // Metoda pro přidání nové otázky
+    public void AddSentenceQuestion(List<SentenceQuestion> questions, SentenceQuestion question)
+    {
+        questions.Add(question);
+    }
+
+    // Metoda pro odstranění otázky podle ID
+    public bool RemoveSentenceQuestionById(List<SentenceQuestion> questions, int id)
+    {
+        var question = FindSentenceQuestionById(questions, id);
+        if (question != null)
+        {
+            questions.Remove(question);
+            return true;
+        }
+        return false;
+    }
 }
